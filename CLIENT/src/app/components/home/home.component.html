@@ -1,0 +1,46 @@
+<div class="main_container">
+
+  <!-- searchbar -->
+  <div class="searchbar_container">
+    <form class="search-form"> 
+    <div class="form-field item1">
+      <mat-form-field appearance="outline">
+        <mat-label>Search Location</mat-label>
+        <mat-select [(ngModel)]="selectedValue" name="location">
+          <mat-option *ngFor="let location of locations" [value]="location.value">
+            {{location.viewValue}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      </div>
+      <div class="form-field item2">
+        <mat-form-field class="search-input" appearance="outline">
+        <mat-label>Search doctors,hospitals</mat-label>
+        <input matInput placeholder="eg: Rainbow Hospital" required>
+        <mat-error></mat-error>
+      
+      </mat-form-field>
+    </div>
+    </form>
+  </div>
+<!-- video-playing -->
+<div class="video-container ">
+  
+    <video controls>
+      <source src="assets/videos/video1.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+  
+  
+</div>
+
+<!-- cards -->
+
+  
+
+
+
+
+
+
+

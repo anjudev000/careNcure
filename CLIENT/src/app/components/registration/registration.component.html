@@ -1,0 +1,89 @@
+
+<div class="container d-flex align-items-center justify-content-center">
+  <div class="row d-flex justify-content-center signUpArea">
+    <div class="col-7">
+      <div class="row d-flex">
+        <div class="left col">
+      <img class="img-fluid signupImg"  src="assets/img/registration (2).png">
+    
+      </div>
+      <div class="right col">
+      <div class="row">
+        <mat-card class="registration-card col">
+          <span class="d-flex justify-content-between align-items-end  p-3 ">
+            <p class="m-0 p-0 fs-5 " style="color: rgb(19, 19, 104);">User Register</p>
+            <a href="#"  routerLink="/doctor-signup">Are you a doctor?</a>
+          </span>
+          <mat-card-content>
+            <form class="registration-form " [formGroup]="signUpForm" (ngSubmit)="onSubmit()">
+              <!-- fullname -->
+              <mat-form-field appearance="outline">
+                <mat-label>FullName</mat-label>
+               <input matInput placeholder="Full Name" required 
+                 formControlName="fullName">
+              <mat-error 
+              *ngIf="signUpForm.get('fullName')?.invalid && (signUpForm.get('fullName')?.dirty || signUpForm.get('fullName')?.touched) && signUpForm.get('fullName')?.errors?.['required']">Name cannot be empty</mat-error>
+              </mat-form-field>
+             <!-- mobile number -->
+              <mat-form-field appearance="outline">
+                <mat-label>Mobile Number</mat-label>
+                <input matInput placeholder="Mobile Number"  required  name="mobile_num" [pattern]=" phoneRegex" formControlName="mobile_num">
+                <mat-error *ngIf="signUpForm.get('mobile_num')?.invalid && (signUpForm.get('mobile_num')?.dirty || signUpForm.get('email')?.touched)">
+                  <ng-container *ngIf="signUpForm.get('mobile_num')?.errors?.['required']">Phone Number required</ng-container>
+                  <ng-container *ngIf="signUpForm.get('mobile_num')?.errors?.['pattern']">Invalid Phone Number</ng-container>
+                </mat-error>         
+              </mat-form-field>
+              <!-- email -->
+              <mat-form-field appearance="outline">
+                <mat-label>Email</mat-label>
+                <input matInput placeholder="Email" required  name="email" formControlName="email">
+               <mat-error *ngIf="signUpForm.get('email')?.invalid && (signUpForm.get('email')?.dirty || signUpForm.get('email')?.touched)">
+                <ng-container *ngIf="signUpForm.get('email')?.errors?.['required']">Email required</ng-container>
+                <ng-container *ngIf="signUpForm.get('email')?.errors?.['email']">Invalid email address</ng-container>
+              </mat-error>
+            </mat-form-field>
+            <!-- password -->
+              <mat-form-field appearance="outline">
+                <mat-label>Password</mat-label>
+                <input matInput type="password" placeholder="Password" required  name="password" formControlName="password">
+           
+                <mat-error *ngIf="signUpForm.get('password')?.invalid && (signUpForm.get('password')?.dirty || signUpForm.get('password')?.touched)">
+                  <ng-container *ngIf="signUpForm.get('password')?.errors?.['required']">Password required</ng-container>
+                  <ng-container  *ngIf="signUpForm.get('password')?.errors?.['minlength']">Password should contain atleast 6 characters</ng-container>
+                </mat-error>
+               </mat-form-field>
+               <!-- confirm password -->
+               <mat-form-field appearance="outline">
+                <mat-label>Confirm Password</mat-label>
+                <input matInput type="password" placeholder="Confirm Password" required name="confirmPassword" formControlName="confirmPassword">
+                <mat-error *ngIf="signUpForm.get('confirmPassword')?.invalid && (signUpForm.get('confirmPassword')?.dirty || signUpForm.get('confirmPassword')?.touched)">
+                  <ng-container *ngIf="signUpForm.get('confirmPassword')?.errors?.['required']">Confirm Password required</ng-container>
+                  <ng-container *ngIf="signUpForm.get('confirmPassword')?.errors?.['PasswordMismatch']">Passwords do not match</ng-container>
+                </mat-error>
+                
+              </mat-form-field>
+              <!-- button -->
+             <div class="d-flex justify-content-between align-items-end">
+              <button mat-raised-button style="background-color:rgb(19,190,240);" type="submit" [disabled]="signUpForm.invalid">SUBMIT</button>
+              <a class="doctor-link login-here" routerLink="/user-login">Already have account?Login Here</a>
+             </div>
+            </form>
+          </mat-card-content>
+        </mat-card>
+      </div>
+        
+        
+      </div>
+  
+      
+      
+      <!-- error messages -->
+      <div *ngIf="showerrorMessages" class="custom-error-message">
+        {{showerrorMessages}}
+      </div>
+    </div>
+    </div>
+  </div>
+</div>
+
+

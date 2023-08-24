@@ -1,0 +1,44 @@
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav #drawer class="sidenav" fixedInViewport
+      [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+      [mode]="(isHandset$ | async) ? 'over' : 'side'"
+      [opened]="(isHandset$ | async) === false">
+    <mat-toolbar>Menu</mat-toolbar>
+    <mat-nav-list>
+      <a mat-list-item href="#">Find Doctors</a>
+      <a mat-list-item href="#">Video Consult</a>
+      <button mat-raised-button >Login/Register</button>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+  <div class="container-fluid  p-0">
+    <div class="row-fluid">
+      <mat-toolbar class="" color="primary">
+        <button style="color: black;"
+          type="button"
+          aria-label="Toggle sidenav"
+          mat-icon-button
+          (click)="drawer.toggle()"
+          *ngIf="isHandset$ | async">
+          <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+        </button>
+        <div class="row-fluid d-flex justify-content-center ">
+          <div class="col-10">
+            <span class="logo-container img-fluid "><img src="assets/img/cnc6.png" routerLink="/home" class="logo"></span>
+          </div>
+        </div>
+        <ng-container *ngIf="!(isHandset$ | async)">
+          <a href="#" class="desktop-link">Find Doctors</a>
+          <a href="#" class="desktop-link">Video Consult</a>
+          <span class="spacer"></span>
+          <button mat-raised-button class="desktop-button" routerLink="/user-signup">Login/Register</button>
+        </ng-container>
+      
+      </mat-toolbar>
+    </div>
+   
+  </div>
+    <ng-content></ng-content>
+    <!-- Add Content Here -->
+  </mat-sidenav-content>
+</mat-sidenav-container>
