@@ -37,6 +37,7 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { environment } from 'src/environment/environment';
 //service
 import { UserService } from './shared/user.service';
+import { OtpVerificationComponent } from './components/otp-verification/otp-verification.component';
 
 
 @NgModule({
@@ -47,7 +48,8 @@ import { UserService } from './shared/user.service';
     RegistrationComponent,
     LoginComponent,
     UserRegistrationComponent,
-    DoctorRegistrationComponent
+    DoctorRegistrationComponent,
+    OtpVerificationComponent
   ],
   imports: [
     BrowserModule,

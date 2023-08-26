@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './components/home/home.component';
 import { UserRegistrationComponent } from './components/user/user-registration/user-registration.component';
 import { DoctorRegistrationComponent } from './components/doctor/doctor-registration/doctor-registration.component';
+import { OtpVerificationComponent } from './components/otp-verification/otp-verification.component';
 
 const routes: Routes = [
   {
@@ -14,6 +15,10 @@ const routes: Routes = [
   {
     path:'doctor-signup',component:DoctorRegistrationComponent
   },
+  {
+    path:'verify',component:OtpVerificationComponent
+  },
+
   {
     path:'',redirectTo:'home',pathMatch:'full'
   }

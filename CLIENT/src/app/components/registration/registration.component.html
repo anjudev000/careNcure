@@ -11,8 +11,12 @@
       <div class="row">
         <mat-card class="registration-card col">
           <span class="d-flex justify-content-between align-items-end  p-3 ">
-            <p class="m-0 p-0 fs-5 " style="color: rgb(19, 19, 104);">User Register</p>
-            <a href="#"  routerLink="/doctor-signup">Are you a doctor?</a>
+            <p class="m-0 p-0 fs-5 " style="color: rgb(19, 19, 104);" *ngIf="!isDoctor">User Register</p>
+            <p class="m-0 p-0 fs-5 " style="color: rgb(19, 19, 104);" *ngIf="isDoctor">Doctor Register</p>
+
+            <a href="#"  routerLink="/doctor-signup" *ngIf="!isDoctor">Are you a doctor?</a>
+            <a href="#"  routerLink="/user-signup" *ngIf="isDoctor">Not a doctor?</a>
+
           </span>
           <mat-card-content>
             <form class="registration-form " [formGroup]="signUpForm" (ngSubmit)="onSubmit()">

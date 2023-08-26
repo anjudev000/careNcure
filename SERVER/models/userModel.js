@@ -48,6 +48,13 @@ const userSchema = new mongoose.Schema(
         type: Boolean,
         default:false
     },
+    isVerified:{
+        type:Boolean,
+        default:false
+    },
+    otp:{   
+        type:Number,
+        },
     saltSecret: String
 });
 // Custom validation for email

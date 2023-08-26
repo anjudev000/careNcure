@@ -13,6 +13,7 @@ import { MatSnackBar,MatSnackBarModule } from '@angular/material/snack-bar';
 export class RegistrationComponent {
   @Input() showerrorMessages!:string;
   @Input() showSuccessMessage!:boolean;
+  @Input() isDoctor!:boolean;
   @Output() registrationSubmit:EventEmitter<any> = new EventEmitter<any>();
 
 
