@@ -52,7 +52,9 @@ const otpVerification = async(req,res,next)=>{
     if(!user){
       return res.status(404).json(['User not Found']);
     }
-    if(user.otp !== receivedOTP){
+    console.log("fffffffff",user.otp,receivedOTP);
+    console.log(typeof(user.otp),typeof(receivedOTP));
+    if(user.otp != receivedOTP){
       return res.status(400).json(['Invalid OTP']);
     }
     

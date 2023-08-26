@@ -4,6 +4,7 @@ import { HomeComponent } from './components/home/home.component';
 import { UserRegistrationComponent } from './components/user/user-registration/user-registration.component';
 import { DoctorRegistrationComponent } from './components/doctor/doctor-registration/doctor-registration.component';
 import { OtpVerificationComponent } from './components/otp-verification/otp-verification.component';
+import { LoginComponent } from './components/login/login.component';
 
 const routes: Routes = [
   {
@@ -17,6 +18,9 @@ const routes: Routes = [
   },
   {
     path:'verify',component:OtpVerificationComponent
+  },
+  {
+    path:'login',component:LoginComponent
   },
 
   {

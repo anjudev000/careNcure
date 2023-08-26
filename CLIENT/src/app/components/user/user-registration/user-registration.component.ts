@@ -1,9 +1,8 @@
 import { Component } from '@angular/core';
-import { User } from 'src/app/shared/user.model';
 import { UserService } from 'src/app/shared/user.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { FormGroup, FormBuilder, Validators, ValidatorFn, AbstractControl } from '@angular/forms';
-
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-user-registration',
@@ -14,16 +13,19 @@ export class UserRegistrationComponent {
   signUpForm!: FormGroup;
   showerrorMessages!: string;
   showSuccessMessage!: boolean;
-  constructor(private userService: UserService, private _snackBar: MatSnackBar) { }
+  constructor(private userService: UserService, private _snackBar: MatSnackBar,private router:Router) { }
 
   handleRegistrationSubmit(formData: any) {
     this.showerrorMessages = '';
     this.userService.postUser(formData).subscribe(
       res => {
         this.showSuccessMessage = true;
-        this._snackBar.open('Form submitted successfully', 'close', {
+        this._snackBar.open('User Registered. Verify to Activate your account ', 'close', {
           duration: 3000
         });
+        this.router.navigate(['/verify'],{
+          state:{email:formData.email}
+        })
       },
       err => {
         console.log(err, 29);
