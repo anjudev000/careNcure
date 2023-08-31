@@ -1,4 +1,4 @@
-import { Component,EventEmitter,Input,Output } from '@angular/core';
+import { Component,Input,Output,EventEmitter } from '@angular/core';
 import { Otp } from 'src/app/shared/otp.model';
 import { FormGroup,FormBuilder, } from '@angular/forms';
 import { MatSnackBar,MatSnackBarModule } from '@angular/material/snack-bar';
@@ -11,9 +11,10 @@ import { ActivatedRoute,Router } from '@angular/router';
   styleUrls: ['./otp-verification.component.css']
 })
 export class OtpVerificationComponent {
-errorMessages!:string;
+@Input() errorMessages!:string;
 otpForm!:FormGroup;
 email:string='';
+@Output() otpVerificationSubmit:EventEmitter<any>=new EventEmitter<any>();
 
 constructor(private otpService:OtpService,
   private fb:FormBuilder,
@@ -25,7 +26,7 @@ get otp():Otp{
 }
 ngOnInit(){
    this.email = history.state.email;
-  console.log("email from registration component:",this.email);
+  console.log("email from component:",this.email);
   this.otpForm = this.fb.group({
     otp:[''],
     email:[this.email]
@@ -34,26 +35,8 @@ ngOnInit(){
 
 onSubmit(){
   const formData = this.otpForm.value;
-  this.otpService.verifyOTP(formData).subscribe(
-    res=>{
-       this._snackBar.open('OTP Verification Successful','Close',{duration:3000}) ;
-      this.router.navigate(['/login']);
-    },
-    err=>{
-      if(err.status === 400){
-        this.errorMessages = 'Invalid OTP';
-      }
-      else if(err.status === 404){
-        this.errorMessages = 'User Not Found';
-      }
-      else{
-        this.errorMessages = 'An error occured!Please try again later!'
-      }
-      // this._snackBar.open(this.errorMessages, 'Close', {
-      //   duration: 3000, // Duration in milliseconds
-      // });
-    }
-  )
+ this.otpVerificationSubmit.emit(formData);
+
 }
 
 }

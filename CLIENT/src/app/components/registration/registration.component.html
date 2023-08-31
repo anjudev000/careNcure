@@ -1,4 +1,4 @@
-
+ 
 <div class="container d-flex align-items-center justify-content-center">
   <div class="row d-flex justify-content-center signUpArea">
     <div class="col-7">
@@ -69,7 +69,8 @@
               <!-- button -->
              <div class="d-flex justify-content-between align-items-end">
               <button mat-raised-button style="background-color:rgb(19,190,240);" type="submit" [disabled]="signUpForm.invalid">SUBMIT</button>
-              <a class="doctor-link login-here" routerLink="/user-login">Already have account?Login Here</a>
+              <a class="doctor-link login-here" [routerLink]="isDoctor?'/doctor-login':'/user-login'">Already have account?Login Here</a>
+              
              </div>
             </form>
           </mat-card-content>

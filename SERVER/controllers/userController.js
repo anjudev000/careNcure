@@ -1,7 +1,7 @@
-const mongoose = require('mongoose');
 const User = require('../models/userModel');
 const {sendOtpToMail} = require('../utils/sendotp');
 const {clearExiredOtp} = require('../utils/otpExpire');
+const passport = require('passport');
 
 
 const register = async (req, res,next) => {
@@ -26,7 +26,7 @@ const register = async (req, res,next) => {
    //clear otp after one minute
    setTimeout(async()=>{
     await clearExiredOtp(newUser.email);
-   },600000);
+   },60000);
 
    res.status(201).json(savedUser);
   } catch (error) {
@@ -70,7 +70,24 @@ const otpVerification = async(req,res,next)=>{
 }
 
 
+const login = (req, res, next) => {
+  passport.authenticate('local', (err, user, info) => {
+    if (err) {
+      return next(err);
+    }
+    if (!user) {
+      return res.status(404).json(info);
+    }
+    
+    // Assuming user.generateToken() is a valid method
+    return res.status(200).json({ "userToken": user.generateToken() });
+  })(req, res, next);
+};
+
+
+
 module.exports = {
   register,
-  otpVerification
+  otpVerification,
+  login
 }

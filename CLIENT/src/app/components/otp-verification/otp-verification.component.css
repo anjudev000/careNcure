@@ -10,3 +10,11 @@
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   padding: 20px;
 }
+.custom-error-message {
+  background-color: #ffdddd;
+  border: 1px solid #f44336;
+  color: #f44336;
+  padding: 10px;
+  margin-top: 10px;
+  border-radius: 4px;
+}

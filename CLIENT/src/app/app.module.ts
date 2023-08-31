@@ -38,6 +38,10 @@ import { environment } from 'src/environment/environment';
 //service
 import { UserService } from './shared/user.service';
 import { OtpVerificationComponent } from './components/otp-verification/otp-verification.component';
+import { UserLoginComponent } from './components/user/user-login/user-login.component';
+import { DoctorLoginComponent } from './components/doctor/doctor-login/doctor-login.component';
+import { UserOtpVerifyComponent } from './components/user/user-otp-verify/user-otp-verify.component';
+import { DoctorOtpVerifyComponent } from './components/doctor/doctor-otp-verify/doctor-otp-verify.component';
 
 
 @NgModule({
@@ -49,7 +53,11 @@ import { OtpVerificationComponent } from './components/otp-verification/otp-veri
     LoginComponent,
     UserRegistrationComponent,
     DoctorRegistrationComponent,
-    OtpVerificationComponent
+    OtpVerificationComponent,
+    UserLoginComponent,
+    DoctorLoginComponent,
+    UserOtpVerifyComponent,
+    DoctorOtpVerifyComponent
   ],
   imports: [
     BrowserModule,

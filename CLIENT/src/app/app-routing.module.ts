@@ -5,6 +5,10 @@ import { UserRegistrationComponent } from './components/user/user-registration/u
 import { DoctorRegistrationComponent } from './components/doctor/doctor-registration/doctor-registration.component';
 import { OtpVerificationComponent } from './components/otp-verification/otp-verification.component';
 import { LoginComponent } from './components/login/login.component';
+import { UserLoginComponent } from './components/user/user-login/user-login.component';
+import { DoctorLoginComponent } from './components/doctor/doctor-login/doctor-login.component';
+import { UserOtpVerifyComponent } from './components/user/user-otp-verify/user-otp-verify.component';
+import { DoctorOtpVerifyComponent } from './components/doctor/doctor-otp-verify/doctor-otp-verify.component';
 
 const routes: Routes = [
   {
@@ -17,10 +21,16 @@ const routes: Routes = [
     path:'doctor-signup',component:DoctorRegistrationComponent
   },
   {
-    path:'verify',component:OtpVerificationComponent
+    path:'user-otp-verify',component:UserOtpVerifyComponent
   },
   {
-    path:'login',component:LoginComponent
+    path:'doctor-otp-verify',component:DoctorOtpVerifyComponent
+  },
+  {
+    path:'user-login',component:UserLoginComponent
+  },
+  {
+    path:'doctor-login',component:DoctorLoginComponent
   },
 
   {

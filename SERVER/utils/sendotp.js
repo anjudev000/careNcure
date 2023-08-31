@@ -32,17 +32,13 @@ const sendOtpToMail = async(email,next)=>{
       subject: 'OTP for verifying your account',
       text: `Your One Time Password is ${otp}`
     }
-     transporter.sendMail(mailOptions,(error,info,next)=>{
-      console.log("sending mail status:",info.accepted);
-      console.log("sending mail status:",info.rejected);
-      if(error){
-        next(error);
-      }
-    });
-    return otp;
+     await transporter.sendMail(mailOptions);
+     return otp;
   }
   catch(error){
-    next(error);
+    // next(error);
+    console.log('error',error);
+    throw new Error('Failed to send OTP via email.');
   }
 }
 

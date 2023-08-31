@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { UserService } from 'src/app/shared/user.service';
+import { User } from 'src/app/shared/user.model';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { FormGroup, FormBuilder, Validators, ValidatorFn, AbstractControl } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -15,7 +16,7 @@ export class UserRegistrationComponent {
   showSuccessMessage!: boolean;
   constructor(private userService: UserService, private _snackBar: MatSnackBar,private router:Router) { }
 
-  handleRegistrationSubmit(formData: any) {
+  handleRegistrationSubmit(formData: User) {
     this.showerrorMessages = '';
     this.userService.postUser(formData).subscribe(
       res => {
@@ -23,7 +24,7 @@ export class UserRegistrationComponent {
         this._snackBar.open('User Registered. Verify to Activate your account ', 'close', {
           duration: 3000
         });
-        this.router.navigate(['/verify'],{
+        this.router.navigate(['/user-otp-verify'],{
           state:{email:formData.email}
         })
       },

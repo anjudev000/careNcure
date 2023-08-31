@@ -1,1 +1,49 @@
-<p>login works!</p>
+
+<div class="container">
+  <div class="left">
+   
+   <img style="max-width: 100%;" src="assets/img/user-login.png">
+  </div>
+  <div class="right">
+    <mat-card class="login-card">
+      <mat-card-header class="header">
+        <mat-card-title style="color: rgb(19, 19, 104);">Login</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <form class="login-form" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+         
+          <mat-form-field appearance="outline">
+            <mat-label>Email</mat-label>
+            <input matInput placeholder="Enter your email" required
+            formControlName="email">
+            <mat-error *ngIf="loginForm.get('email')?.invalid && (loginForm.get('email')?.dirty || loginForm.get('email')?.touched)">
+              <ng-container *ngIf="loginForm.get('email')?.errors?.['required']">Email Required</ng-container>
+              <ng-container *ngIf="loginForm.get('email')?.errors?.['email']">Invalid email address</ng-container>
+
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Password</mat-label>
+            <input matInput type="password" placeholder="Password" required formControlName="password">
+            <mat-error *ngIf="loginForm.get('password')?.invalid && (loginForm.get('password')?.dirty || loginForm.get('password')?.touched)">
+              <ng-container *ngIf="loginForm.get('password')?.errors?.['required']">Password required</ng-container>
+              <ng-container  *ngIf="loginForm.get('password')?.errors?.['minlength']">Invalid Password</ng-container>
+            </mat-error>         
+           </mat-form-field>
+      
+          <button mat-raised-button style="background-color:rgb(19,190,240);" type="submit">Login</button>
+          <div class="forgot-link">
+          <a class="link login-here" routerLink="/user-signup">New Member?Register Here</a>
+          <a class="link login-here" style="color: rgb(19,190,240);" href="">Forgot Password</a>
+        </div>
+        </form>
+      </mat-card-content>
+    </mat-card>
+
+     <!-- error messages -->
+     <div *ngIf="errorMessages" class="custom-error-message">
+      {{errorMessages}}
+    </div>
+    
+  </div>
+</div>
