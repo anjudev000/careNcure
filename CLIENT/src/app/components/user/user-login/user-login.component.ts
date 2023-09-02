@@ -5,7 +5,7 @@ import { UserService } from 'src/app/shared/user.service';
 import { Router } from '@angular/router';
 
 interface LoginResponse{
-  token:string
+  userToken:string
 }
 
 @Component({
@@ -18,6 +18,12 @@ export class UserLoginComponent {
   errorMessages!:string;
 constructor(private userService: UserService, private router:Router){}
 
+ngOnInit(){
+ if(this.userService.isLoggedIn()) {
+  this.router.navigateByUrl('/user-home');
+  }
+}
+
 
   handleLoginSubmit(formData:loginModel){
     this.errorMessages='';
@@ -25,7 +31,9 @@ constructor(private userService: UserService, private router:Router){}
     this.userService.postLogin(formData).subscribe(
       res =>{
         console.log("login successfull. response : ",res);
-        this.userService.setToken((res as LoginResponse).token)
+       this.userService.setToken((res as LoginResponse).userToken);
+       
+        this.router.navigateByUrl('/user-home');
       },
       err=>{
         this.errorMessages = err.error.message;

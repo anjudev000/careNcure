@@ -19,6 +19,13 @@ import { RegistrationComponent } from './components/registration/registration.co
 import { LoginComponent } from './components/login/login.component';
 import { UserRegistrationComponent } from './components/user/user-registration/user-registration.component';
 import { DoctorRegistrationComponent } from './components/doctor/doctor-registration/doctor-registration.component';
+import { OtpVerificationComponent } from './components/otp-verification/otp-verification.component';
+import { UserLoginComponent } from './components/user/user-login/user-login.component';
+import { DoctorLoginComponent } from './components/doctor/doctor-login/doctor-login.component';
+import { UserOtpVerifyComponent } from './components/user/user-otp-verify/user-otp-verify.component';
+import { DoctorOtpVerifyComponent } from './components/doctor/doctor-otp-verify/doctor-otp-verify.component';
+import { UserHomeComponent } from './components/user/user-home/user-home.component';
+
 
 //angualar material
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -37,12 +44,9 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { environment } from 'src/environment/environment';
 //service
 import { UserService } from './shared/user.service';
-import { OtpVerificationComponent } from './components/otp-verification/otp-verification.component';
-import { UserLoginComponent } from './components/user/user-login/user-login.component';
-import { DoctorLoginComponent } from './components/doctor/doctor-login/doctor-login.component';
-import { UserOtpVerifyComponent } from './components/user/user-otp-verify/user-otp-verify.component';
-import { DoctorOtpVerifyComponent } from './components/doctor/doctor-otp-verify/doctor-otp-verify.component';
 
+//auth service
+import { userAuthServiceGuard } from './auth/user-auth-service.guard';
 
 @NgModule({
   declarations: [
@@ -57,7 +61,8 @@ import { DoctorOtpVerifyComponent } from './components/doctor/doctor-otp-verify/
     UserLoginComponent,
     DoctorLoginComponent,
     UserOtpVerifyComponent,
-    DoctorOtpVerifyComponent
+    DoctorOtpVerifyComponent,
+    UserHomeComponent
   ],
   imports: [
     BrowserModule,
@@ -78,7 +83,7 @@ import { DoctorOtpVerifyComponent } from './components/doctor/doctor-otp-verify/
     MatCardModule,
     MatSnackBarModule,
   ],
-  providers: [UserService],
+  providers: [UserService,userAuthServiceGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

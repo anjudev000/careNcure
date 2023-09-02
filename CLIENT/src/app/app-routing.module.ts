@@ -9,6 +9,8 @@ import { UserLoginComponent } from './components/user/user-login/user-login.comp
 import { DoctorLoginComponent } from './components/doctor/doctor-login/doctor-login.component';
 import { UserOtpVerifyComponent } from './components/user/user-otp-verify/user-otp-verify.component';
 import { DoctorOtpVerifyComponent } from './components/doctor/doctor-otp-verify/doctor-otp-verify.component';
+import { UserHomeComponent } from './components/user/user-home/user-home.component';
+import { userAuthServiceGuard } from './auth/user-auth-service.guard';
 
 const routes: Routes = [
   {
@@ -31,6 +33,9 @@ const routes: Routes = [
   },
   {
     path:'doctor-login',component:DoctorLoginComponent
+  },
+  {
+    path:'user-home',component:UserHomeComponent , canActivate:[userAuthServiceGuard]
   },
 
   {
