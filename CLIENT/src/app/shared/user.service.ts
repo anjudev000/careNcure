@@ -1,8 +1,11 @@
 import { Injectable } from '@angular/core';
 import {User} from './user.model';
 import { loginModel } from './login.model';
+import { passwordReset } from './passwordReset.model';
 import { HttpClient,HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environment/environment';
+import { forgotModel } from './passwordReset.model';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -13,6 +16,7 @@ export class UserService {
     email:'',
     password:''
   };
+
   noAuthHeader = {headers: new HttpHeaders({'NoAuth':'True'})};
 
 
@@ -28,6 +32,20 @@ export class UserService {
   
   getUserProfile(){
     return this.http.get(environment.apiBaseUrl+'/user-home');
+  }
+
+  getUserName(userId:string){
+    return this.http.get(environment.apiBaseUrl+`/user-info/${userId}`);
+  }
+
+  postEmailForgotPassword(email:forgotModel){
+    return this.http.post(environment.apiBaseUrl+'/forgot-password',email,this.noAuthHeader);
+  }
+  getUserIdfromPasswordToken(token:string){
+    return this.http.get(environment.apiBaseUrl+`/getUserId/${token}`,this.noAuthHeader)
+  }
+  postNewPassword(passRes: passwordReset){
+    return this.http.post(environment.apiBaseUrl+'/updateNewPassword',passRes,this.noAuthHeader)
   }
 
   //helper methods
@@ -52,6 +70,12 @@ export class UserService {
       return JSON.parse(userPayload);
     }
     else return null
+  }
+  getUserId(){
+    let userPayload = this.getUserPayload();
+    let userId = userPayload._id;
+    console.log('userid line 744',userId);
+    return userId;
   }
 
   isLoggedIn(){

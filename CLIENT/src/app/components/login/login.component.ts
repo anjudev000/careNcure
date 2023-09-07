@@ -10,6 +10,7 @@ import { UserService } from 'src/app/shared/user.service';
 })
 export class LoginComponent {
   @Input() errorMessages!:string;
+  @Input() isDoctor!:boolean;
   @Output() loginSubmit:EventEmitter<any> = new EventEmitter<any>();
 
   loginForm!:FormGroup;

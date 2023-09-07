@@ -11,6 +11,10 @@ import { UserOtpVerifyComponent } from './components/user/user-otp-verify/user-o
 import { DoctorOtpVerifyComponent } from './components/doctor/doctor-otp-verify/doctor-otp-verify.component';
 import { UserHomeComponent } from './components/user/user-home/user-home.component';
 import { userAuthServiceGuard } from './auth/user-auth-service.guard';
+import { UserForgetPassComponent } from './components/user/user-forget-pass/user-forget-pass.component';
+import { DoctorForgetPasswordComponent } from './components/doctor/doctor-forget-password/doctor-forget-password.component';
+import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
+import { UserResetPasswordComponent } from './components/user/user-reset-password/user-reset-password.component';
 
 const routes: Routes = [
   {
@@ -28,6 +32,7 @@ const routes: Routes = [
   {
     path:'doctor-otp-verify',component:DoctorOtpVerifyComponent
   },
+
   {
     path:'user-login',component:UserLoginComponent
   },
@@ -36,6 +41,15 @@ const routes: Routes = [
   },
   {
     path:'user-home',component:UserHomeComponent , canActivate:[userAuthServiceGuard]
+  },
+  {
+    path:'user-forget-password',component: UserForgetPassComponent
+  },
+  {
+    path:'doctor-forget-password',component: DoctorForgetPasswordComponent
+  },
+  {
+    path:'user-reset-password',component:UserResetPasswordComponent
   },
 
   {

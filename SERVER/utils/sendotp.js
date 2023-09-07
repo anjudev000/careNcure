@@ -1,5 +1,4 @@
 const nodemailer = require('nodemailer');
-const random = require('randomstring');
 const dotenv = require('dotenv');
 dotenv.config();
 

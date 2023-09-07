@@ -39,6 +39,7 @@ import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatCardModule} from '@angular/material/card';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {MatMenuModule} from '@angular/material/menu';
 
 //environment
 import { environment } from 'src/environment/environment';
@@ -47,6 +48,12 @@ import { UserService } from './shared/user.service';
 
 //auth service
 import { userAuthServiceGuard } from './auth/user-auth-service.guard';
+import { ForgetPasswordComponent } from './components/forget-password/forget-password.component';
+import { UserForgetPassComponent } from './components/user/user-forget-pass/user-forget-pass.component';
+import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
+import { DoctorForgetPasswordComponent } from './components/doctor/doctor-forget-password/doctor-forget-password.component';
+import { DoctorResetPasswordComponent } from './components/doctor/doctor-reset-password/doctor-reset-password.component';
+import { UserResetPasswordComponent } from './components/user/user-reset-password/user-reset-password.component';
 
 @NgModule({
   declarations: [
@@ -62,7 +69,13 @@ import { userAuthServiceGuard } from './auth/user-auth-service.guard';
     DoctorLoginComponent,
     UserOtpVerifyComponent,
     DoctorOtpVerifyComponent,
-    UserHomeComponent
+    UserHomeComponent,
+    ForgetPasswordComponent,
+    UserForgetPassComponent,
+    ResetPasswordComponent,
+    DoctorForgetPasswordComponent,
+    DoctorResetPasswordComponent,
+    UserResetPasswordComponent
   ],
   imports: [
     BrowserModule,
@@ -82,6 +95,7 @@ import { userAuthServiceGuard } from './auth/user-auth-service.guard';
     MatFormFieldModule,
     MatCardModule,
     MatSnackBarModule,
+    MatMenuModule
   ],
   providers: [UserService,userAuthServiceGuard],
   bootstrap: [AppComponent]

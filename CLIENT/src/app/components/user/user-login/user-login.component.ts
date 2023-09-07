@@ -16,6 +16,7 @@ interface LoginResponse{
 export class UserLoginComponent {
   loginForm! :FormGroup;
   errorMessages!:string;
+  isDoctor:boolean = false;
 constructor(private userService: UserService, private router:Router){}
 
 ngOnInit(){

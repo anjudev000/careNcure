@@ -5,7 +5,6 @@ dotenv.config();
 const verifyJwtToken = async(req,res,next)=>{
   
     let token;
-    console.log("token isssssss",token);
     if ('authorization' in req.headers) {
       token = req.headers['authorization'].split(' ')[1];
       console.log(token,25);

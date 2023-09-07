@@ -34,7 +34,9 @@
           <button mat-raised-button style="background-color:rgb(19,190,240);" type="submit">Login</button>
           <div class="forgot-link">
           <a class="link login-here" routerLink="/user-signup">New Member?Register Here</a>
-          <a class="link login-here" style="color: rgb(19,190,240);" href="">Forgot Password</a>
+          <a class="link login-here" style="color: rgb(19,190,240);" routerLink="/user-forget-password" *ngIf="!isDoctor">Forgot Password</a>
+          <a class="link login-here" style="color: rgb(19,190,240);" routerLink="/doctor-forget-password" *ngIf="isDoctor">Forgot Password</a>
+
         </div>
         </form>
       </mat-card-content>
