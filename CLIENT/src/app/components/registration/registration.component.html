@@ -23,10 +23,14 @@
               <!-- fullname -->
               <mat-form-field appearance="outline">
                 <mat-label>FullName</mat-label>
-               <input matInput placeholder="Full Name" required 
+               <input matInput placeholder="Full Name" required [pattern]="namePattern"
                  formControlName="fullName">
               <mat-error 
-              *ngIf="signUpForm.get('fullName')?.invalid && (signUpForm.get('fullName')?.dirty || signUpForm.get('fullName')?.touched) && signUpForm.get('fullName')?.errors?.['required']">Name cannot be empty</mat-error>
+              *ngIf="signUpForm.get('fullName')?.invalid && (signUpForm.get('fullName')?.dirty || signUpForm.get('fullName')?.touched)">
+              <ng-container *ngIf="signUpForm.get('fullName')?.errors?.['required']">Name cannot empty</ng-container>
+              <ng-container *ngIf="signUpForm.get('fullName')?.errors?.['pattern']">Cannot contain Symbols/Numbers</ng-container>
+
+            </mat-error>
               </mat-form-field>
              <!-- mobile number -->
               <mat-form-field appearance="outline">

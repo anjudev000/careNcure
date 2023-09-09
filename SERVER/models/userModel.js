@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const dotenv = require('dotenv');
 dotenv.config();
@@ -55,9 +54,10 @@ const userSchema = new mongoose.Schema(
         type:Boolean,
         default:false
     },
-    otp:{   
-        type:Number,
-    },
+    otp: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'OTP',
+      },
     token:{
         type: String,
         default:''

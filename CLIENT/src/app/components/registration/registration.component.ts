@@ -18,6 +18,7 @@ export class RegistrationComponent {
 
 
   phoneRegex = /^[0-9]{10}$/; 
+  namePattern = /^[A-Za-z]+$/;
   signUpForm!:FormGroup;
 
 constructor(private userService: UserService, private fb:FormBuilder,private _snackBar: MatSnackBar){}

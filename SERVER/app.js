@@ -18,7 +18,8 @@ app.use(passport.initialize());
 
 const userRoute = require('./routes/userRoutes');
 app.use('/api',userRoute);
-
+const doctorRoute = require('./routes/doctorRoutes');
+app.use('/api',doctorRoute);
 
 
 app.use('*',notFound);
