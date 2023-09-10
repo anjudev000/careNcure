@@ -15,6 +15,9 @@ export class OtpService {
   constructor(private http:HttpClient) { }
 
   verifyOTP(data:Otp){
-    return this.http.post(environment.apiBaseUrl+'/verifyOTP',data)  
+    return this.http.post(environment.apiBaseUrl+'/verifyOTP',data);  
+  }
+  verifyDoctorOTP(data:Otp){
+    return this.http.post(environment.apiBaseUrl+'/doctor-otp-verify',data);
   }
 }

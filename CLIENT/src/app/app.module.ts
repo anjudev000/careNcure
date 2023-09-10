@@ -54,6 +54,7 @@ import { ResetPasswordComponent } from './components/reset-password/reset-passwo
 import { DoctorForgetPasswordComponent } from './components/doctor/doctor-forget-password/doctor-forget-password.component';
 import { DoctorResetPasswordComponent } from './components/doctor/doctor-reset-password/doctor-reset-password.component';
 import { UserResetPasswordComponent } from './components/user/user-reset-password/user-reset-password.component';
+import { DoctorHomeComponent } from './components/doctor/doctor-home/doctor-home.component';
 
 @NgModule({
   declarations: [
@@ -75,7 +76,8 @@ import { UserResetPasswordComponent } from './components/user/user-reset-passwor
     ResetPasswordComponent,
     DoctorForgetPasswordComponent,
     DoctorResetPasswordComponent,
-    UserResetPasswordComponent
+    UserResetPasswordComponent,
+    DoctorHomeComponent
   ],
   imports: [
     BrowserModule,

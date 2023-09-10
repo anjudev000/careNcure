@@ -9,7 +9,7 @@ const {sendLinkToMail} = require('../utils/sendLink');
 
 
 
-const register = async(req,res)=>{
+const register = async(req,res,next)=>{
   try{
     const {fullName,mobile_num,email,password} = req.body;
     const newDoctor = new Doctor({
@@ -57,7 +57,7 @@ const otpVerify = async(req,res)=>{
     if(!otpData){
       return res.status(404).json(['OTP not found']);
     }
-    if(otpData.otp!==receivedOTP){
+    if(otpData.otp!=receivedOTP){
       return res.status(400).json(['Invalid OTP']);
     }
     doctor.isVerified = true;
