@@ -33,7 +33,12 @@ export class DoctorLoginComponent {
           this.router.navigateByUrl('/doctor-home');
         },
         err=>{
-          
+          this.errorMessages = err.error.message;
+          if(err.error.notVerified)
+          this.errorMessages = 'Doctor not verified. Please verify to Continue. OTP send to your mail';
+          setTimeout(()=>{
+            this.router.navigate(['/doctor-otp-verify'],{state:{email:formData.email}});
+          },6000)
         }
       )
     }

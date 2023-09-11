@@ -1,11 +1,8 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import {FormsModule} from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule,HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
-
-
-
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -25,6 +22,13 @@ import { DoctorLoginComponent } from './components/doctor/doctor-login/doctor-lo
 import { UserOtpVerifyComponent } from './components/user/user-otp-verify/user-otp-verify.component';
 import { DoctorOtpVerifyComponent } from './components/doctor/doctor-otp-verify/doctor-otp-verify.component';
 import { UserHomeComponent } from './components/user/user-home/user-home.component';
+import { ForgetPasswordComponent } from './components/forget-password/forget-password.component';
+import { UserForgetPassComponent } from './components/user/user-forget-pass/user-forget-pass.component';
+import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
+import { DoctorForgetPasswordComponent } from './components/doctor/doctor-forget-password/doctor-forget-password.component';
+import { DoctorResetPasswordComponent } from './components/doctor/doctor-reset-password/doctor-reset-password.component';
+import { UserResetPasswordComponent } from './components/user/user-reset-password/user-reset-password.component';
+import { DoctorHomeComponent } from './components/doctor/doctor-home/doctor-home.component';
 
 
 //angualar material
@@ -45,16 +49,14 @@ import {MatMenuModule} from '@angular/material/menu';
 import { environment } from 'src/environment/environment';
 //service
 import { UserService } from './shared/user.service';
+import { DoctorService } from './shared/doctor.service';
+
 
 //auth service
 import { userAuthServiceGuard } from './auth/user-auth-service.guard';
-import { ForgetPasswordComponent } from './components/forget-password/forget-password.component';
-import { UserForgetPassComponent } from './components/user/user-forget-pass/user-forget-pass.component';
-import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
-import { DoctorForgetPasswordComponent } from './components/doctor/doctor-forget-password/doctor-forget-password.component';
-import { DoctorResetPasswordComponent } from './components/doctor/doctor-reset-password/doctor-reset-password.component';
-import { UserResetPasswordComponent } from './components/user/user-reset-password/user-reset-password.component';
-import { DoctorHomeComponent } from './components/doctor/doctor-home/doctor-home.component';
+import { doctorAuthGuard } from './auth/doctor-auth.guard';
+import { AuthInterceptor } from './auth/auth.interceptor';
+import { AdminDashboardComponent } from './components/admin/admin-dashboard/admin-dashboard.component';
 
 @NgModule({
   declarations: [
@@ -77,7 +79,8 @@ import { DoctorHomeComponent } from './components/doctor/doctor-home/doctor-home
     DoctorForgetPasswordComponent,
     DoctorResetPasswordComponent,
     UserResetPasswordComponent,
-    DoctorHomeComponent
+    DoctorHomeComponent,
+    AdminDashboardComponent
   ],
   imports: [
     BrowserModule,
@@ -99,7 +102,12 @@ import { DoctorHomeComponent } from './components/doctor/doctor-home/doctor-home
     MatSnackBarModule,
     MatMenuModule
   ],
-  providers: [UserService,userAuthServiceGuard],
+  providers: [{
+    provide: HTTP_INTERCEPTORS,
+    useClass: AuthInterceptor,
+    multi: true
+  },
+  UserService,userAuthServiceGuard,DoctorService,doctorAuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

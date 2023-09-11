@@ -17,9 +17,11 @@ app.use(cors());
 app.use(passport.initialize());
 
 const userRoute = require('./routes/userRoutes');
-app.use('/api',userRoute);
+app.use('/api/user',userRoute);
 const doctorRoute = require('./routes/doctorRoutes');
-app.use('/api',doctorRoute);
+app.use('/api/doctor',doctorRoute);
+const adminRoute = require('./routes/adminRoutes');
+app.use('/api/admin',adminRoute);
 
 
 app.use('*',notFound);

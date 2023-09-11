@@ -18,6 +18,6 @@ export class OtpService {
     return this.http.post(environment.apiBaseUrl+'/verifyOTP',data);  
   }
   verifyDoctorOTP(data:Otp){
-    return this.http.post(environment.apiBaseUrl+'/doctor-otp-verify',data);
+    return this.http.post(environment.doctorapiBaseUrl+'/doctor-otp-verify',data);
   }
 }

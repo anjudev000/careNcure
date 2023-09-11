@@ -15,6 +15,7 @@ const verifyJwtToken = async(req,res,next)=>{
         try{
           console.log('line 26');
           const decoded = jwt.verify(token,process.env.JWT_SECRET);
+          console.log("hiiiiiiiiiiii");
           console.log(decoded,27);
           req._id = decoded._id;
           next();

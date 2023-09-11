@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { User } from './user.model';
 import { loginModel } from './login.model';
-import { passwordReset } from './passwordReset.model';
+import { doctorPasswordresetModel } from './passwordReset.model';
 import { forgotModel } from './passwordReset.model';
 import { HttpClient,HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environment/environment';
@@ -10,31 +10,33 @@ import { environment } from 'src/environment/environment';
   providedIn: 'root'
 })
 export class DoctorService {
+  noAuthHeader = {headers: new HttpHeaders({'NoAuth':'True'})};
+
 
   constructor(private http:HttpClient) { }
 
   //http methods
 
   postRegister(user:User){
-    return this.http.post(environment.apiBaseUrl+'/doctor-register',user);
+    return this.http.post(environment.doctorapiBaseUrl+'/doctor-register',user,this.noAuthHeader);
   }
   postLogin(authcredentials:loginModel){
-    return this.http.post(environment.apiBaseUrl+'/authenticate-doctor',authcredentials)
+    return this.http.post(environment.doctorapiBaseUrl+'/authenticate-doctor',authcredentials,this.noAuthHeader)
   }
   getDoctorProfile(){
-    return this.http.get(environment.apiBaseUrl+'/doctor-home');
+    return this.http.get(environment.doctorapiBaseUrl+'/doctor-home');
   }
   getUserName(doctorId:string){
-    return this.http.get(environment.apiBaseUrl+`/doctor-info/${doctorId}`);
+    return this.http.get(environment.doctorapiBaseUrl+`/doctor-info/${doctorId}`);
   }
   postEmailForgotPassword(email:forgotModel){
-    return this.http.post(environment.apiBaseUrl+'/doctor-forgot-password',email);
+    return this.http.post(environment.doctorapiBaseUrl+'/doctor-forgot-password',email,this.noAuthHeader);
   }
   getUserIdfromPasswordToken(token:string){
-    return this.http.get(environment.apiBaseUrl+`/getDoctorId/${token}`);
+    return this.http.get(environment.doctorapiBaseUrl+`/getDoctorId/${token}`,this.noAuthHeader);
   }
-  postNewPassword(passRes:passwordReset){
-    return this.http.post(environment.apiBaseUrl+'/doctor-updateNewPassword',passRes);
+  postNewPassword(passRes:doctorPasswordresetModel){
+    return this.http.post(environment.doctorapiBaseUrl+'/doctor-updateNewPassword',passRes,this.noAuthHeader);
   }
 
 
@@ -63,5 +65,9 @@ export class DoctorService {
     if(doctorPayload){
       return doctorPayload.exp >Date.now()/1000;
     }else return false;
+  }
+
+  deleteToken(){
+    localStorage.removeItem('doctorToken');
   }
 }

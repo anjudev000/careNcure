@@ -16,6 +16,8 @@ import { DoctorForgetPasswordComponent } from './components/doctor/doctor-forget
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 import { UserResetPasswordComponent } from './components/user/user-reset-password/user-reset-password.component';
 import { DoctorHomeComponent } from './components/doctor/doctor-home/doctor-home.component';
+import { doctorAuthGuard } from './auth/doctor-auth.guard';
+import { DoctorResetPasswordComponent } from './components/doctor/doctor-reset-password/doctor-reset-password.component';
 
 const routes: Routes = [
   {
@@ -44,7 +46,7 @@ const routes: Routes = [
     path:'user-home',component:UserHomeComponent , canActivate:[userAuthServiceGuard]
   },
   {
-    path:'doctor-home',component:DoctorHomeComponent
+    path:'doctor-home',component:DoctorHomeComponent, canActivate:[doctorAuthGuard]
   },
   {
     path:'user-forget-password',component: UserForgetPassComponent
@@ -54,6 +56,9 @@ const routes: Routes = [
   },
   {
     path:'user-reset-password',component:UserResetPasswordComponent
+  },
+  {
+    path:'doctor-reset-password',component:DoctorResetPasswordComponent
   },
 
   {

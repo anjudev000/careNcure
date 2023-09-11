@@ -11,7 +11,7 @@
         <mat-label>Enter your OTP</mat-label>
         <input matInput type="text" placeholder="OTP" formControlName="otp">
       </mat-form-field>
-      <button mat-raised-button style="background-color:rgb(19,190,240);" type="submit">Verify</button>
+      <button mat-raised-button style="background-color:rgb(19,190,240);" type="submit" [disabled]="otpForm.invalid">Verify</button>
     </form>
   </div>
  

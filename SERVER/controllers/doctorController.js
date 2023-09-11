@@ -5,7 +5,7 @@ const Otp = require('../models/otpModel');
 const passport = require('passport');
 const _ = require('lodash');
 const random = require('randomstring');
-const {sendLinkToMail} = require('../utils/sendLink');
+const {sendLinkToDoctorMail} = require('../utils/sendLink');
 
 
 
@@ -114,7 +114,7 @@ const forgotSendLink = async(req,res,next)=>{
     if(doctor){
       let randomString = random.generate();
       const updatedData = await Doctor.updateOne({email:email},{$set:{token: randomString}});
-      sendLinkToMail(doctor.email,doctor.fullName,randomString);
+      sendLinkToDoctorMail(doctor.email,doctor.fullName,randomString);
       res.status(200).json({ message: 'Link is send to your mail to reset password' });
     }else {
       res.status(400).json({ message: 'Invalid Email' });
