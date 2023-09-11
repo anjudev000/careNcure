@@ -1,0 +1,42 @@
+
+<div class="container">
+ 
+  <div class="right">
+    <mat-card class="login-card">
+      <mat-card-header class="header">
+        <mat-card-title style="color: rgb(19, 19, 104);">Admin Login</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <form class="login-form" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+         
+          <mat-form-field appearance="outline">
+            <mat-label>Email</mat-label>
+            <input matInput placeholder="Enter your email" required
+            formControlName="email">
+            <mat-error *ngIf="loginForm.get('email')?.invalid && (loginForm.get('email')?.dirty || loginForm.get('email')?.touched)">
+              <ng-container *ngIf="loginForm.get('email')?.errors?.['required']">Email Required</ng-container>
+              <ng-container *ngIf="loginForm.get('email')?.errors?.['email']">Invalid email address</ng-container>
+
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Password</mat-label>
+            <input matInput type="password" placeholder="Password" required formControlName="password">
+            <mat-error *ngIf="loginForm.get('password')?.invalid && (loginForm.get('password')?.dirty || loginForm.get('password')?.touched)">
+              <ng-container *ngIf="loginForm.get('password')?.errors?.['required']">Password required</ng-container>
+            </mat-error>         
+           </mat-form-field>
+      
+          <button mat-raised-button style="background-color:rgb(19,190,240);" type="submit">Login</button>
+         
+        </form>
+      </mat-card-content>
+    </mat-card>
+
+     <!-- error messages -->
+     <div *ngIf="error" class="custom-error-message">
+      {{error}}
+    </div>
+    
+  </div>
+</div>

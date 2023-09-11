@@ -29,6 +29,8 @@ import { DoctorForgetPasswordComponent } from './components/doctor/doctor-forget
 import { DoctorResetPasswordComponent } from './components/doctor/doctor-reset-password/doctor-reset-password.component';
 import { UserResetPasswordComponent } from './components/user/user-reset-password/user-reset-password.component';
 import { DoctorHomeComponent } from './components/doctor/doctor-home/doctor-home.component';
+import { AdminDashboardComponent } from './components/admin/admin-dashboard/admin-dashboard.component';
+import { AdminLoginComponent } from './components/admin/admin-dashboard/admin-login/admin-login.component';
 
 
 //angualar material
@@ -50,13 +52,14 @@ import { environment } from 'src/environment/environment';
 //service
 import { UserService } from './shared/user.service';
 import { DoctorService } from './shared/doctor.service';
+import { AdminService } from './shared/admin.service';
 
 
 //auth service
 import { userAuthServiceGuard } from './auth/user-auth-service.guard';
 import { doctorAuthGuard } from './auth/doctor-auth.guard';
 import { AuthInterceptor } from './auth/auth.interceptor';
-import { AdminDashboardComponent } from './components/admin/admin-dashboard/admin-dashboard.component';
+import { adminGuard } from './auth/admin.guard';
 
 @NgModule({
   declarations: [
@@ -80,7 +83,8 @@ import { AdminDashboardComponent } from './components/admin/admin-dashboard/admi
     DoctorResetPasswordComponent,
     UserResetPasswordComponent,
     DoctorHomeComponent,
-    AdminDashboardComponent
+    AdminDashboardComponent,
+    AdminLoginComponent
   ],
   imports: [
     BrowserModule,
@@ -107,7 +111,7 @@ import { AdminDashboardComponent } from './components/admin/admin-dashboard/admi
     useClass: AuthInterceptor,
     multi: true
   },
-  UserService,userAuthServiceGuard,DoctorService,doctorAuthGuard],
+  UserService,userAuthServiceGuard,DoctorService,doctorAuthGuard,AdminService,adminGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

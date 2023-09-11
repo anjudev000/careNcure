@@ -18,6 +18,9 @@ import { UserResetPasswordComponent } from './components/user/user-reset-passwor
 import { DoctorHomeComponent } from './components/doctor/doctor-home/doctor-home.component';
 import { doctorAuthGuard } from './auth/doctor-auth.guard';
 import { DoctorResetPasswordComponent } from './components/doctor/doctor-reset-password/doctor-reset-password.component';
+import { AdminLoginComponent } from './components/admin/admin-dashboard/admin-login/admin-login.component';
+import { AdminDashboardComponent } from './components/admin/admin-dashboard/admin-dashboard.component';
+import { adminGuard } from './auth/admin.guard';
 
 const routes: Routes = [
   {
@@ -59,6 +62,12 @@ const routes: Routes = [
   },
   {
     path:'doctor-reset-password',component:DoctorResetPasswordComponent
+  },
+  {
+    path:'admin-login',component:AdminLoginComponent
+  },
+  {
+    path:'admin-dashboard',component:AdminDashboardComponent,canActivate:[adminGuard]
   },
 
   {
