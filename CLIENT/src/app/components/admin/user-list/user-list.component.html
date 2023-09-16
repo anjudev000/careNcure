@@ -1,0 +1,7 @@
+
+<app-data-table 
+ [displayedColumns]="userColumns"   
+ [dataSource]="dataSource"
+ (blockUser)="handleblock($event.userId,$event.isblock)"
+  >
+</app-data-table>

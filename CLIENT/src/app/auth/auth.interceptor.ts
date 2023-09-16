@@ -19,7 +19,7 @@ export class AuthInterceptor implements HttpInterceptor{
 
       if(req.url.includes('/admin/')){
         authToken = localStorage.getItem('adminToken');}
-      if(req.url.includes('/user/')){
+      else if(req.url.includes('/user/')){
         authToken = localStorage.getItem('userToken');
       }else if(req.url.includes('/doctor/')){
         authToken = localStorage.getItem('doctorToken');

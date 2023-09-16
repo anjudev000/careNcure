@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import {FormsModule} from '@angular/forms';
-import { HttpClientModule,HTTP_INTERCEPTORS } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -29,8 +29,7 @@ import { DoctorForgetPasswordComponent } from './components/doctor/doctor-forget
 import { DoctorResetPasswordComponent } from './components/doctor/doctor-reset-password/doctor-reset-password.component';
 import { UserResetPasswordComponent } from './components/user/user-reset-password/user-reset-password.component';
 import { DoctorHomeComponent } from './components/doctor/doctor-home/doctor-home.component';
-import { AdminDashboardComponent } from './components/admin/admin-dashboard/admin-dashboard.component';
-import { AdminLoginComponent } from './components/admin/admin-dashboard/admin-login/admin-login.component';
+import { AdminLoginComponent } from './components/admin/admin-login/admin-login.component';
 
 
 //angualar material
@@ -39,13 +38,16 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
-import {MatGridListModule} from '@angular/material/grid-list';
-import {MatSelectModule} from '@angular/material/select';
-import {MatInputModule} from '@angular/material/input';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import {MatCardModule} from '@angular/material/card';
-import {MatSnackBarModule} from '@angular/material/snack-bar';
-import {MatMenuModule} from '@angular/material/menu';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatSelectModule } from '@angular/material/select';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatCardModule } from '@angular/material/card';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatTableModule } from '@angular/material/table';
+import { MatSortModule } from '@angular/material/sort';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 //environment
 import { environment } from 'src/environment/environment';
@@ -60,6 +62,10 @@ import { userAuthServiceGuard } from './auth/user-auth-service.guard';
 import { doctorAuthGuard } from './auth/doctor-auth.guard';
 import { AuthInterceptor } from './auth/auth.interceptor';
 import { adminGuard } from './auth/admin.guard';
+import { AdminDashComponent } from './components/admin/admin-dash/admin-dash.component';
+import { DataTableComponent } from './data-table/data-table.component';
+import { UserListComponent } from './components/admin/user-list/user-list.component';
+import { DocListComponent } from './components/admin/doc-list/doc-list.component';
 
 @NgModule({
   declarations: [
@@ -83,8 +89,11 @@ import { adminGuard } from './auth/admin.guard';
     DoctorResetPasswordComponent,
     UserResetPasswordComponent,
     DoctorHomeComponent,
-    AdminDashboardComponent,
-    AdminLoginComponent
+    AdminLoginComponent,
+    AdminDashComponent,
+    DataTableComponent,
+    UserListComponent,
+    DocListComponent
   ],
   imports: [
     BrowserModule,
@@ -104,14 +113,18 @@ import { adminGuard } from './auth/admin.guard';
     MatFormFieldModule,
     MatCardModule,
     MatSnackBarModule,
-    MatMenuModule
+    MatMenuModule,
+    MatTableModule,
+    MatSortModule,
+    MatPaginatorModule
+
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,
     useClass: AuthInterceptor,
     multi: true
   },
-  UserService,userAuthServiceGuard,DoctorService,doctorAuthGuard,AdminService,adminGuard],
+    UserService, userAuthServiceGuard, DoctorService, doctorAuthGuard, AdminService, adminGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -17,7 +17,18 @@ export class AdminService {
   getAdminProfile(){
     return this.http.get(environment.adminapiBaseUrl+'/getAdminProfile');
   }
-
+  getAllUsers(){
+    return this.http.get(environment.adminapiBaseUrl+'/getUserList');
+  }
+  getAllDoctors(){
+    return this.http.get(environment.adminapiBaseUrl+'/getDoctorList');
+  }
+  postUserBlockUnblock(userId:string){
+    return this.http.post(environment.adminapiBaseUrl+`/User-block-Unblock/${userId}`,{});
+  }
+  postDoctorBlockUnblock(doctorId:string){
+    return this.http.post(environment.adminapiBaseUrl+`/Doctor-block-Unblock/${doctorId}`,{});
+  }
   //helper methods
   setToken(token:string){
     localStorage.setItem('adminToken',token);

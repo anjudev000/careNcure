@@ -5,6 +5,7 @@ import { map, shareReplay } from 'rxjs/operators';
 import { UserService } from 'src/app/shared/user.service';
 import { DoctorService } from 'src/app/shared/doctor.service';
 import { Router } from '@angular/router';
+import { AdminService } from 'src/app/shared/admin.service';
 
 interface NameRes{
   Name:string;
@@ -18,12 +19,15 @@ interface NameRes{
 export class MainNavComponent {
   constructor(private userService:UserService,
     private route:Router,
-    private doctorService:DoctorService
+    private doctorService:DoctorService,
+    private adminService:AdminService
     ){}
   userName!:string;
   doctorName!:string;
+  adminName!:string;
   isDoctorLoggedIn!:boolean;
   isUserLoggedin!:boolean;
+  isAdminLoggedin!:boolean;
   private breakpointObserver = inject(BreakpointObserver);
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
@@ -67,6 +71,9 @@ export class MainNavComponent {
                 }
               )
             }
+          }else if(localStorage.getItem('adminToken')){
+            this.isAdminLoggedin = true;
+            this.adminName = 'ADMIN'
           }
           else{
             console.log("not logged in");
@@ -85,5 +92,11 @@ export class MainNavComponent {
       this.doctorName='';
       this.isDoctorLoggedIn = false;
       this.route.navigateByUrl('/doctor-login');
+    }
+    adminlogout(){
+      this.adminService.deleteToken();
+      this.adminName = '';
+      this.isAdminLoggedin = false;
+      this.route.navigateByUrl('/admin-login');
     }
 }

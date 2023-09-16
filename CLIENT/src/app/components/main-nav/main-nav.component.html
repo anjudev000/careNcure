@@ -28,11 +28,15 @@
           </div>
         </div>
         <ng-container *ngIf="!(isHandset$ | async)">
-          <a *ngIf="(isUserLoggedin || !isDoctorLoggedIn)" href="#" class="desktop-link">Find Doctors</a>
-          <a *ngIf="(isUserLoggedin || !isDoctorLoggedIn)" href="#" class="desktop-link">Video Consult</a>
+          <a *ngIf="(isUserLoggedin || !isDoctorLoggedIn || isAdminLoggedin)" href="#" class="desktop-link">Find Doctors</a>
+          <a *ngIf="(isUserLoggedin || !isDoctorLoggedIn || !isAdminLoggedin )" href="#" class="desktop-link">Video Consult</a>
           <a *ngIf="isDoctorLoggedIn" href="#" class="desktop-link">My Appointments</a>
           <a *ngIf="isDoctorLoggedIn" href="#" class="desktop-link">Schedule Slots</a>
           <a *ngIf="isDoctorLoggedIn" href="#" class="desktop-link">View Prescriptions</a>
+          <a *ngIf="isAdminLoggedin" routerLink="/userList" class="desktop-link"> View Users</a>
+          <a *ngIf="isAdminLoggedin" routerLink="/docList" class="desktop-link">View Doctors</a>
+
+
 
 
           <span class="spacer"></span>
@@ -70,7 +74,24 @@
               
               </div>
             </ng-container>
-            <button *ngIf="!(userName || doctorName) " mat-raised-button class="desktop-button" routerLink="/user-signup">Login/Register</button>
+            <ng-container  *ngIf="adminName">
+              <div>
+                <button mat-button color="primary" [matMenuTriggerFor]="menu">{{adminName}}</button>
+                <mat-menu #menu="matMenu">
+                  <button mat-menu-item>
+                    <mat-icon>account_circle</mat-icon>
+                    <span>Profile</span>
+                  </button>
+                  <button mat-menu-item (click)="adminlogout()">
+                    <mat-icon>power_settings_new</mat-icon>
+                    <span>Logout</span>
+                  </button>
+                 
+                </mat-menu>
+                
+                </div>
+              </ng-container>
+            <button *ngIf="!(userName || doctorName || adminName) " mat-raised-button class="desktop-button" routerLink="/user-signup">Login/Register</button>
   
          
         </ng-container>

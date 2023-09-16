@@ -33,6 +33,16 @@ const adminProfile = async (req, res, next) => {
     next(error);
   }
 }
+// const getName = async(req,res,next)=>{
+//   try{
+//     const adminId = req.params.adminId;
+//     const adminName = await Admin.findById(adminId);
+//     res.status(200).json({Name:adminName})
+//   }
+//   catch(error){
+//     next(error);
+//   }
+// }
 
 const getUserList = async(req,res,next)=>{
   try{
@@ -56,24 +66,27 @@ const getDoctors = async(req,res,next)=>{
   }
 }
 
-const blockUnblockUser = async(req,res,next)=>{
-  try{
+const blockUnblockUser = async (req, res, next) => {
+  try {
+    const { userId } = req.params;
+    console.log(userId, 456);
     
-    const {userId} = req.params;
-    console.log(userId,456);
     const user = await User.findById(userId);
-    if(user.isblock){
-      user.isblock = false;
-    }else{
-      user.isblock = true;
+    
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
     }
+    
+    user.isblock = !user.isblock; // Toggle isblock status
+    
     const updatedUser = await user.save();
-    return res.status(200).json({updatedUser});
-  }
-  catch(error){
+    
+    return res.status(200).json(updatedUser);
+  } catch (error) {
     next(error);
   }
 }
+
 
 const blockUnblockDoctor = async(req,res,next)=>{
   try{

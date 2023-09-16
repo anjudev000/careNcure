@@ -18,60 +18,67 @@ import { UserResetPasswordComponent } from './components/user/user-reset-passwor
 import { DoctorHomeComponent } from './components/doctor/doctor-home/doctor-home.component';
 import { doctorAuthGuard } from './auth/doctor-auth.guard';
 import { DoctorResetPasswordComponent } from './components/doctor/doctor-reset-password/doctor-reset-password.component';
-import { AdminLoginComponent } from './components/admin/admin-dashboard/admin-login/admin-login.component';
-import { AdminDashboardComponent } from './components/admin/admin-dashboard/admin-dashboard.component';
+import { AdminLoginComponent } from './components/admin/admin-login/admin-login.component';
 import { adminGuard } from './auth/admin.guard';
+import { AdminDashComponent } from './components/admin/admin-dash/admin-dash.component';
+import { UserListComponent } from './components/admin/user-list/user-list.component';
+import { DocListComponent } from './components/admin/doc-list/doc-list.component';
 
 const routes: Routes = [
   {
-    path:'home',component:HomeComponent
+    path: 'home', component: HomeComponent
   },
   {
-    path:'user-signup',component:UserRegistrationComponent
+    path: 'user-signup', component: UserRegistrationComponent
   },
   {
-    path:'doctor-signup',component:DoctorRegistrationComponent
+    path: 'doctor-signup', component: DoctorRegistrationComponent
   },
   {
-    path:'user-otp-verify',component:UserOtpVerifyComponent
+    path: 'user-otp-verify', component: UserOtpVerifyComponent
   },
   {
-    path:'doctor-otp-verify',component:DoctorOtpVerifyComponent
-  },
-
-  {
-    path:'user-login',component:UserLoginComponent
-  },
-  {
-    path:'doctor-login',component:DoctorLoginComponent
-  },
-  {
-    path:'user-home',component:UserHomeComponent , canActivate:[userAuthServiceGuard]
-  },
-  {
-    path:'doctor-home',component:DoctorHomeComponent, canActivate:[doctorAuthGuard]
-  },
-  {
-    path:'user-forget-password',component: UserForgetPassComponent
-  },
-  {
-    path:'doctor-forget-password',component: DoctorForgetPasswordComponent
-  },
-  {
-    path:'user-reset-password',component:UserResetPasswordComponent
-  },
-  {
-    path:'doctor-reset-password',component:DoctorResetPasswordComponent
-  },
-  {
-    path:'admin-login',component:AdminLoginComponent
-  },
-  {
-    path:'admin-dashboard',component:AdminDashboardComponent,canActivate:[adminGuard]
+    path: 'doctor-otp-verify', component: DoctorOtpVerifyComponent
   },
 
   {
-    path:'',redirectTo:'home',pathMatch:'full'
+    path: 'user-login', component: UserLoginComponent
+  },
+  {
+    path: 'doctor-login', component: DoctorLoginComponent
+  },
+  {
+    path: 'user-home', component: UserHomeComponent, canActivate: [userAuthServiceGuard]
+  },
+  {
+    path: 'doctor-home', component: DoctorHomeComponent, canActivate: [doctorAuthGuard]
+  },
+  {
+    path: 'user-forget-password', component: UserForgetPassComponent
+  },
+  {
+    path: 'doctor-forget-password', component: DoctorForgetPasswordComponent
+  },
+  {
+    path: 'user-reset-password', component: UserResetPasswordComponent
+  },
+  {
+    path: 'doctor-reset-password', component: DoctorResetPasswordComponent
+  },
+  {
+    path: 'admin-login', component: AdminLoginComponent
+  },
+  {
+    path: 'admin-dashboard', component: AdminDashComponent, canActivate: [adminGuard]
+  },
+  {
+    path:'userList',component:UserListComponent,canActivate:[adminGuard]
+  },
+  {
+    path:'docList',component:DocListComponent,canActivate:[adminGuard]
+  },
+  {
+    path: '', redirectTo: 'home', pathMatch: 'full'
   }
 ];
 
