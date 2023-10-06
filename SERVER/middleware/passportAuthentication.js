@@ -32,7 +32,7 @@ passport.use('user',
       if (!user.isVerified) {
         console.log(username, 18);
         const otp = await sendOtpToMail(username);
-        console.log('line 34', otp);
+        console.log('line 34444444444', otp);
         //Save otp to the otp schema
         const newOTP = new Otp({
           userId: user._id,
