@@ -12,22 +12,22 @@ export class AdminService {
   constructor(private http:HttpClient) { }
 
   postLogin(authcredentials:loginModel){
-    return this.http.post(environment.adminapiBaseUrl+'/authenticate-admin',authcredentials,this.noAuthHeader);
+    return this.http.post(environment.adminApiBaseUrl+'/authenticate-admin',authcredentials,this.noAuthHeader);
   }
   getAdminProfile(){
-    return this.http.get(environment.adminapiBaseUrl+'/getAdminProfile');
+    return this.http.get(environment.adminApiBaseUrl+'/getAdminProfile');
   }
   getAllUsers(){
-    return this.http.get(environment.adminapiBaseUrl+'/getUserList');
+    return this.http.get(environment.adminApiBaseUrl+'/getUserList');
   }
   getAllDoctors(){
-    return this.http.get(environment.adminapiBaseUrl+'/getDoctorList');
+    return this.http.get(environment.adminApiBaseUrl+'/getDoctorList');
   }
   postUserBlockUnblock(userId:string){
-    return this.http.post(environment.adminapiBaseUrl+`/User-block-Unblock/${userId}`,{});
+    return this.http.post(environment.adminApiBaseUrl+`/User-block-Unblock/${userId}`,{});
   }
   postDoctorBlockUnblock(doctorId:string){
-    return this.http.post(environment.adminapiBaseUrl+`/Doctor-block-Unblock/${doctorId}`,{});
+    return this.http.post(environment.adminApiBaseUrl+`/Doctor-block-Unblock/${doctorId}`,{});
   }
   //helper methods
   setToken(token:string){

@@ -2,6 +2,9 @@ import { Component } from '@angular/core';
 import { AdminService } from 'src/app/shared/admin.service';
 import { UserData } from 'src/app/data-table/data-table.component';
 import {MatTableDataSource} from '@angular/material/table';
+import Swal from 'sweetalert2';
+import { MatSnackBar } from '@angular/material/snack-bar';
+
 
 interface ApiResponse {
   users: UserData[]; // Assuming 'users' is the property containing an array of UserData
@@ -16,10 +19,12 @@ export class UserListComponent {
   userColumns: string[] = ['fullName', 'mobile_num', 'email','Action'];
   dataSource!:MatTableDataSource<UserData>
   block:boolean=true;
-  constructor(private adminService:AdminService){}
+  constructor(private adminService:AdminService,
+    private _snackBar:MatSnackBar
+    ){}
 
   ngOnInit(){
-    this.getAllUser()
+    this.getAllUser();
   }
 
 
@@ -41,17 +46,70 @@ getAllUser() {
   });
 }
 
-handleblock(userId:string, isblocked:boolean){
-  const apimethod = isblocked?this.adminService.postUserBlockUnblock(userId):this.adminService.postUserBlockUnblock(userId);
-  apimethod.subscribe({
-    next:(res)=>{
-      console.log("user blocked");
-    },
-    error:(err)=>{
-      console.log("error is :",err);
+// handleblock(userId:string, isblocked:boolean){
+ 
+
+//   const confirmationMessage = isblocked ? 'Do you want to unblock this user?' : 'Do you want to block this user?';
+
+//   // Show a Swal confirmation alert
+//   Swal.fire({
+//     title: 'Confirmation',
+//     text: confirmationMessage,
+//     icon: 'warning',
+//     showCancelButton: true,
+//     confirmButtonText: 'Yes',
+//     cancelButtonText: 'No',
+//   }).then((result) => {
+//     if (result.isConfirmed) {
+//       // User confirmed, proceed with the block/unblock action
+//       const apimethod = isblocked ? this.adminService.postUserBlockUnblock(userId) : this.adminService.postUserBlockUnblock(userId);
+//       apimethod.subscribe({
+//         next: (res) => {
+//           console.log(isblocked ? 'User unblocked' : 'User blocked');
+//         },
+//         error: (err) => {
+//           console.error('Error:', err);
+//         },
+//       });
+//     }
+//   });
+// }
+
+handleblock(userId: string, isblocked: boolean) {
+  const confirmationMessage = isblocked ? 'Do you want to unblock this user?' : 'Do you want to block this user?';
+
+  // Show a Swal confirmation alert
+  Swal.fire({
+    title: 'Confirmation',
+    text: confirmationMessage,
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonText: 'Yes',
+    cancelButtonText: 'No',
+  }).then((result) => {
+    if (result.isConfirmed) {
+      // User confirmed, proceed with the block/unblock action
+      const apimethod = isblocked ? this.adminService.postUserBlockUnblock(userId) : this.adminService.postUserBlockUnblock(userId);
+      apimethod.subscribe({
+        next: (res) => {
+          // Update the button text after successful API call
+          const updatedRow = this.dataSource.data.find((row) => row._id === userId);
+          if (updatedRow) {
+            updatedRow.isblock = !isblocked;
+          }
+          console.log(isblocked ? 'User unblocked' : 'User blocked');
+           // Show a snack bar message
+           this._snackBar.open(isblocked ? 'User Unblocked' : 'User Blocked', 'Close', { duration: 3000 });
+        
+        },
+        error: (err) => {
+          console.error('Error:', err);
+        },
+      });
     }
-  })
+  });
 }
+
 
 
 }
