@@ -44,7 +44,7 @@
           <div>
             <button mat-button color="primary" [matMenuTriggerFor]="menu">{{userName}}</button>
             <mat-menu #menu="matMenu">
-              <button mat-menu-item>
+              <button mat-menu-item routerLink="user-profile">
                 <mat-icon>account_circle</mat-icon>
                 <span>Profile</span>
               </button>
@@ -61,7 +61,7 @@
             <div>
               <button mat-button color="primary" [matMenuTriggerFor]="menu">DR.{{doctorName}}</button>
               <mat-menu #menu="matMenu">
-                <button mat-menu-item>
+                <button mat-menu-item routerLink="doctor-profile">
                   <mat-icon>account_circle</mat-icon>
                   <span>Profile</span>
                 </button>

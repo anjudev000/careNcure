@@ -28,10 +28,10 @@ ngOnInit(){
 
   handleLoginSubmit(formData:loginModel){
     this.errorMessages='';
-    console.log("user component:",formData);
+  
     this.userService.postLogin(formData).subscribe(
       res =>{
-        console.log("login successfull. response : ",res);
+      
        this.userService.setToken((res as LoginResponse).userToken);
        
         this.router.navigateByUrl('/user-home');
@@ -39,11 +39,12 @@ ngOnInit(){
       err=>{
         this.errorMessages = err.error.message;
         console.log("errorr",this.errorMessages);
-        if(err.error.notVerified)
+        if(err.error.notVerified){
         this.errorMessages='User Not Verified! Please Verify to continue. Otp is send to your mail';
         setTimeout(()=>{
           this.router.navigate(['/user-otp-verify'],{state:{email:formData.email}});
         },6000)
+      }
       }
     )
   }

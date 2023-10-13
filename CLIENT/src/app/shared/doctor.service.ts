@@ -38,6 +38,12 @@ export class DoctorService {
   postNewPassword(passRes:doctorPasswordresetModel){
     return this.http.post(environment.doctorapiBaseUrl+'/doctor-updateNewPassword',passRes,this.noAuthHeader);
   }
+  getDoctorDetails(doctorId:string){
+    return this.http.get(environment.doctorapiBaseUrl+`/doctor-Profile-Details/${doctorId}`);
+  }
+  updateDoctorProfile(doctorId:string,updatedData:any){
+    return this.http.put(environment.doctorapiBaseUrl+`/update-doc-profile/${doctorId}`,updatedData);
+  }
 
 
   //helper methods

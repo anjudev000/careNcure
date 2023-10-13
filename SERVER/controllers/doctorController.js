@@ -6,6 +6,7 @@ const passport = require('passport');
 const _ = require('lodash');
 const random = require('randomstring');
 const {sendLinkToDoctorMail} = require('../utils/sendLink');
+const cloudinary = require('cloudinary').v2;
 
 
 
@@ -156,6 +157,47 @@ const getIdFromToken = async(req,res,next)=>{
   }
 }
 
+const profileDetails = async(req,res,next)=>{
+  try{
+    const doctor = await Doctor.findById({_id:req.params.doctorId})
+    if(doctor){
+      res.status(200).json({doctorData:doctor});
+    }else{
+      console.log('Something went wrong');
+    }
+  }
+  catch(error){
+    next(error)
+  }
+}
+
+const updateprofile = async(req,res,next)=>{
+  try{
+      const doctorId = req.params.doctorId;
+      const updateFields = req.body;
+      console.log(17888,updateFields);
+      if(req.file){
+        const result = await cloudinary.uploader.upload(req.file.path,{
+          folder: 'careNcure_doctor_uploads',
+          resource_type: 'auto',
+          allowed_formats: ['jpg', 'png'],
+           transformation: [{  width: "auto",
+           crop: "scale" }]
+        }); 
+        updateFields.profilePic = result.secure_url
+       }
+       const updateData = await Doctor.findByIdAndUpdate(doctorId,updateFields,{new:true});
+       if(!updateData){
+        return res.status(404).json({message:'Doctor Not Found'});
+       }
+       return res.status(200).json({updateData});
+  }
+  catch(error){
+    console.log(19555,error.message);
+    next(error);
+  }
+}
+
 module.exports = {
   register,
   otpVerify,
@@ -164,5 +206,7 @@ module.exports = {
   getDoctorName,
   forgotSendLink,
   updatePassword,
-  getIdFromToken
+  getIdFromToken,
+  profileDetails,
+  updateprofile
 }

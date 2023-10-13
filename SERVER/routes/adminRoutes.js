@@ -11,5 +11,7 @@ adminRoute.get('/getUserList',jwtHelper.verifyJwtToken,adminController.getUserLi
 adminRoute.get('/getDoctorList',jwtHelper.verifyJwtToken,adminController.getDoctors);
 adminRoute.post('/User-block-Unblock/:userId',jwtHelper.verifyJwtToken,adminController.blockUnblockUser);
 adminRoute.post('/Doctor-block-Unblock/:doctorId',jwtHelper.verifyJwtToken,adminController.blockUnblockDoctor);
+adminRoute.post('/doctor-approval/:doctorId',jwtHelper.verifyJwtToken,adminController.approveDoctor);
+adminRoute.post('/doctor-rejection/:doctorId',adminController.rejectDoctor);
 
 module.exports = adminRoute;

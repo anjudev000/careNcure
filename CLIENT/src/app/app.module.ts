@@ -30,6 +30,15 @@ import { DoctorResetPasswordComponent } from './components/doctor/doctor-reset-p
 import { UserResetPasswordComponent } from './components/user/user-reset-password/user-reset-password.component';
 import { DoctorHomeComponent } from './components/doctor/doctor-home/doctor-home.component';
 import { AdminLoginComponent } from './components/admin/admin-login/admin-login.component';
+import { AdminDashComponent } from './components/admin/admin-dash/admin-dash.component';
+import { DataTableComponent } from './data-table/data-table.component';
+import { UserListComponent } from './components/admin/user-list/user-list.component';
+import { DocListComponent } from './components/admin/doc-list/doc-list.component';
+import { UserProfileComponent } from './components/user/user-profile/user-profile.component';
+import { ProfileEditComponent } from './components/user/profile-edit/profile-edit.component';
+import { DocProfileComponent } from './components/doctor/doc-profile/doc-profile.component';
+import { DocProfileEditComponent } from './components/doctor/doc-profile/doc-profile-edit/doc-profile-edit.component';
+
 
 
 //angualar material
@@ -48,7 +57,11 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
 import { MatPaginatorModule } from '@angular/material/paginator';
-
+import {MatDialogModule} from '@angular/material/dialog';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import {MatRadioModule} from '@angular/material/radio';
+// import { MatFileUploadModule } from 'angular-material-fileupload';
 //environment
 import { environment } from 'src/environment/environment';
 //service
@@ -62,11 +75,6 @@ import { userAuthServiceGuard } from './auth/user-auth-service.guard';
 import { doctorAuthGuard } from './auth/doctor-auth.guard';
 import { AuthInterceptor } from './auth/auth.interceptor';
 import { adminGuard } from './auth/admin.guard';
-import { AdminDashComponent } from './components/admin/admin-dash/admin-dash.component';
-import { DataTableComponent } from './data-table/data-table.component';
-import { UserListComponent } from './components/admin/user-list/user-list.component';
-import { DocListComponent } from './components/admin/doc-list/doc-list.component';
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -93,7 +101,11 @@ import { DocListComponent } from './components/admin/doc-list/doc-list.component
     AdminDashComponent,
     DataTableComponent,
     UserListComponent,
-    DocListComponent
+    DocListComponent,
+    UserProfileComponent,
+    ProfileEditComponent,
+    DocProfileComponent,
+    DocProfileEditComponent,
   ],
   imports: [
     BrowserModule,
@@ -116,7 +128,13 @@ import { DocListComponent } from './components/admin/doc-list/doc-list.component
     MatMenuModule,
     MatTableModule,
     MatSortModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatDialogModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatRadioModule,
+    // MatFileUploadModule
+    
 
   ],
   providers: [{

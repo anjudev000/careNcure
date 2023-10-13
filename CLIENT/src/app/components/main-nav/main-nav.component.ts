@@ -39,17 +39,17 @@ export class MainNavComponent {
     ngOnInit(){
       this.route.events.subscribe(
         (val:any)=>{
-          console.log(val.url);
+        
           if(localStorage.getItem('userToken')){
             this.isUserLoggedin = true;
-            console.log("user is logged in");
+          
             const userId = this.userService.getUserId();
             if(userId){
-              console.log('line 844',userId);
+        
               this.userService.getUserName(userId).subscribe(
                 (res)=>{
                   this.userName = ((res as NameRes).Name)
-                  console.log('line 944',this.userName);
+                
                 },
                 (err)=>{
                   console.log(err.error.message);

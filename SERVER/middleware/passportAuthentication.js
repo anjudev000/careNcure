@@ -55,17 +55,17 @@ passport.use('doctor',
       console.log("doctor is", doctor);
 
       if (!doctor) {
-        return done(null, false, { message: 'Email is not registered' });
+        return done(null, false, { message: 'Email is not registered',notVerified:false });
       }
 
       if (doctor.isBlocked) {
-        return done(null, false, { message: 'Doctor is blocked' });
+        return done(null, false, { message: 'Doctor is blocked',notVerified:false });
       }
 
       const passwordMatch = await bcrypt.compare(password, doctor.password);
 
       if (!passwordMatch) {
-        return done(null, false, { message: 'Wrong Password' });
+        return done(null, false, { message: 'Wrong Password',notVerified:false });
       }
 
       if (!doctor.isVerified) {

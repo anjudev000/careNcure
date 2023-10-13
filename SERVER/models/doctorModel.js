@@ -24,6 +24,13 @@ const doctorSchema = new mongoose.Schema(
       required:true,
       minlength:[6,'Password must be atleast 6 characters long']
     },
+    profilePic: {
+      type: String,
+      default:'https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava1-bg.webp'
+  },
+  RegnNumber:{
+    type:String
+  },
     education:[
       {
         degree:{
@@ -48,9 +55,6 @@ const doctorSchema = new mongoose.Schema(
     description:{
       type:String
     },
-    services:[{
-      type:String
-    }],
     specialization:{
       type:String
     },
@@ -58,10 +62,16 @@ const doctorSchema = new mongoose.Schema(
       type:Number
     },
     isBlocked:{
-      type:Boolean
+      type:Boolean,
+      default:false
     },
     isVerified:{
-      type:Boolean
+      type:Boolean,
+      default:false
+    },
+    isApproved:{
+      type:Boolean,
+      default:false
     },
     otp:{
       type:mongoose.Schema.Types.ObjectId,

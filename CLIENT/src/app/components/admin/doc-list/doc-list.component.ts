@@ -3,6 +3,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
 import { DoctorData } from 'src/app/data-table/data-table.component';
 import { AdminService } from 'src/app/shared/admin.service';
+import Swal from 'sweetalert2';
 
 interface ApiResponse{
   doctors:DoctorData[];
@@ -40,5 +41,35 @@ export class DocListComponent {
 
         }
       });
+    }
+
+    handleblock(doctorId:string,isblocked:boolean){
+      const confirmationMessage = isblocked ? 'Do you want to unblock this user?' : 'Do you want to block this user?';
+      Swal.fire({
+        title:'Confirmation',
+        text:confirmationMessage,
+        icon:'warning',
+        showCancelButton:true,
+        confirmButtonText:'Yes',
+        cancelButtonText:'No'
+      }).then((result)=>{
+        if(result.isConfirmed){
+          const apimethod = isblocked? this.adminService.postDoctorBlockUnblock(doctorId):this.adminService.postDoctorBlockUnblock(doctorId);
+          apimethod.subscribe({
+            next:(res)=>{
+              const updatedRow = this.dataSource.data.find((row)=>row._id === doctorId);
+              if(updatedRow){
+                updatedRow.isblock=!isblocked;
+              }
+              this._snackBar.open(isblocked ? 'Doctor Unblocked' : 'Doctor Blocked', 'Close', { duration: 3000 });
+
+            },
+            error:(err)=>{
+              console.log('error in blocking:',err);
+              
+            }
+          })
+        }
+      })
     }
 }

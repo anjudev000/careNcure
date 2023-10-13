@@ -6,6 +6,8 @@ const passport = require('passport');
 const _ = require('lodash');
 const random = require('randomstring');
 const {securePassword} = require('../utils/passwordHashing');
+const cloudinary = require('cloudinary').v2;
+
 
 
 
@@ -171,6 +173,52 @@ const getUserIdfromToken = async (req, res, next) => {
   }
 }
 
+const profileDetails = async(req,res,next)=>{
+  try{
+    const user = await User.findById({_id:req.params.userId})
+    if(user){
+      res.status(200).json({userData:user});
+    }else{
+      console.log('Something went wrong!');
+    }
+  }
+  catch(error){
+    next(error);
+  }
+}
+
+const updateProfile = async(req,res,next)=>{
+  try{
+    
+    const userId= req.params.userId;
+    const updateFields = req.body;
+    console.log(195,updateFields);
+  if(req.file){
+    //upload the file to cloudinary
+  
+    const result = await cloudinary.uploader.upload(req.file.path,{
+      folder: 'careNcure_Uploads',
+      resource_type: 'auto',
+      allowed_formats: ['jpg', 'png'],
+       transformation: [{  width: "auto",
+       crop: "scale" }]
+    });
+    
+    //update the userprofile with cloudinary url
+    updateFields.profilePic = result.secure_url
+  }
+    const updatedUser = await User.findByIdAndUpdate(userId,updateFields,{new:true});
+  
+    if(!updatedUser){
+       return res.status(404).json({ message: 'User not found' });
+    }return res.status(200).json({updatedUser})
+  }
+  catch(error){
+    console.log(216,error.message);
+    next(error);
+  }
+}
+
 
 
 module.exports = {
@@ -181,5 +229,8 @@ module.exports = {
   getUserInfo,
   forgetSendLink,
   updatePassword,
-  getUserIdfromToken
+  getUserIdfromToken,
+  profileDetails,
+  updateProfile,
+  
 }

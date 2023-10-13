@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const jwt = require('jsonwebtoken');
-const dotenv = require('dotenv');
-dotenv.config();
+    const dotenv = require('dotenv');
+    dotenv.config();
 
 const userSchema = new mongoose.Schema(
   {
@@ -27,7 +27,7 @@ const userSchema = new mongoose.Schema(
     },
     profilePic: {
         type: String,
-        default:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR9-tH5rGjOoip0aJSXbSgRf_5H4mtOlNJvIRihbjg&s'
+        default:'https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava1-bg.webp'
     },
     gender:{
         type: String
@@ -40,7 +40,7 @@ const userSchema = new mongoose.Schema(
     },
     address : [{
         houseName: {type: String},
-        houseNumber: {type: Number,},
+        houseNumber: {type: String},
         street: {type: String},
         city: {type: String},
         state: {type: String},

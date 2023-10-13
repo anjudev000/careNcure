@@ -23,6 +23,8 @@ import { adminGuard } from './auth/admin.guard';
 import { AdminDashComponent } from './components/admin/admin-dash/admin-dash.component';
 import { UserListComponent } from './components/admin/user-list/user-list.component';
 import { DocListComponent } from './components/admin/doc-list/doc-list.component';
+import { UserProfileComponent } from './components/user/user-profile/user-profile.component';
+import { DocProfileComponent } from './components/doctor/doc-profile/doc-profile.component';
 
 const routes: Routes = [
   {
@@ -77,6 +79,13 @@ const routes: Routes = [
   {
     path:'docList',component:DocListComponent,canActivate:[adminGuard]
   },
+  {
+    path:'user-profile',component:UserProfileComponent,canActivate:[userAuthServiceGuard]
+  },
+  {
+ path:'doctor-profile',component:DocProfileComponent,canActivate:[doctorAuthGuard]
+  },
+ 
   {
     path: '', redirectTo: 'home', pathMatch: 'full'
   }

@@ -1,0 +1,85 @@
+
+<h1 mat-dialog-title>EDIT PROFILE</h1>
+<form [formGroup]="editForm" (ngSubmit)="onFormSubmit()">
+
+<div mat-dialog-content class="content">
+    <mat-form-field appearance="outline">
+        <mat-label>Name</mat-label>
+        <input matInput placeholder="Name" formControlName="fullName">
+        <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+      </mat-form-field>&nbsp;
+      <mat-form-field appearance="outline">
+        <mat-label>Email</mat-label>
+        <input matInput type="email" placeholder="Email" formControlName="email">
+        <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+      </mat-form-field>
+      <br>
+      <mat-form-field appearance="outline">
+        <mat-label>Mobile Number</mat-label>
+        <input matInput placeholder="Mobile Number" formControlName="mobile_num">
+        <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+      </mat-form-field>&nbsp;
+      <mat-form-field appearance="outline">
+        <mat-label>Date of Birth</mat-label>
+        <input matInput [matDatepicker]="picker" placeholder="MM/DD/YYYY" formControlName="dob">
+        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+      <br>
+      <mat-form-field appearance="outline">
+        <mat-label>Blood Group</mat-label>
+        <input matInput placeholder="Mobile Number" formControlName="bloodGroup">
+        <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+      </mat-form-field>&nbsp;
+      <mat-radio-group aria-label="Select an option" formControlName="gender">
+        <mat-label><b>Gender</b></mat-label>
+
+        <mat-radio-button value="Male">Male</mat-radio-button >
+        <mat-radio-button value="Female">Female</mat-radio-button>
+        <mat-radio-button value="Others">Others</mat-radio-button>
+
+      </mat-radio-group><br>
+     
+    <div formGroupName="address">
+      <!-- Address Section -->
+      <span>ADDRESS</span>
+  <div mat-dialog-content class="content">
+    <mat-form-field appearance="outline">
+      <mat-label>House Name</mat-label>
+      <input matInput placeholder="House Name" formControlName="houseName">
+    </mat-form-field>&nbsp;
+    <mat-form-field appearance="outline">
+      <mat-label>House Number</mat-label>
+      <input matInput placeholder="House Number" formControlName="houseNumber">
+    </mat-form-field><br>
+    <mat-form-field appearance="outline">
+      <mat-label>Street</mat-label>
+      <input matInput placeholder="street" formControlName="street">
+    </mat-form-field>&nbsp;
+    <mat-form-field appearance="outline">
+      <mat-label>City</mat-label>
+      <input matInput placeholder="city" formControlName="city">
+    </mat-form-field><br>
+    <mat-form-field appearance="outline">
+      <mat-label>State</mat-label>
+      <input matInput placeholder="state" formControlName="state">
+    </mat-form-field>&nbsp;
+    <mat-form-field appearance="outline">
+      <mat-label>Pincode</mat-label>
+      <input matInput placeholder="pincode" formControlName="pincode">
+    </mat-form-field>
+  </div>
+</div>
+      <div class="profileIMG">
+      <span>Browse Image</span>
+        <input type="file"  accept="image/*" (change)="onFileSelected($event)" style="display: none;" #fileInput formControlName="profilePic">
+        <button mat-icon-button color="primary" type="button"  (click)="fileInput.click()">
+          <mat-icon>cloud_upload</mat-icon> </button>
+          <span>{{selectedFileName}}</span>
+        </div>
+  </div>
+<div mat-dialog-actions class="action">
+  <button mat-raised-button type="button" [mat-dialog-close]="false" >Cancel</button>
+  <button mat-raised-button color="primary" type="submit" cdkFocusInitial>Save</button>
+</div>
+</form>

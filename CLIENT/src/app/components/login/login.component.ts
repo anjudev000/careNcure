@@ -28,7 +28,7 @@ ngOnInit(){
 
 onSubmit(){
   const formData = this.loginForm.value;
-  console.log("login component",formData);
+
   this.loginSubmit.emit(formData);
 }
 

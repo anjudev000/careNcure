@@ -4,6 +4,8 @@ const Doctor = require('../models/doctorModel');
 const dotenv = require('dotenv');
 dotenv.config();
 const _ = require('lodash');
+const {sendApprovalMail} = require('../utils/sendApprovalMail');
+const {sendRejectMail} =require('../utils/rejectMail');
 
 
 const login = async (req, res, next) => {
@@ -92,15 +94,49 @@ const blockUnblockDoctor = async(req,res,next)=>{
   try{
     const {doctorId} =req.params;
     const doctor = await Doctor.findById(doctorId);
-    if(doctor.isBlocked){
-      doctor.isBlocked = false;
-    }else{
-      doctor.isBlocked = true;
+    if(!doctor){
+      return res.status(404).json({error:'Doctor not found'});
     }
+      doctor.isBlocked = !doctor.isBlocked;
+  
     const updatedDoctor = await doctor.save();
     return res.status(200).json({updatedDoctor});
   }
   catch(error){
+    next(error);
+  }
+}
+
+const approveDoctor = async(req,res,next)=>{
+  try{
+    const doctorId  =req.params.doctorId;
+    const doctor = await Doctor.findById(doctorId)
+    if(!doctor) return res.status(404).json({error:'not found'});
+    doctor.isApproved = true;
+    const updatedDoc = await doctor.save();
+    sendApprovalMail(doctor.email,doctor.fullName);
+    return res.status(200).json({updatedDoc});
+  }
+  catch(error){
+    console.log(error.message);
+    next(error)
+  }
+}
+
+const rejectDoctor = async(req,res,next)=>{
+  try{
+
+    const doctorId = req.params.doctorId;
+    const doctor = await Doctor.findById(doctorId);
+    if(!doctor) return res.status(404).json({error:'not found'});
+    doctor.isApproved = false;
+    const updatedDoc = await doctor.save();
+    sendRejectMail(doctor.email,doctor.fullName);
+    return res.status(200).json({updatedDoc});
+
+  }
+  catch(error){
+    console.log(error.message);
     next(error);
   }
 }
@@ -112,5 +148,7 @@ module.exports = {
   getUserList,
   getDoctors,
   blockUnblockUser,
-  blockUnblockDoctor
+  blockUnblockDoctor,
+  approveDoctor,
+  rejectDoctor
 }

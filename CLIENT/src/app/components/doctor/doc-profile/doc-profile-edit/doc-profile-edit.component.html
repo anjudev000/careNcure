@@ -1,0 +1,85 @@
+<div mat-dialog-title>Edit Profile</div>
+<form [formGroup]="docEditForm" (ngSubmit)="onSubmit()">
+  <div mat-dialog-content class="content">
+    <div>
+      <mat-form-field appearance="outline">
+        <mat-label>Name</mat-label>
+        <input matInput placeholder="Name" formControlName="fullName">
+
+      </mat-form-field>&nbsp;
+      <mat-form-field appearance="outline">
+        <mat-label>Email</mat-label>
+        <input matInput placeholder="Email" formControlName="email">
+      </mat-form-field><br>
+      <mat-form-field appearance="outline">
+        <mat-label>Phone</mat-label>
+        <input matInput placeholder="Phone Number" formControlName="mobile_num">
+      </mat-form-field>&nbsp;
+      <mat-form-field appearance="outline">
+        <mat-label>Specialization</mat-label>
+        <input matInput placeholder="specialization" formControlName="specialization">
+      </mat-form-field><br>
+      <mat-form-field appearance="outline">
+        <mat-label>Fees</mat-label>
+        <input matInput type="number" placeholder="Fees" [min]="0" formControlName="fee">
+        <mat-hint>In Rupees</mat-hint>
+      </mat-form-field>&nbsp;
+      <mat-form-field appearance="outline">
+        <mat-label>Registration Number</mat-label>
+        <input matInput  placeholder="RegnNumber" formControlName="RegnNumber">
+       </mat-form-field>
+
+    </div><br>
+    <div formGroupName="education">
+
+      <span>EDUCATION</span><br><br>
+      <mat-form-field appearance="outline">
+        <mat-label>Degree</mat-label>
+        <mat-select formControlName="degree">
+          <mat-option *ngFor="let val of education" [value]="val">
+            {{val}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>&nbsp;
+      <mat-form-field appearance="outline">
+        <mat-label>College</mat-label>
+        <input matInput placeholder="college" formControlName="college">
+      </mat-form-field>
+      <br>
+      <mat-form-field appearance="outline">
+        <mat-label>year</mat-label>
+        <input matInput placeholder="year" formControlName="year">
+      </mat-form-field><br>
+    </div>
+    <div formGroupName="experience">
+      <span>EXPERIENCE</span><br>
+      <mat-form-field appearance="outline">
+        <mat-label>Hospital</mat-label>
+        <input matInput placeholder="hospital" formControlName="hospital">
+      </mat-form-field>&nbsp;
+      <mat-form-field appearance="outline">
+        <mat-label>Term</mat-label>
+        <input matInput placeholder="term" type="number" formControlName="term">
+      </mat-form-field><br>
+    </div>
+
+   
+    <mat-form-field class="example-full-width">
+      <mat-label>Add description</mat-label>
+      <textarea matInput placeholder="Explain yourself" formControlName="description"></textarea>
+    </mat-form-field>
+ 
+    <div class="profileIMG">
+      <span>Browse Image</span>
+      <input type="file" accept="image/*" (change)="onFileSelected($event)" style="display: none;" #fileInput>
+      <button mat-icon-button color="primary" type="button" (click)="fileInput.click()">
+        <mat-icon>cloud_upload</mat-icon> </button>
+      <span>{{selectedFileName}}</span>
+    </div>
+  </div>
+
+  <div mat-dialog-actions class="action">
+    <button mat-raised-button type="button" [mat-dialog-close]="false">Cancel</button>
+    <button mat-raised-button color="primary" type="submit">Save</button>
+  </div>
+</form>

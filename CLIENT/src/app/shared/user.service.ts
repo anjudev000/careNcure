@@ -5,6 +5,7 @@ import { passwordReset } from './passwordReset.model';
 import { HttpClient,HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environment/environment';
 import { forgotModel } from './passwordReset.model';
+import { UserProfile } from './userProfile.model';
 
 @Injectable({
   providedIn: 'root'
@@ -46,6 +47,12 @@ export class UserService {
   }
   postNewPassword(passRes: passwordReset){
     return this.http.post(environment.apiBaseUrl+'/updateNewPassword',passRes,this.noAuthHeader)
+  }
+  getUserProfileData(userId:string){
+    return this.http.get(environment.apiBaseUrl+`/userDetails/${userId}`);
+  }
+  updateUserProfile(userId:string,updatedData:any){
+    return this.http.put(environment.apiBaseUrl+`/updateUserProfile/${userId}`,updatedData);
   }
 
   //helper methods
