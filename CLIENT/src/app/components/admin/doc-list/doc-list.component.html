@@ -1,8 +1,10 @@
 <app-data-table
 [displayedColumns]="doctorColumns"   
     [dataSource]="dataSource"
-     (blockUser)="handleblock($event.userId,$event.isblock)"
-
+     (blockUser)="handleblock($event.Id,$event.isblock)"
+     (approveDoctor)="handleApprove($event.doctorId)"
+     (rejectDoctor)="handleRejection($event.doctorId)"
+     [isDoctor]="true"
 >
     
 </app-data-table>

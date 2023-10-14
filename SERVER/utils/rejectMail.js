@@ -4,8 +4,9 @@ dotenv.config();
 
 
 
-const sendRejectMail = async(email,name,next)=>{
+const sendRejectMail = async(email,name,msg,next)=>{
   try{
+    console.log('inside mailfuntionality',msg);
     const transporter = nodemailer.createTransport({
       host:'smtp.gmail.com',
       port: 587,
@@ -22,7 +23,7 @@ const sendRejectMail = async(email,name,next)=>{
       from : process.env.EMAIL_USER,
       to:email,
       subject: 'CAREnCURE REJECTION MAIL',
-      text: `HELLO DR. ${name} ! YOUR ACCOUNT HAS BEEN REJECTED BY THE ADMIN. CONTACT THE PLATFORM FOR MORE INFORMATION!`
+      text: `HELLO DR. ${name} ! ${msg}`
     }
      await transporter.sendMail(mailOptions);
      

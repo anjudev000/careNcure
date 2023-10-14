@@ -61,7 +61,7 @@ const doctorSchema = new mongoose.Schema(
     fee:{
       type:Number
     },
-    isBlocked:{
+    isblock:{
       type:Boolean,
       default:false
     },
@@ -69,9 +69,10 @@ const doctorSchema = new mongoose.Schema(
       type:Boolean,
       default:false
     },
-    isApproved:{
-      type:Boolean,
-      default:false
+    status:{
+      type:String,
+      enum:['Pending','Approved','Rejected'],
+      default:'Pending'
     },
     otp:{
       type:mongoose.Schema.Types.ObjectId,

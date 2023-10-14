@@ -25,11 +25,15 @@ export interface DoctorData {
   styleUrls: ['./data-table.component.css']
 })
 export class DataTableComponent  {
+  @Input() isDoctor!:boolean;
   block = true;
+  isappoved:boolean=false;
   blockedUsers: string[] = [];
  @Input() displayedColumns!: string[];
  @Input() dataSource!: MatTableDataSource<UserData | DoctorData>;
- @Output() blockUser:EventEmitter<{userId:string,isblock:boolean}> = new EventEmitter<{userId:string,isblock:boolean}>();
+ @Output() blockUser:EventEmitter<{Id:string,isblock:boolean}> = new EventEmitter<{Id:string,isblock:boolean}>();
+ @Output() approveDoctor:EventEmitter<{doctorId:string}> = new EventEmitter<{doctorId:string}>
+ @Output() rejectDoctor:EventEmitter<{doctorId:string}> = new EventEmitter<{doctorId:string}>
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
@@ -42,13 +46,16 @@ export class DataTableComponent  {
     }
   }
 
-blkUnblk(userId:string,isblock:boolean){
-  // isblock = !isblock ;
-  // const updatedRow  = this.dataSource.data.find(row => row._id === userId);
-  // if(updatedRow){
-  //   updatedRow.isblock = isblock;
-  // }
-  this.blockUser.emit({userId,isblock})
+blkUnblk(Id:string,isblock:boolean){
+  
+this.blockUser.emit({Id,isblock})
+}
+approve(doctorId:string){
+ 
+  this.approveDoctor.emit({doctorId})
+}
+reject(doctorId:string){
+  this.rejectDoctor.emit({doctorId})
 }
  
 }

@@ -29,6 +29,12 @@ export class AdminService {
   postDoctorBlockUnblock(doctorId:string){
     return this.http.post(environment.adminApiBaseUrl+`/Doctor-block-Unblock/${doctorId}`,{});
   }
+  postDocApproval(doctorId:string){
+    return this.http.put(environment.adminApiBaseUrl+`/doctor-approval/${doctorId}`,{});
+  }
+  postDocRejection(doctorId:string,reason:string){
+    return this.http.post(environment.adminApiBaseUrl+`/doctor-rejection/${doctorId}`,reason);
+  }
   //helper methods
   setToken(token:string){
     localStorage.setItem('adminToken',token);

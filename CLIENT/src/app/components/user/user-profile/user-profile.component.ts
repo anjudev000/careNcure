@@ -3,7 +3,7 @@ import { UserService } from 'src/app/shared/user.service';
 import { UserProfile } from 'src/app/shared/userProfile.model';
 import { Address } from 'src/app/shared/userProfile.model';
 import { ProfileEditComponent } from '../profile-edit/profile-edit.component';
-import {MatDialog, MAT_DIALOG_DATA, MatDialogModule} from '@angular/material/dialog';
+import {MatDialog, MAT_DIALOG_DATA} from '@angular/material/dialog';
 
 
 interface ApiResponse{

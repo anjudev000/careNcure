@@ -75,6 +75,7 @@ import { userAuthServiceGuard } from './auth/user-auth-service.guard';
 import { doctorAuthGuard } from './auth/doctor-auth.guard';
 import { AuthInterceptor } from './auth/auth.interceptor';
 import { adminGuard } from './auth/admin.guard';
+import { MessageDialogComponent } from './components/admin/doc-list/message-dialog/message-dialog.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -106,6 +107,7 @@ import { adminGuard } from './auth/admin.guard';
     ProfileEditComponent,
     DocProfileComponent,
     DocProfileEditComponent,
+    MessageDialogComponent,
   ],
   imports: [
     BrowserModule,

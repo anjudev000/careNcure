@@ -1,0 +1,13 @@
+
+.container {
+    width: 500px;
+  }
+  
+  mat-dialog-content {
+    width: 100%; 
+  }
+  
+  mat-form-field {
+    width: 100%; 
+  }
+  

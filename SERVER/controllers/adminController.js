@@ -4,8 +4,8 @@ const Doctor = require('../models/doctorModel');
 const dotenv = require('dotenv');
 dotenv.config();
 const _ = require('lodash');
-const {sendApprovalMail} = require('../utils/sendApprovalMail');
-const {sendRejectMail} =require('../utils/rejectMail');
+const { sendApprovalMail } = require('../utils/sendApprovalMail');
+const { sendRejectMail } = require('../utils/rejectMail');
 
 
 const login = async (req, res, next) => {
@@ -46,24 +46,24 @@ const adminProfile = async (req, res, next) => {
 //   }
 // }
 
-const getUserList = async(req,res,next)=>{
-  try{
+const getUserList = async (req, res, next) => {
+  try {
     const users = await User.find();
-    if(users) return res.status(200).json({users});
-    else return res.status(404).json({message:"No Users Found"});
+    if (users) return res.status(200).json({ users });
+    else return res.status(404).json({ message: "No Users Found" });
   }
-  catch(error){
+  catch (error) {
     next(error);
   }
 }
 
-const getDoctors = async(req,res,next)=>{
-  try{
+const getDoctors = async (req, res, next) => {
+  try {
     const doctors = await Doctor.find();
-    if(doctors) return res.status(200).json({doctors});
-    else return res.status(404).json({mesasge : "Doctors not found"});
+    if (doctors) return res.status(200).json({ doctors });
+    else return res.status(404).json({ mesasge: "Doctors not found" });
   }
-  catch(error){
+  catch (error) {
     next(error);
   }
 }
@@ -72,17 +72,17 @@ const blockUnblockUser = async (req, res, next) => {
   try {
     const { userId } = req.params;
     console.log(userId, 456);
-    
+
     const user = await User.findById(userId);
-    
+
     if (!user) {
       return res.status(404).json({ error: 'User not found' });
     }
-    
+
     user.isblock = !user.isblock; // Toggle isblock status
-    
+
     const updatedUser = await user.save();
-    
+
     return res.status(200).json(updatedUser);
   } catch (error) {
     next(error);
@@ -90,52 +90,59 @@ const blockUnblockUser = async (req, res, next) => {
 }
 
 
-const blockUnblockDoctor = async(req,res,next)=>{
-  try{
-    const {doctorId} =req.params;
+const blockUnblockDoctor = async (req, res, next) => {
+  try {
+    const { doctorId } = req.params;
     const doctor = await Doctor.findById(doctorId);
-    if(!doctor){
-      return res.status(404).json({error:'Doctor not found'});
+    if (!doctor) {
+      return res.status(404).json({ error: 'Doctor not found' });
     }
-      doctor.isBlocked = !doctor.isBlocked;
-  
+    doctor.isblock = !doctor.isblock;
+
     const updatedDoctor = await doctor.save();
-    return res.status(200).json({updatedDoctor});
+    return res.status(200).json({ updatedDoctor });
   }
-  catch(error){
+  catch (error) {
     next(error);
   }
 }
 
-const approveDoctor = async(req,res,next)=>{
-  try{
-    const doctorId  =req.params.doctorId;
+const approveDoctor = async (req, res, next) => {
+  try {
+    console.log(111222);
+    const doctorId = req.params.doctorId;
     const doctor = await Doctor.findById(doctorId)
-    if(!doctor) return res.status(404).json({error:'not found'});
-    doctor.isApproved = true;
-    const updatedDoc = await doctor.save();
-    sendApprovalMail(doctor.email,doctor.fullName);
-    return res.status(200).json({updatedDoc});
+    if (doctor) {
+      const update = await Doctor.updateOne({ _id: doctorId }, { $set: { status: "Approved" } },{runValidators:true});
+      //send approval mail
+      sendApprovalMail(doctor.email, doctor.fullName);
+      return res.status(200).json({ update });
+    }
+    return res.status(404).json({error:'not found'})
   }
-  catch(error){
+  catch (error) {
     console.log(error.message);
     next(error)
   }
 }
 
-const rejectDoctor = async(req,res,next)=>{
-  try{
+const rejectDoctor = async (req, res, next) => {
+  try {
 
     const doctorId = req.params.doctorId;
+    const {messageInput} = req.body;
+    console.log(134,req.body);
+    console.log(133,messageInput);
     const doctor = await Doctor.findById(doctorId);
-    if(!doctor) return res.status(404).json({error:'not found'});
-    doctor.isApproved = false;
-    const updatedDoc = await doctor.save();
-    sendRejectMail(doctor.email,doctor.fullName);
-    return res.status(200).json({updatedDoc});
-
-  }
-  catch(error){
+    if (doctor){
+      const update = await Doctor.findByIdAndUpdate({_id: doctorId},{$set:{status:"Rejected"}},{runValidators:true});
+      //send rejection mail
+      sendRejectMail(doctor.email, doctor.fullName,messageInput);
+      return res.status(200).json({ update });
+    }
+    return res.status(404).json({ error: 'not found' });
+    }
+  catch (error) {
     console.log(error.message);
     next(error);
   }

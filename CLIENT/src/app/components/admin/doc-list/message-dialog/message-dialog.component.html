@@ -1,0 +1,23 @@
+
+<div class="container"  >
+    <form [formGroup]="messageForm" (ngSubmit)="onSubmit()">
+        <mat-dialog-content>
+            <h2 class="dialog-title">Reason for Rejection</h2>
+            <mat-form-field class="full-width">
+              <mat-label>Reason of Rejection</mat-label>
+              <textarea matInput rows="6" placeholder="Enter your reason here" formControlName="messageInput"></textarea>
+              <mat-error *ngIf="messageForm.get('messageInput')?.hasError('required')">
+                Reason of Rejection is required.
+              </mat-error>            
+            </mat-form-field>
+          </mat-dialog-content>
+          
+          <mat-dialog-actions>
+            <button mat-button type="button" [mat-dialog-close]="false">Cancel</button>
+            <button mat-raised-button color="primary" type="submit">Submit</button>
+          </mat-dialog-actions>
+    </form>
+    
+</div>
+
+  
