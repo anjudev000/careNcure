@@ -47,29 +47,29 @@
                     </div>
                    
                   </div>
-                  <div *ngIf="data.address">
+                  <div *ngIf="data.address && data.address[0]">
                   <h6>Address</h6>
                   <hr class="mt-0 mb-4">
                   <div class="row pt-1">
                     <div class="col-6 mb-3">
                       <h6>House Name</h6>
-                      <p class="text-muted">{{data.address[0]?.houseName}}</p>
+                      <p class="text-muted">{{data.address[0].houseName}}</p>
                     </div>
                     <div class="col-6 mb-3">
                       <h6>city</h6>
-                      <p class="text-muted">{{data.address[0]?.city}}</p>
+                      <p class="text-muted">{{data.address[0].city}}</p>
                     </div>
-                    <div class="col-6 mb-3" *ngIf="data.address[0]?.state">
+                    <div class="col-6 mb-3" *ngIf="data.address[0].state">
                         <h6>state</h6>
-                        <p class="text-muted">{{data.address[0]?.state}}</p>
+                        <p class="text-muted">{{data.address[0].state}}</p>
                       </div>
-                      <div class="col-6 mb-3" *ngIf="data.address[0]?.street">
+                      <div class="col-6 mb-3" *ngIf="data.address[0].street">
                         <h6>street</h6>
-                        <p class="text-muted">{{data.address[0]?.street}}</p>
+                        <p class="text-muted">{{data.address[0].street}}</p>
                       </div>
                       <div class="col-6 mb-3">
                         <h6>Pincode</h6>
-                        <p class="text-muted">{{data.address[0]?.pincode}}</p>
+                        <p class="text-muted">{{data.address[0].pincode}}</p>
                       </div>
                   </div>
                   </div>

@@ -51,12 +51,10 @@ onSubmit(){
  
   const formData = {...this.signUpForm.value};
   delete formData.confirmPassword;
-  console.log(formData);
     this.registrationSubmit.emit(formData);
 
 }
 startCounDown(){
-  console.log("countdown started");
   setTimeout(()=>{this.showerrorMessages=''},4000)
 }
 ngOnChanges() {

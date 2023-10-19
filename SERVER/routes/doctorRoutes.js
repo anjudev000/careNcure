@@ -37,7 +37,9 @@ doctorRoute.get('/doctor-info/:doctorId',doctorController.getDoctorName);
 doctorRoute.post('/doctor-forgot-password',doctorController.forgotSendLink);
 doctorRoute.post('/doctor-updateNewPassword',doctorController.updatePassword);
 doctorRoute.get('/getDoctorId/:token',doctorController.getIdFromToken);
-doctorRoute.get('/doctor-Profile-Details/:doctorId',doctorController.profileDetails);
-doctorRoute.put('/update-doc-profile/:doctorId',upload.single('profilePic'),doctorController.updateprofile);
+doctorRoute.get('/doctor-Profile-Details/:doctorId',jwtHelper.verifyJwtToken,doctorController.profileDetails);
+doctorRoute.put('/update-doc-profile/:doctorId',jwtHelper.verifyJwtToken,upload.single('profilePic'),doctorController.updateprofile);
+doctorRoute.post('/add-time-slots/:doctorId',doctorController.addTimeSlot);
+doctorRoute.get('/available-slots/:doctorId/:date',doctorController.getAvailableSlot);
 
 module.exports = doctorRoute;

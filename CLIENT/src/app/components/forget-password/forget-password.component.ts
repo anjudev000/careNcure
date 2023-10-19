@@ -23,7 +23,6 @@ ngOnInit(){
 
 onSubmit(){
   const formData = this.forgotPasswordForm.value;
-  console.log("formdata is emitted from here",formData);
   this.emailSubmit.emit(formData);
 }
 }

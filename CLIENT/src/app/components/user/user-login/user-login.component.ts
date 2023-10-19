@@ -38,7 +38,6 @@ ngOnInit(){
       },
       err=>{
         this.errorMessages = err.error.message;
-        console.log("errorr",this.errorMessages);
         if(err.error.notVerified){
         this.errorMessages='User Not Verified! Please Verify to continue. Otp is send to your mail';
         setTimeout(()=>{

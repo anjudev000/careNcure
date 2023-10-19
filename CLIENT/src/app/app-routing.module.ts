@@ -25,6 +25,7 @@ import { UserListComponent } from './components/admin/user-list/user-list.compon
 import { DocListComponent } from './components/admin/doc-list/doc-list.component';
 import { UserProfileComponent } from './components/user/user-profile/user-profile.component';
 import { DocProfileComponent } from './components/doctor/doc-profile/doc-profile.component';
+import { ScheduleSlotComponent } from './components/doctor/schedule-slot/schedule-slot.component';
 
 const routes: Routes = [
   {
@@ -84,6 +85,9 @@ const routes: Routes = [
   },
   {
  path:'doctor-profile',component:DocProfileComponent,canActivate:[doctorAuthGuard]
+  },
+  {
+    path:'schedule-slot',component:ScheduleSlotComponent,canActivate:[doctorAuthGuard]
   },
  
   {

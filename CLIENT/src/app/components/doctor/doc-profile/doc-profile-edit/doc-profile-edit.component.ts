@@ -55,7 +55,6 @@ export class DocProfileEditComponent {
     }
 
     ngOnInit(){
-      console.log(58, this.doctorData);
       
     }
 
@@ -70,7 +69,6 @@ export class DocProfileEditComponent {
   }
 
   onSubmit(){
-    console.log(this.docEditForm, 67);
     
     const formData= new FormData();
     formData.append('fullName',this.docEditForm.get('fullName')?.value);
@@ -103,7 +101,6 @@ export class DocProfileEditComponent {
     const docId = this.docService.getDoctorId();
     this.docService.updateDoctorProfile(docId,formData).subscribe({
       next:(res)=>{
-        console.log('Description:', this.docEditForm.get('description')?.value);
 
         
         this._snackBar.open('Profile updated successfully', 'Close', {

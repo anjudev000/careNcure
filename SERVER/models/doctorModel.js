@@ -61,6 +61,16 @@ const doctorSchema = new mongoose.Schema(
     fee:{
       type:Number
     },
+    slots:[
+      {
+        date:{
+          type:String
+        },
+        timeslots:{
+          type:Array
+        }
+      }
+    ],
     isblock:{
       type:Boolean,
       default:false

@@ -6,7 +6,6 @@ import { DoctorData } from 'src/app/data-table/data-table.component';
 import { AdminService } from 'src/app/shared/admin.service';
 import Swal from 'sweetalert2';
 import { MessageDialogComponent } from './message-dialog/message-dialog.component';
-import { DialogRef } from '@angular/cdk/dialog';
 
 interface ApiResponse{
   doctors:DoctorData[];
@@ -20,7 +19,7 @@ interface ApiResponse{
 })
 export class DocListComponent {
   isDoctor!:boolean
-  doctorColumns:string[] = ['fullName','mobile_num','email','status','RegnNumber','Action'];
+  doctorColumns:string[] = ['fullName','mobile_num','email','status','degree','Action'];
   dataSource!:MatTableDataSource<DoctorData>
   constructor(private adminService:AdminService,
     private _snackBar:MatSnackBar,
@@ -36,7 +35,6 @@ export class DocListComponent {
         next:(res)=>{
           if(res && ((res as ApiResponse).doctors)){
             const docArray = ((res as ApiResponse).doctors);
-            console.log(34,docArray);
             
             this.dataSource = new MatTableDataSource<DoctorData>(docArray);
           }else{
@@ -125,7 +123,6 @@ export class DocListComponent {
          const dialogRef = this._dialog.open(MessageDialogComponent);
           dialogRef.afterClosed().subscribe({
             next:(res)=>{
-              console.log(132,res);
               this.adminService.postDocRejection(doctorId,res).subscribe({
                 next:(res)=>{
                   this._snackBar.open('Doctor rejected','Close',{duration:3000});

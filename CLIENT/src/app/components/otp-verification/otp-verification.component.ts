@@ -26,7 +26,6 @@ get otp():Otp{
 }
 ngOnInit(){
    this.email = history.state.email;
-  console.log("email from component:",this.email);
   this.otpForm = this.fb.group({
     otp:[''],
     email:[this.email]

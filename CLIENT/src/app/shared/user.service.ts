@@ -61,7 +61,6 @@ export class UserService {
     localStorage.setItem('userToken',token);
   }
   getToken(){
-    console.log('testing 18',localStorage.getItem('userToken'));
     return localStorage.getItem('userToken');
   }
   deleteToken(){
@@ -70,10 +69,8 @@ export class UserService {
 
   getUserPayload(){
     let token = this.getToken();
-    console.log("inside getUserPayload. token is:",token);
     if(token){
       let userPayload = atob(token.split('.')[1]);
-      console.log('userPayload is',userPayload);
       return JSON.parse(userPayload);
     }
     else return null
@@ -81,7 +78,6 @@ export class UserService {
   getUserId(){
     let userPayload = this.getUserPayload();
     let userId = userPayload._id;
-    console.log('userid line 744',userId);
     return userId;
   }
 

@@ -40,7 +40,6 @@ export class UserResetPasswordComponent {
 
   updatePassword(userId:string,newPassword:string){
     const newPasswordData:newPasswordData = {userId,newPassword}
-    console.log("inside updatePass",newPasswordData);
     this.userService.postNewPassword(newPasswordData).subscribe(
       res=>{
         this._snackBar.open('Password Changed Successfully','close',{duration:3000});

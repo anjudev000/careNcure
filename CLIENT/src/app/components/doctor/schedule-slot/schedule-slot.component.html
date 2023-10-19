@@ -1,0 +1,29 @@
+<form [formGroup]="timeslotForm" (ngSubmit)="onSubmit()">
+    <div class="container">
+        <div class="slotGrid">
+
+            <div>
+                <h2>Choose Your Available slots</h2>
+                <mat-form-field appearance="outline">
+                    <mat-label>Choose a date</mat-label>
+                    <input matInput [matDatepicker]="picker" formControlName="date" (ngModelChange)="onDateChange($event)"  [min]="minDate">
+                    <mat-hint>MM/DD/YYYY</mat-hint>
+                    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker ></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <div class="buttonDiv">
+                <button mat-raised-button color="primary" 
+                type="button" 
+                *ngFor="let timeSlot of timeSlots; let index=index"
+                [ngClass]="{'selected-slot':selectedButtonIndices.includes(index),'available-slot':!selectedButtonIndices.includes(index)}"
+                 (click)="handleButton(index,timeSlot)"
+               > {{ timeSlot }}</button>
+                <input type="hidden" formControlName="selectedSlot" /></div>
+            <div>
+                <button mat-raised-button color="warn" type="submit" [disabled]="timeslotForm.invalid">SUBMIT</button>
+            </div>
+
+        </div>
+    </div>
+</form>

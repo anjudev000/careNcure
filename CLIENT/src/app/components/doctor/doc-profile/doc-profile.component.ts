@@ -34,8 +34,6 @@ export class DocProfileComponent {
     this.doctorService.getDoctorDetails(doctorId).subscribe({
       next:(res)=>{
         this.data = ((res as ApiResponse).doctorData);
-        console.log('doc details',this.data);
-        console.log('description',this.data.description);
         
         
       },

@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
+import {FlexLayoutModule} from '@angular/flex-layout';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -76,6 +77,7 @@ import { doctorAuthGuard } from './auth/doctor-auth.guard';
 import { AuthInterceptor } from './auth/auth.interceptor';
 import { adminGuard } from './auth/admin.guard';
 import { MessageDialogComponent } from './components/admin/doc-list/message-dialog/message-dialog.component';
+import { ScheduleSlotComponent } from './components/doctor/schedule-slot/schedule-slot.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -108,6 +110,7 @@ import { MessageDialogComponent } from './components/admin/doc-list/message-dial
     DocProfileComponent,
     DocProfileEditComponent,
     MessageDialogComponent,
+    ScheduleSlotComponent,
   ],
   imports: [
     BrowserModule,
@@ -135,6 +138,7 @@ import { MessageDialogComponent } from './components/admin/doc-list/message-dial
     MatDatepickerModule,
     MatNativeDateModule,
     MatRadioModule,
+    FlexLayoutModule
     // MatFileUploadModule
     
 

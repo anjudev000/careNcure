@@ -5,6 +5,8 @@ import { doctorPasswordresetModel } from './passwordReset.model';
 import { forgotModel } from './passwordReset.model';
 import { HttpClient,HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environment/environment';
+import {TimeSlotArray} from './timeSlot.model';
+
 
 @Injectable({
   providedIn: 'root'
@@ -43,6 +45,12 @@ export class DoctorService {
   }
   updateDoctorProfile(doctorId:string,updatedData:any){
     return this.http.put(environment.doctorapiBaseUrl+`/update-doc-profile/${doctorId}`,updatedData);
+  }
+  addTimeSlots(doctorId:string,timeslotData:any){
+    return this.http.post(environment.doctorapiBaseUrl+`/add-time-slots/${doctorId}`,timeslotData);
+  }
+  getAvailSlots(doctorId:string,date:string){
+    return this.http.get(environment.doctorapiBaseUrl+`/available-slots/${doctorId}/${date}`);
   }
 
 

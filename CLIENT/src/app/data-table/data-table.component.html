@@ -4,48 +4,54 @@
       <mat-label>Filter</mat-label>
       <input matInput (keyup)="applyFilter($event)" placeholder="Filter data" #input>
     </mat-form-field>
-    
+
     <div class="mat-elevation-z8">
       <table mat-table [dataSource]="dataSource" matSort>
-      <ng-container *ngFor="let column of displayedColumns; let last = last" [matColumnDef]="column">
+        <ng-container *ngFor="let column of displayedColumns; let last = last" [matColumnDef]="column">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ column }}</th>
-          <td mat-cell *matCellDef="let row">
+          <td mat-cell class="" *matCellDef="let row">
             <!-- Check if the current column is "Action" -->
-            <ng-container *ngIf="column === 'Action'">
-           <button mat-raised-button [ngStyle]="{'background-color': row.isblock ? 'rgb(0,151,178)' : 'rgb(247,0,0)'}" (click)="blkUnblk(row._id,row.isblock)" style="width: 100px;">
-                {{ row.isblock ? 'UnBlock' : 'Block' }}
-              </button> 
-             
-              <ng-container *ngIf="isDoctor" >
-                <button mat-raised-button style="background-color:rgb(78,169,68);margin-left: 10px;" [disabled]="row.status === 'Approved'" (click)="approve(row._id)"> 
-                 <b> Approve</b>
-                  <mat-icon>done_outline</mat-icon>
+            <ng-container class="lastCol" *ngIf="column === 'Action'">
+              <div class="d-flex flex-column align-items-start p-3  gap-2">
+                <button mat-raised-button
+                  color="primary"
+                  (click)="blkUnblk(row._id,row.isblock)">
+                  {{ row.isblock ? 'UnBlock' : 'Block' }}
                 </button>
-                <button mat-raised-button  style="margin-left: 10px;background-color: rgb(166, 171, 198);" [disabled]="row.status === 'Approved' || row.status === 'Rejected' " (click)="reject(row._id)"> 
-                  <b>Reject</b>
-                   <mat-icon>clear</mat-icon>
-                 </button>
-              </ng-container>
-              
+
+                <ng-container *ngIf="isDoctor">
+                  <div class="d-flex flex-column align-items-start gap-2">
+                    <button mat-raised-button style="background-color:rgb(13, 156, 0);"
+                      [disabled]="row.status === 'Approved'" (click)="approve(row._id)">
+                      <b> Approve</b>
+                      <mat-icon>done_outline</mat-icon>
+                    </button>
+                    <button mat-raised-button style="background-color: rgb(205, 0, 0);"
+                      [disabled]="row.status === 'Approved' || row.status === 'Rejected' " (click)="reject(row._id)">
+                      <b>Reject</b>
+                      <mat-icon>clear</mat-icon>
+                    </button>
+                  </div>
+                </ng-container>
+              </div>
+
             </ng-container>
             <!-- If it's not the "Action" column, display the row data -->
             <ng-container *ngIf="column !== 'Action'">{{ row[column] }}</ng-container>
           </td>
-        
+
         </ng-container>
-         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-    
+
         <!-- Row shown when there is no matching data. -->
         <tr class="mat-row" *matNoDataRow>
-          <td class="mat-cell" [attr.colspan]="displayedColumns.length">No data matching the filter "{{input.value}}"</td>
+          <td class="mat-cell" [attr.colspan]="displayedColumns.length">No data matching the filter "{{input.value}}"
+          </td>
         </tr>
       </table>
-    
-      <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of data"></mat-paginator>
+
+      <mat-paginator [pageSizeOptions]="[1, 10, 25, 100]" aria-label="Select page of data"></mat-paginator>
     </div>
   </div>
 </div>
-
-
-
