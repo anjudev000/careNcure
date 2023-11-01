@@ -1,0 +1,39 @@
+.search-container {
+    position: relative;
+    height: 70vh;
+    top:60px;
+  }
+  
+  .search-image {
+    max-width: 100%;
+    height: auto;
+  }
+  
+  .search-input-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(255, 255, 255, 0.9);
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    
+  }
+  
+  .search-input {
+    width: 100%;
+    font-size: 16px;
+    border: none;
+    outline: none;
+    padding: 5px;
+  }
+  
+ mat-form-field{
+    width: 600px;
+    padding-bottom: 0px;
+  }
+  input{
+    margin:0px;
+    justify-content: center;
+  }

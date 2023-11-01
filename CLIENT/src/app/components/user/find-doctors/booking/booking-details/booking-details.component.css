@@ -1,0 +1,45 @@
+
+.gridContainer{
+    height: 80vh;
+    margin-top: 50px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    row-gap: 20px;
+}
+
+.left{
+    /* display: flex; */
+    height: auto;
+    /* background-color: blueviolet; */
+    padding: 50px;
+    margin: 50px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+
+}
+.right{
+    /* display: flex; */
+    height: auto;
+    /* background-color: blueviolet; */
+    padding: 50px;
+    margin: 50px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+
+}
+.innerDiv{
+    display: flex;
+    gap: 0.5cm;
+}
+.innerDivB{
+    display: flex;
+    justify-content: space-between
+}
+.thumbnail{
+    width:130px;
+}
+.divForDoctor{
+    display: flex;
+    flex-direction: column;
+}
+mat-form-field,mat-card,button{
+    width: 500px;
+}

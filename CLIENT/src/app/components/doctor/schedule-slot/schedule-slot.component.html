@@ -4,9 +4,9 @@
 
             <div>
                 <h2>Choose Your Available slots</h2>
-                <mat-form-field appearance="outline">
+                <mat-form-field appearance="outline" >
                     <mat-label>Choose a date</mat-label>
-                    <input matInput [matDatepicker]="picker" formControlName="date" (ngModelChange)="onDateChange($event)"  [min]="minDate">
+                    <input matInput [matDatepicker]="picker" formControlName="date" (ngModelChange)="onDateChange($event)"  [min]="minDate" [max]="maxDate">
                     <mat-hint>MM/DD/YYYY</mat-hint>
                     <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
                     <mat-datepicker #picker ></mat-datepicker>

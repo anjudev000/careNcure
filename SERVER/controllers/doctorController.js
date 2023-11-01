@@ -323,6 +323,19 @@ const getAvailableSlot = async (req, res, next) => {
 }
 }
 
+const getDocStatus=async(req,res,next)=>{
+  try{
+
+    const {doctorId} = req.params;
+    const doctor = await Doctor.findById(doctorId);
+    if(!doctor)  return res.status(404).json({message:'Doctor not found'});
+    const docstatus = doctor.status;
+    return res.status(200).json({ docstatus });  }
+  catch(error){
+    next(error)
+  }
+}
+
 
 module.exports = {
   register,
@@ -336,5 +349,6 @@ module.exports = {
   profileDetails,
   updateprofile,
   addTimeSlot,
-  getAvailableSlot
+  getAvailableSlot,
+  getDocStatus
 }

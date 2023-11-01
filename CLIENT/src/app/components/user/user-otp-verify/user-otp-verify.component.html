@@ -1,1 +1,6 @@
-<app-otp-verification [errorMessages]="errorMessages" (otpVerificationSubmit)="handleOtpSubmit($event)"></app-otp-verification>
+<app-otp-verification 
+[errorMessages]="errorMessages"
+(otpVerificationSubmit)="handleOtpSubmit($event)"
+(resendEvent)="handleOtpResend($event)"
+ >
+</app-otp-verification>

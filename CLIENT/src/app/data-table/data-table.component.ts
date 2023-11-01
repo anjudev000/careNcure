@@ -17,6 +17,13 @@ export interface DoctorData {
   email: string;
   isblock:boolean;
 }
+interface ColumnType{
+  columns:columnData[]
+}
+interface columnData{
+  title:string,
+  dataProperty:string
+}
 
 
 @Component({
@@ -26,16 +33,23 @@ export interface DoctorData {
 })
 export class DataTableComponent  {
   @Input() isDoctor!:boolean;
+  @Input() isPendingDoc!:boolean;
+  @Input() isUser!:boolean;
   block = true;
   isappoved:boolean=false;
   blockedUsers: string[] = [];
  @Input() displayedColumns!: string[];
  @Input() dataSource!: MatTableDataSource<UserData | DoctorData>;
+//  columnData:ColumnType={
+//       {title:'Name',dataProperty:'fullName'},
+//       {title:'Email',dataProperty:'email'}
+//  }
  @Output() blockUser:EventEmitter<{Id:string,isblock:boolean}> = new EventEmitter<{Id:string,isblock:boolean}>();
  @Output() approveDoctor:EventEmitter<{doctorId:string}> = new EventEmitter<{doctorId:string}>
  @Output() rejectDoctor:EventEmitter<{doctorId:string}> = new EventEmitter<{doctorId:string}>
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
+
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;

@@ -25,6 +25,8 @@ export class ScheduleSlotComponent {
   selectedButtonIndices: number[] = [];
   datePipe = new DatePipe('en-US');
   minDate!:string
+  maxDate!:string
+  
   
 
   constructor(private fb: FormBuilder,
@@ -38,16 +40,16 @@ export class ScheduleSlotComponent {
     
   }
   ngOnInit() {
-    const formattedDate = this.datePipe.transform(new Date(), 'yyyy-MM-dd');
-    if (formattedDate !== null) {
-      this.minDate = formattedDate;
-    } else {
-      // Handle the case when datePipe.transform returns null, e.g., set a default value.
-      this.minDate = ''; // Or any other suitable default value
-    }
-  }
+   const currentDate = new Date();
+    const maxDate = new Date();
+    maxDate.setDate(currentDate.getDate() + 30);
   
-  changeDateFormat(date: string) {
+    this.minDate = this.datePipe.transform(currentDate, 'yyyy-MM-dd') || '';
+    this.maxDate = this.datePipe.transform(maxDate, 'yyyy-MM-dd') || '';
+    
+  }
+
+ changeDateFormat(date: string) {
     const dateobj = new Date(date);
     const options = { year: 'numeric', month: 'short', day: '2-digit' };
     const formattedDate = dateobj.toLocaleDateString(undefined, options as Intl.DateTimeFormatOptions);

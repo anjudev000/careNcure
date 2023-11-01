@@ -13,6 +13,7 @@ const generateOtp = ()=>{
 
 const sendOtpToMail = async(email,next)=>{
   try{
+
     const transporter = nodemailer.createTransport({
       host:'smtp.gmail.com',
       port: 587,
@@ -32,6 +33,7 @@ const sendOtpToMail = async(email,next)=>{
       text: `Your One Time Password is ${otp}`
     }
      await transporter.sendMail(mailOptions);
+     console.log(36,'inisde sendMAIL');
      return otp;
   }
   catch(error){

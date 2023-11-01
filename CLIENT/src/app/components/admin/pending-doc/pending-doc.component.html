@@ -1,0 +1,8 @@
+<app-data-table
+    [displayedColumns]="doctorColumns"   
+    [dataSource]="dataSource"
+    (approveDoctor)="handleApprove($event.doctorId)"
+    (rejectDoctor)="handleRejection($event.doctorId)"
+    [isPendingDoc]="true"
+>
+</app-data-table>

@@ -10,6 +10,9 @@ import { AdminService } from 'src/app/shared/admin.service';
 interface NameRes{
   Name:string;
 }
+interface docStatusRes{
+  docstatus:string
+}
 
 @Component({
   selector: 'app-main-nav',
@@ -28,6 +31,7 @@ export class MainNavComponent {
   isDoctorLoggedIn!:boolean;
   isUserLoggedin!:boolean;
   isAdminLoggedin!:boolean;
+  isApproved!:boolean;
   private breakpointObserver = inject(BreakpointObserver);
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
@@ -80,6 +84,8 @@ export class MainNavComponent {
           }
         }
       )
+
+      this.isDocAppproved()
     }
 
     logout(){
@@ -99,4 +105,26 @@ export class MainNavComponent {
       this.isAdminLoggedin = false;
       this.route.navigateByUrl('/admin-login');
     }
+
+    isDocAppproved(){
+      const doctorId=this.doctorService.getDoctorId();
+      this.doctorService.getDocSTatus(doctorId).subscribe({
+        next:(res)=>{
+          const status =((res as docStatusRes).docstatus);
+          console.log(status,11444);
+          
+          if(status ==="Approved"){
+            this.isApproved = true;
+            console.log(this.isApproved,118);
+            
+          }else{
+            this.isApproved = false;
+            console.log(this.isApproved,120);
+            
+          }
+        }
+      })
+      
+    }
 }
+ 

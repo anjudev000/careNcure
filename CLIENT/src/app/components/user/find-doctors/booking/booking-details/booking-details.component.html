@@ -1,0 +1,78 @@
+<div class="gridContainer">
+    <div>
+    <div class="left">
+        <div>
+            <h2>Doctor Details</h2>
+        </div>
+        <hr>
+        <div class="innerDiv">
+            <mat-icon>schedule</mat-icon>
+            <h3>APPOINTMENT:</h3>
+        </div>
+        <hr>
+        <div class="innerDivB">
+            <div class="d-flex" style="gap: 0.5cm;">
+                <mat-icon>calendar_today</mat-icon>
+                <p>On, {{selectedDate}}</p>
+            </div>
+            <div class="d-flex" style="gap: 0.5cm;">
+                <mat-icon>access_alarms</mat-icon>
+                <p>At,{{selectedSlot}} </p>
+            </div>
+        </div>
+        <hr>
+        <div class="innerDiv">
+            <!-- <mat-icon> person_pin</mat-icon> -->
+            <i class="fa fa-user-md fa-beat fa-lg "></i>
+            <img class="img-fluid thumbnail" [src]="pic">
+            <div class="divForDoctor">
+                <p>Dr. {{doctorName}}</p>
+                <p>{{education}}</p>
+                <p>{{doctorDept}}</p>
+            </div>
+
+        </div>
+    </div>
+</div>
+    
+        <div class="right">
+           <div>
+            <div><h2>Patient Details</h2></div>
+            <hr>
+            <div><h3>Appointment for:</h3></div>
+            <div>
+                <mat-form-field appearance="outline">
+                    <mat-label>Name</mat-label>
+                    <input matInput >
+                    <mat-icon matSuffix>lock</mat-icon>
+                  </mat-form-field>
+                  <mat-form-field appearance="outline">
+                    <mat-label>Email</mat-label>
+                    <input matInput>
+                    <mat-icon matSuffix>lock</mat-icon>
+                  </mat-form-field>
+            </div>
+            <div style="margin-bottom: 20px;"><strong>Choose a payment option to Book Appointment</strong></div>
+            <div>
+                
+                <mat-radio-group aria-label="Select an option">
+                    <mat-card>
+                        <mat-card-content>                   
+                             <mat-radio-button value="1">&#x20B9; {{fees}} Pay Online</mat-radio-button>
+                        </mat-card-content>
+                      </mat-card><br>
+                      <mat-card>
+                        <mat-card-content>                   
+                             <mat-radio-button value="1">Wallet Payment</mat-radio-button>
+                        </mat-card-content>
+                      </mat-card>
+                  </mat-radio-group>
+            </div>
+            <div style="margin-top: 25px;">
+                <button mat-raised-button color="primary">Confirm Appointment</button>
+            </div>
+           </div>
+        </div>
+    
+
+</div>

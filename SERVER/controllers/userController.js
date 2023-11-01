@@ -1,4 +1,5 @@
 const User = require('../models/userModel');
+const Doctor = require('../models/doctorModel')
 const Otp = require('../models/otpModel');
 const { sendOtpToMail } = require('../utils/sendotp');
 const { sendLinkToMail } = require('../utils/sendLink');
@@ -32,7 +33,8 @@ const register = async (req, res, next) => {
     //Save otp to the otp schema
     const newOTP = new Otp({
       userId: savedUser._id,
-      otp: otp
+      otp: otp,
+      email:savedUser.email
     })
     await newOTP.save();
 
@@ -52,6 +54,32 @@ const register = async (req, res, next) => {
   };
 }
 
+const resendOTP = async(req,res,next)=>{
+  try{
+   const {email}=req.body;
+    console.log(61,email);
+    const otpGenerated = await sendOtpToMail(email);
+     console.log(63,otpGenerated);
+    let existingOtp = await Otp.findOne({email:email});
+    if(existingOtp){
+      existingOtp.otp = otpGenerated;
+      await existingOtp.save();
+
+    }else{
+      const newOTP = new Otp({
+        otp:otpGenerated,
+        email:email
+      })
+      await newOTP.save();
+
+    }
+    
+    return res.status(200).json({message:'OTP send successfully'})
+  }
+  catch(error){
+    console.log(error.message);
+    next(error);
+  }}
 const otpVerification = async (req, res, next) => {
   try {
     const receivedOTP = req.body.otp;
@@ -60,7 +88,9 @@ const otpVerification = async (req, res, next) => {
     if (!user) {
       return res.status(404).json(['User not Found']);
     }
-    const otpData = await Otp.findOne({ userId: user._id });
+    // const otpData = await Otp.findOne({ userId: user._id });
+    
+    const otpData = await Otp.findOne({ email:email });
     console.log("line 73", otpData.otp, receivedOTP);
 
     if (!otpData) {
@@ -219,6 +249,23 @@ const updateProfile = async(req,res,next)=>{
   }
 }
 
+const getDoctor = async(req,res,next)=>{
+  try{
+    const { deptName } = req.params;
+    const doctors = await Doctor.find({specialization:deptName});
+    if(doctors.length>0){
+      return res.status(200).json({doctors});
+    }else{
+      return res.status(404).json({message:`Doctors not found in ${deptName} department!`});
+    }
+
+  }
+  catch(error){
+    console.log(error.message,235);
+    next(error);
+  }
+}
+
 
 
 module.exports = {
@@ -232,5 +279,6 @@ module.exports = {
   getUserIdfromToken,
   profileDetails,
   updateProfile,
-  
+  getDoctor,
+  resendOTP
 }

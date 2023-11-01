@@ -1,49 +1,48 @@
-
 <!-- cartoon image:  https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava1-bg.webp -->
 
 
 <section class="vh-100 " style="background-color: #f4f5f7;">
-    <div class="container py-5 h-100">
-      <div class="row d-flex justify-content-center align-items-center h-100">
-        <div class="col col-lg-6 mb-4 mb-lg-0">
-          <div class="card mb-3 h-100" style="border-radius: .5rem;;">
-            <div class="row g-0">
-              <div class="col-md-4 gradient-custom text-center text-white"
-                style="border-top-left-radius: .5rem; border-bottom-left-radius: .5rem;">
-                <img [src]="data.profilePic"
-                  alt="Avatar" class="img-fluid my-5" style="width: 200px; border-radius: 70px;" />
-                <!-- <h5>Marie Horwitz</h5> -->
-                <p><b>DR.{{data.fullName}}</b></p>
-                <i class="far fa-edit mb-5"></i>
-                <p>Regn.No: {{data.RegnNumber}}</p>
-              </div>
-              <div class="col-md-8">
-                <div class="card-body p-4">
-                  <h6><b>Your Information</b></h6>
-                  <hr class="mt-0 mb-4">
-                  <div class="row pt-1">
-                    <div class="col-6 mb-3">
-                      <h6><b>Email</b></h6>
-                      <p class="text-muted">{{data.email}}</p>
-                    </div>
-                    <div class="col-6 mb-3">
-                      <h6><b>Phone</b></h6>
-                      <p class="text-muted">{{data.mobile_num}}</p>
-                    </div>
+  <div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col col-lg-6 mb-4 mb-lg-0">
+        <div class="card mb-3 h-100" style="border-radius: .5rem;;">
+          <div class="row g-0">
+            <div class="col-md-4 gradient-custom text-center text-white"
+              style="border-top-left-radius: .5rem; border-bottom-left-radius: .5rem;">
+              <img [src]="data?.profilePic" alt="Avatar" class="img-fluid my-5"
+                style="width: 200px; border-radius: 70px;" />
+              <!-- <h5>Marie Horwitz</h5> -->
+              <p><b>DR.{{data.fullName}}</b></p>
+              <i class="far fa-edit mb-5"></i>
+              <p>Regn.No: {{data.RegnNumber}}</p>
+            </div>
+            <div class="col-md-8">
+              <div class="card-body p-4">
+                <h6><b>Your Information</b></h6>
+                <hr class="mt-0 mb-4">
+                <div class="row pt-1">
+                  <div class="col-6 mb-3">
+                    <h6><b>Email</b></h6>
+                    <p class="text-muted">{{data.email}}</p>
                   </div>
-                  <div class="row pt-1">
-                    <div class="col-6 mb-3">
-                      <h6><b>Specialization</b></h6>
-                      <p class="text-muted">{{data.specialization}}</p>
-                    </div>
-                    <div class="col-6 mb-3">
-                      <h6><b>Fees</b></h6>
-                      <p class="text-muted">{{data.fee}}</p>
-                    </div>
+                  <div class="col-6 mb-3">
+                    <h6><b>Phone</b></h6>
+                    <p class="text-muted">{{data.mobile_num}}</p>
                   </div>
-                 
-                 
-                  <div *ngIf="data.education && data.education[0]">
+                </div>
+                <div class="row pt-1">
+                  <div class="col-6 mb-3">
+                    <h6><b>Specialization</b></h6>
+                    <p class="text-muted">{{data.specialization}}</p>
+                  </div>
+                  <div class="col-6 mb-3">
+                    <h6><b>Fees</b></h6>
+                    <p class="text-muted">{{data.fee}}</p>
+                  </div>
+                </div>
+
+
+                <div *ngIf="data && data.education && data.education[0]">
                   <h6><b>Education</b></h6>
                   <hr class="mt-0 mb-4">
                   <div class="row pt-1">
@@ -55,46 +54,45 @@
                       <h6><b>College</b></h6>
                       <p class="text-muted">{{data.education[0].college}}</p>
                     </div>
-                    <div class="col-4 mb-3" >
-                        <h6><b>year</b></h6>
-                        <p class="text-muted">{{data.education[0].graduation_year}}</p>
-                      </div>
-                      
-                  </div>
-                  </div>
-                  <div *ngIf="data.experience">
-                    <h6><b>Experience</b></h6>
-                    <hr class="mt-0 mb-4">
-                    <div class="row pt-1">
-                      <div class="col-6 mb-3">
-                        <h6><b>Hospital</b></h6>
-                        <p class="text-muted">{{data.experience[0].hospital}}</p>
-                      </div>
-                      <div class="col-6 mb-3">
-                        <h6><b>Term</b></h6>
-                        <p class="text-muted">{{data.experience[0].term}}</p>
-                      </div>
-                    
-                        
+                    <div class="col-4 mb-3">
+                      <h6><b>year</b></h6>
+                      <p class="text-muted">{{data.education[0].graduation_year}}</p>
                     </div>
+
+                  </div>
+                </div>
+                <div *ngIf="data && data.experience ">
+                  <h6><b>Experience</b></h6>
+                  <hr class="mt-0 mb-4">
+                  <div class="row pt-1">
+                    <div class="col-6 mb-3">
+                      <h6><b>Hospital</b></h6>
+                      <p class="text-muted">{{data.experience[0]?.hospital}}</p>
                     </div>
-                    <div *ngIf="data.description">
-                        <h6><b>Description</b></h6>
-                        <hr class="mt-0 mb-4">
-                        <div class="row pt-1">
-                          <div class="col-12 mb-3 ">
-                           
-                            <p class="text-muted justified-text">{{data.description}}</p>
-                          </div>
-                         
-                            
-                        </div>
-                        </div>
-                        
-                  <div class="d-flex justify-content-start">
+                    <div class="col-6 mb-3">
+                      <h6><b>Term</b></h6>
+                      <p class="text-muted">{{data.experience[0]?.term}}</p>
+                    </div>
+
+
+                  </div>
+                </div>
+                <div *ngIf="data && data.description">
+                  <h6><b>Description</b></h6>
+                  <hr class="mt-0 mb-4">
+                  <div class="row pt-1">
+                    <div class="col-12 mb-3 ">
+
+                      <p class="text-muted justified-text">{{data.description}}</p>
+                    </div>
+
+
+                  </div>
+                </div>
+
+                <div class="d-flex justify-content-start">
                   <button class="btn btn-primary" (click)="opendocDialog()">Edit Profile</button>
                   <!-- <app-profile-edit></app-profile-edit> -->
-                  </div>
                 </div>
               </div>
             </div>
@@ -102,4 +100,5 @@
         </div>
       </div>
     </div>
-  </section>
+  </div>
+</section>

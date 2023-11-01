@@ -23,6 +23,9 @@ export class AdminService {
   getAllDoctors(){
     return this.http.get(environment.adminApiBaseUrl+'/getDoctorList');
   }
+  getPendingDocList(){
+    return this.http.get(environment.adminApiBaseUrl+'/getPendingDoctors')
+  }
   postUserBlockUnblock(userId:string){
     return this.http.post(environment.adminApiBaseUrl+`/User-block-Unblock/${userId}`,{});
   }

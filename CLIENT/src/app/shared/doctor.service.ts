@@ -43,6 +43,7 @@ export class DoctorService {
   getDoctorDetails(doctorId:string){
     return this.http.get(environment.doctorapiBaseUrl+`/doctor-Profile-Details/${doctorId}`);
   }
+ 
   updateDoctorProfile(doctorId:string,updatedData:any){
     return this.http.put(environment.doctorapiBaseUrl+`/update-doc-profile/${doctorId}`,updatedData);
   }
@@ -51,6 +52,9 @@ export class DoctorService {
   }
   getAvailSlots(doctorId:string,date:string){
     return this.http.get(environment.doctorapiBaseUrl+`/available-slots/${doctorId}/${date}`);
+  }
+  getDocSTatus(doctorId:string){
+    return this.http.get(environment.doctorapiBaseUrl+`/getStatus/${doctorId}`);
   }
 
 

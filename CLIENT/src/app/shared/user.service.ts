@@ -7,6 +7,10 @@ import { environment } from 'src/environment/environment';
 import { forgotModel } from './passwordReset.model';
 import { UserProfile } from './userProfile.model';
 
+interface Department{
+  deptName:string
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -17,6 +21,7 @@ export class UserService {
     email:'',
     password:''
   };
+
 
   noAuthHeader = {headers: new HttpHeaders({'NoAuth':'True'})};
 
@@ -53,6 +58,12 @@ export class UserService {
   }
   updateUserProfile(userId:string,updatedData:any){
     return this.http.put(environment.apiBaseUrl+`/updateUserProfile/${userId}`,updatedData);
+  }
+  getDeptWiseDoctor(deptName:Department){
+    return this.http.get(environment.apiBaseUrl+`/getDoctors/${deptName}`);
+  }
+  postResendOtp(email:string){
+    return this.http.post(environment.apiBaseUrl+`/resendOTP`,{email});
   }
 
   //helper methods

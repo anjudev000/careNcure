@@ -3,12 +3,15 @@ import { UserService } from 'src/app/shared/user.service';
 import { User } from 'src/app/shared/user.model';
 import { FormGroup,FormBuilder,Validators, ValidatorFn, AbstractControl } from '@angular/forms';
 import { MatSnackBar,MatSnackBarModule } from '@angular/material/snack-bar';
+import { NgxSpinnerService } from "ngx-spinner";
+
 
 
 @Component({
   selector: 'app-registration',
   templateUrl: './registration.component.html',
   styleUrls: ['./registration.component.css']
+  
 })
 export class RegistrationComponent {
   @Input() showerrorMessages!:string;
@@ -21,7 +24,10 @@ export class RegistrationComponent {
   namePattern = /^[A-Za-z]+$/;
   signUpForm!:FormGroup;
 
-constructor(private userService: UserService, private fb:FormBuilder,private _snackBar: MatSnackBar){}
+constructor(private userService: UserService,
+   private fb:FormBuilder,
+   private _snackBar: MatSnackBar,
+   private spinner: NgxSpinnerService){}
 get user(): User {
   return this.userService.selectedUser;
 }
@@ -35,6 +41,15 @@ this.signUpForm = this.fb.group({
 },{
   validator:this.passwordMatchValidator as ValidatorFn
 });
+ /** spinner starts on init */
+//  this.spinner.show();
+
+//  setTimeout(() => {
+//    /** spinner ends after 5 seconds */
+//    this.spinner.hide();
+//  }, 5000);
+
+
 }
 
 passwordMatchValidator(control:AbstractControl){

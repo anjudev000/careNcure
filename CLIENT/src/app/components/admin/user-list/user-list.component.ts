@@ -16,6 +16,7 @@ interface ApiResponse {
   styleUrls: ['./user-list.component.css']
 })
 export class UserListComponent {
+  isUser!:boolean;
   userColumns: string[] = ['fullName', 'mobile_num', 'email','Action'];
   dataSource!:MatTableDataSource<UserData>
   block:boolean=true;

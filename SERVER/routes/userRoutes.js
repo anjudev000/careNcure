@@ -32,6 +32,7 @@ const upload = multer({storage:storage});
 
 userRoute.post('/register',userController.register);
 userRoute.post('/verifyOTP',userController.otpVerification);
+userRoute.post('/resendOTP',userController.resendOTP);
 userRoute.post('/authenticate-user-login',userController.login);
 userRoute.get('/user-home',jwtHelper.verifyJwtToken,userController.userHome);
 userRoute.get('/user-info/:userId',userController.getUserInfo);
@@ -40,5 +41,6 @@ userRoute.post('/updateNewPassword',userController.updatePassword);
 userRoute.get('/getUserId/:token',userController.getUserIdfromToken);
 userRoute.get('/userDetails/:userId',jwtHelper.verifyJwtToken,userController.profileDetails);
 userRoute.put('/updateUserProfile/:userId',upload.single('profilePic'),jwtHelper.verifyJwtToken,userController.updateProfile);
+userRoute.get('/getDoctors/:deptName',userController.getDoctor);
 
 module.exports = userRoute;

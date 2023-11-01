@@ -11,10 +11,12 @@ import { ActivatedRoute,Router } from '@angular/router';
   styleUrls: ['./otp-verification.component.css']
 })
 export class OtpVerificationComponent {
+  timer!:number;
 @Input() errorMessages!:string;
 otpForm!:FormGroup;
 email:string='';
 @Output() otpVerificationSubmit:EventEmitter<any>=new EventEmitter<any>();
+@Output() resendEvent:EventEmitter<any>=new EventEmitter<any>();
 
 constructor(private otpService:OtpService,
   private fb:FormBuilder,
@@ -30,12 +32,31 @@ ngOnInit(){
     otp:[''],
     email:[this.email]
   })
+
+
 }
 
 onSubmit(){
   const formData = this.otpForm.value;
  this.otpVerificationSubmit.emit(formData);
 
+}
+
+startResendTimer(){
+  this.timer = 90;
+  const interval = setInterval(()=>{
+    if(this.timer>0){
+      this.timer--;
+    }else{
+      clearInterval(interval)
+    }
+  },1000)
+}
+
+resendOTP(){
+  console.log(this.email);
+  this.resendEvent.emit(this.email);
+  this.startResendTimer();
 }
 
 }

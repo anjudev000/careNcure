@@ -64,3 +64,9 @@
     display: block;
   }
 }
+.disabledLink {
+  pointer-events: none; /* Disables link interaction */
+  color: rgb(221, 206, 206) !important; /* Change the text color to gray (or any desired disabled color) */
+  text-decoration: none; /* Remove the default underline for links */
+  cursor: not-allowed; /* Change the cursor to indicate it's not clickable */
+}

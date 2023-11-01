@@ -26,6 +26,8 @@ export class DocProfileComponent {
     ){}
 
   ngOnInit(){
+    console.log(29,this.data?.profilePic);
+    
     this.getDocDetails();
   }
 

@@ -1,0 +1,24 @@
+<div class="search-container">
+    <img src="assets/img/background.jpg" alt="Search Image" class="search-image">
+    <div class="search-input-container">
+        <form class="example-form">
+            <mat-form-field class="example-full-width " appearance="outline">
+              <mat-label>Search For Speciality</mat-label>
+              <input type="text"
+                     placeholder="search for your required speciality"
+                     aria-label="Number"
+                     matInput
+                     [formControl]="myControl"
+                     [matAutocomplete]="auto"
+                     >
+              <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onDeptSelected($event.option.value)">
+                <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                  {{option}}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+          </form>
+          
+    </div>
+  </div>
+  

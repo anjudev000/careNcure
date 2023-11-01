@@ -59,11 +59,23 @@ const getUserList = async (req, res, next) => {
 
 const getDoctors = async (req, res, next) => {
   try {
-    const doctors = await Doctor.find();
+    const doctors = await Doctor.find({status:"Approved"});
     if (doctors) return res.status(200).json({ doctors });
     else return res.status(404).json({ mesasge: "Doctors not found" });
   }
   catch (error) {
+    next(error);
+  }
+}
+
+const getPendingDoc = async(req,res,next)=>{
+  try{
+      const doctors = await Doctor.find({status:{$in:["Pending","Rejected"]}});
+    if(doctors) return res.status(200).json({doctors});
+    else return res.status(404).json({message:"Doctors not found"});
+  }
+  catch(error){
+    console.log(error.message);
     next(error);
   }
 }
@@ -154,6 +166,7 @@ module.exports = {
   adminProfile,
   getUserList,
   getDoctors,
+  getPendingDoc,
   blockUnblockUser,
   blockUnblockDoctor,
   approveDoctor,

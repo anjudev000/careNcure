@@ -11,7 +11,12 @@
         <mat-label>Enter your OTP</mat-label>
         <input matInput type="text" placeholder="OTP" formControlName="otp">
       </mat-form-field>
-      <button mat-raised-button style="background-color:rgb(19,190,240);" type="submit" [disabled]="otpForm.invalid">Verify</button>
+      <button mat-raised-button style="background-color:rgb(0,151,178);" type="submit" [disabled]="otpForm.invalid">Verify</button>
+      <br>
+      <button mat-raised-button color="warn" (click)="resendOTP()" [disabled]="timer>0">
+        RESEND OTP {{timer>0? 'in ' + timer + ' seconds': ''}}
+      </button>
+      
     </form>
   </div>
  

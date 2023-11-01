@@ -41,5 +41,6 @@ doctorRoute.get('/doctor-Profile-Details/:doctorId',jwtHelper.verifyJwtToken,doc
 doctorRoute.put('/update-doc-profile/:doctorId',jwtHelper.verifyJwtToken,upload.single('profilePic'),doctorController.updateprofile);
 doctorRoute.post('/add-time-slots/:doctorId',doctorController.addTimeSlot);
 doctorRoute.get('/available-slots/:doctorId/:date',doctorController.getAvailableSlot);
+doctorRoute.get('/getStatus/:doctorId',doctorController.getDocStatus);
 
 module.exports = doctorRoute;

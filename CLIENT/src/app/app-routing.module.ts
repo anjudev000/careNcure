@@ -26,6 +26,11 @@ import { DocListComponent } from './components/admin/doc-list/doc-list.component
 import { UserProfileComponent } from './components/user/user-profile/user-profile.component';
 import { DocProfileComponent } from './components/doctor/doc-profile/doc-profile.component';
 import { ScheduleSlotComponent } from './components/doctor/schedule-slot/schedule-slot.component';
+import { PendingDocComponent } from './components/admin/pending-doc/pending-doc.component';
+import { SearchSpecialityComponent } from './components/user/search-speciality/search-speciality.component';
+import { FindDoctorsComponent } from './components/user/find-doctors/find-doctors.component';
+import { BookingComponent } from './components/user/find-doctors/booking/booking.component';
+import { BookingDetailsComponent } from './components/user/find-doctors/booking/booking-details/booking-details.component';
 
 const routes: Routes = [
   {
@@ -81,6 +86,9 @@ const routes: Routes = [
     path:'docList',component:DocListComponent,canActivate:[adminGuard]
   },
   {
+    path:'pending-doc-list',component:PendingDocComponent,canActivate:[adminGuard]
+  },
+  {
     path:'user-profile',component:UserProfileComponent,canActivate:[userAuthServiceGuard]
   },
   {
@@ -89,8 +97,19 @@ const routes: Routes = [
   {
     path:'schedule-slot',component:ScheduleSlotComponent,canActivate:[doctorAuthGuard]
   },
- 
   {
+    path:'search-speciality',component:SearchSpecialityComponent,canActivate:[userAuthServiceGuard]
+  },
+  {
+    path:'search-doctors',component:FindDoctorsComponent,canActivate:[userAuthServiceGuard]
+  },
+  {
+    path:'booking',component:BookingComponent,canActivate:[userAuthServiceGuard]
+  },
+  {
+    path:'booking-details',component:BookingDetailsComponent,canActivate:[userAuthServiceGuard]
+  },
+ {
     path: '', redirectTo: 'home', pathMatch: 'full'
   }
 ];

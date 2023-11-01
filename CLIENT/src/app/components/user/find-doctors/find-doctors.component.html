@@ -1,0 +1,24 @@
+<div class="container">
+  <div class="availableContainer">
+    <h2>{{docCount}} Doctors available in {{deptName}}</h2>
+  </div>
+  <div class="gridContainer">
+    <div class="doc-div" *ngFor="let doctor of doctorsList">
+      <mat-card class="example-card">
+        <mat-card-header>
+          <mat-card-title-group>
+            <mat-card-title>Dr.{{doctor.fullName}}</mat-card-title>
+            <mat-card-subtitle>{{doctor.education[0].degree}}</mat-card-subtitle>
+            <img mat-card-lg-image [src]="doctor.profilePic">
+          </mat-card-title-group>
+        </mat-card-header>
+        <mat-card-content>
+          {{doctor.description}}
+          <h3>Fees: {{doctor.fee}}</h3>
+        </mat-card-content>
+        <button mat-raised-button color="primary" (click)="onClick(doctor)">Book Now</button>
+      </mat-card>
+    </div>
+  </div>
+
+</div>

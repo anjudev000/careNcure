@@ -3,6 +3,7 @@ import { Otp } from 'src/app/shared/otp.model';
 import { OtpService } from 'src/app/shared/otp.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { UserService } from 'src/app/shared/user.service';
 
 @Component({
   selector: 'app-user-otp-verify',
@@ -13,7 +14,8 @@ export class UserOtpVerifyComponent {
   errorMessages!:string;
 constructor(private otpService:OtpService,
   private _snackBar: MatSnackBar,
-  private router:Router
+  private router:Router,
+  private userService:UserService
 ){}
   handleOtpSubmit(formData:Otp){
     this.otpService.verifyOTP(formData).subscribe(
@@ -34,5 +36,20 @@ constructor(private otpService:OtpService,
         this._snackBar.open(this.errorMessages,'Close',{duration:3000});
       }
     )
+  }
+
+  handleOtpResend(email:string){
+    console.log(40,email);
+    // const userId = this.userService.getUserId();
+    this.userService.postResendOtp(email).subscribe({
+      next:(res)=>{
+        this._snackBar.open('OTP RESEND TO YOUR MAIL','Close',{duration:3000});
+
+      },
+      error:(err)=>{
+        this._snackBar.open(err.message,'Close',{duration:3000});
+
+      }
+    })
   }
 }

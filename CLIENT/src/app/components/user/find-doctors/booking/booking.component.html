@@ -1,0 +1,27 @@
+
+    <div class="container">
+        <div class="slotGrid">
+
+            <div>
+                <h2>Select the date to see available slots</h2>
+                <mat-form-field appearance="outline" >
+                    <mat-label>Choose a date</mat-label>
+                    <input matInput [matDatepicker]="picker" [min]="minDate" [max]="maxDate" [(ngModel)]="selectedDate" (ngModelChange)="availableTimeSlots();" >
+                    <!-- <mat-hint>{{selectedDate}}</mat-hint> -->
+                    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker ></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <div class="buttonDiv">
+                <ng-container *ngIf="displayedSlots.length > 0; else noSlotsMessage">
+                  <button mat-raised-button color="primary" type="button" *ngFor="let slot of displayedSlots" (click)="onSlotSelection(slot)">{{ slot }}</button>
+                </ng-container>
+                <ng-template #noSlotsMessage>
+                  <p *ngIf="selectedDate">No slots available for the date</p>
+                </ng-template>
+              </div>
+           
+              
+        </div>
+    </div>
+

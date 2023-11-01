@@ -2,8 +2,7 @@
 [displayedColumns]="doctorColumns"   
     [dataSource]="dataSource"
      (blockUser)="handleblock($event.Id,$event.isblock)"
-     (approveDoctor)="handleApprove($event.doctorId)"
-     (rejectDoctor)="handleRejection($event.doctorId)"
+    
      [isDoctor]="true"
 >
     

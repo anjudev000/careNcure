@@ -4,10 +4,13 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import {FlexLayoutModule} from '@angular/flex-layout';
+// import { SpinnersAngularModule } from 'spinners-angular';
+import { NgxSpinnerModule } from "ngx-spinner";
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 
 
 //components
@@ -62,6 +65,9 @@ import {MatDialogModule} from '@angular/material/dialog';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import {MatRadioModule} from '@angular/material/radio';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import {MatExpansionModule} from '@angular/material/expansion';
+import {MatDividerModule} from '@angular/material/divider';
 // import { MatFileUploadModule } from 'angular-material-fileupload';
 //environment
 import { environment } from 'src/environment/environment';
@@ -76,8 +82,18 @@ import { userAuthServiceGuard } from './auth/user-auth-service.guard';
 import { doctorAuthGuard } from './auth/doctor-auth.guard';
 import { AuthInterceptor } from './auth/auth.interceptor';
 import { adminGuard } from './auth/admin.guard';
-import { MessageDialogComponent } from './components/admin/doc-list/message-dialog/message-dialog.component';
+import { MessageDialogComponent } from './components/admin/pending-doc/message-dialog/message-dialog.component';
 import { ScheduleSlotComponent } from './components/doctor/schedule-slot/schedule-slot.component';
+import { PendingDocComponent } from './components/admin/pending-doc/pending-doc.component';
+import { SearchSpecialityComponent } from './components/user/search-speciality/search-speciality.component';
+import { FindDoctorsComponent } from './components/user/find-doctors/find-doctors.component';
+import { BookingComponent } from './components/user/find-doctors/booking/booking.component';
+import { BookingDetailsComponent } from './components/user/find-doctors/booking/booking-details/booking-details.component';
+
+interface NgxSpinnerConfig {
+  type?: string;
+}
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -111,6 +127,11 @@ import { ScheduleSlotComponent } from './components/doctor/schedule-slot/schedul
     DocProfileEditComponent,
     MessageDialogComponent,
     ScheduleSlotComponent,
+    PendingDocComponent,
+    SearchSpecialityComponent,
+    FindDoctorsComponent,
+    BookingComponent,
+    BookingDetailsComponent,
   ],
   imports: [
     BrowserModule,
@@ -138,7 +159,13 @@ import { ScheduleSlotComponent } from './components/doctor/schedule-slot/schedul
     MatDatepickerModule,
     MatNativeDateModule,
     MatRadioModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    MatAutocompleteModule,
+    MatExpansionModule,
+    MatDividerModule,
+    NgxSpinnerModule,
+    NgxSpinnerModule.forRoot({ type: 'ball-scale-multiple' })
+    // SpinnersAngularModule
     // MatFileUploadModule
     
 
