@@ -396,7 +396,7 @@ const stripeSession = async(req,res,next)=>{
 const webhooks = async(req,res)=>{
   console.log('inside webhook');
   let endpointSecret;
-  // endpointSecret ="whsec_2cf240bc754f1d5b42200dcd181d2fbf2d2a622c77b82f54f0875da4404c5da5";
+  // endpointSecret =process.env.STRIPE_WEBHOOK_KEY;
   const payload = req.body;
   console.log(366,payload);
   const sig = req.headers['stripe-signature'];
