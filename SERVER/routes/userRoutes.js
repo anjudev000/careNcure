@@ -41,6 +41,12 @@ userRoute.post('/updateNewPassword',userController.updatePassword);
 userRoute.get('/getUserId/:token',userController.getUserIdfromToken);
 userRoute.get('/userDetails/:userId',jwtHelper.verifyJwtToken,userController.profileDetails);
 userRoute.put('/updateUserProfile/:userId',upload.single('profilePic'),jwtHelper.verifyJwtToken,userController.updateProfile);
-userRoute.get('/getDoctors/:deptName',userController.getDoctor);
+userRoute.get('/getDoctors/:deptName',jwtHelper.verifyJwtToken,userController.getDoctor);
+userRoute.post('/create-appointment',userController.createAppointment);
+userRoute.post('/checkout-stripe',jwtHelper.verifyJwtToken,userController.stripeSession);
+userRoute.post('/checkout-stripe/webhook', express.raw({type: 'application/json'}),userController.webhooks);
+userRoute.get('/booking-list/:userId',userController.getBookingList);
+userRoute.get('/cancel-booking/:id',userController.cancelBooking);
+
 
 module.exports = userRoute;

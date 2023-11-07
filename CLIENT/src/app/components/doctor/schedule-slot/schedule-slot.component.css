@@ -31,3 +31,6 @@
     color: white; /* Optionally, change text color for better contrast */
   }
   
+  .disabled-slot{
+    background-color: red;
+  }

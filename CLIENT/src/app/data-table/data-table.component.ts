@@ -39,6 +39,7 @@ export class DataTableComponent  {
   isappoved:boolean=false;
   blockedUsers: string[] = [];
  @Input() displayedColumns!: string[];
+ @Input() header!:string[];
  @Input() dataSource!: MatTableDataSource<UserData | DoctorData>;
 //  columnData:ColumnType={
 //       {title:'Name',dataProperty:'fullName'},
@@ -49,6 +50,10 @@ export class DataTableComponent  {
  @Output() rejectDoctor:EventEmitter<{doctorId:string}> = new EventEmitter<{doctorId:string}>
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
+
+  ngOnInit(){
+    this.dataSource.paginator = this.paginator;
+  }
 
 
   applyFilter(event: Event) {

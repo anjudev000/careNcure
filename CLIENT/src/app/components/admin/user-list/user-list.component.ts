@@ -18,6 +18,13 @@ interface ApiResponse {
 export class UserListComponent {
   isUser!:boolean;
   userColumns: string[] = ['fullName', 'mobile_num', 'email','Action'];
+  // userColumns: { apiHeader: string, customHeader: string }[] = [
+  //    { apiHeader: 'fullName', customHeader: 'Name' },
+  //    { apiHeader: 'mobile_num', customHeader: 'Phone'},
+  //    { apiHeader: 'email', customHeader: 'Email'},
+  //    { apiHeader: '',customHeader: 'Action'}
+  // ]
+  header: string[] = ['Name', 'Phone', 'Email', 'Action'];
   dataSource!:MatTableDataSource<UserData>
   block:boolean=true;
   constructor(private adminService:AdminService,

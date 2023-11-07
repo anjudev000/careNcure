@@ -65,6 +65,12 @@ export class UserService {
   postResendOtp(email:string){
     return this.http.post(environment.apiBaseUrl+`/resendOTP`,{email});
   }
+  postPaymentData(doctorData:any,userId:any,slot:any){
+    return this.http.post(environment.apiBaseUrl+'/checkout-stripe',{doctorData,userId,slot});
+  }
+  getApppointmentData(userId:string){
+    return this.http.get(environment.apiBaseUrl+`/booking-list/${userId}`);
+  }
 
   //helper methods
 

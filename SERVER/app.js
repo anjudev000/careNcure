@@ -8,13 +8,15 @@ const {notFound,errorHandler} = require('./middleware/errorHandling');
 const passport = require('passport');
 require('./middleware/passportAuthentication');
 
+
  
 const app = express();
-
+app.use('/checkout-stripe/webhook', express.raw({ type: 'application/json' }));
 app.use(logger('dev'));
 app.use(express.json());
 app.use(cors());
 app.use(passport.initialize());
+app.use(express.static('public'));
 
 const userRoute = require('./routes/userRoutes');
 app.use('/api/user',userRoute);

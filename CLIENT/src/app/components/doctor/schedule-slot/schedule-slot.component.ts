@@ -41,10 +41,12 @@ export class ScheduleSlotComponent {
   }
   ngOnInit() {
    const currentDate = new Date();
+   const minDate = new Date();
+   minDate.setDate(currentDate.getDate() + 1);
     const maxDate = new Date();
     maxDate.setDate(currentDate.getDate() + 30);
   
-    this.minDate = this.datePipe.transform(currentDate, 'yyyy-MM-dd') || '';
+    this.minDate = this.datePipe.transform(minDate, 'yyyy-MM-dd') || '';
     this.maxDate = this.datePipe.transform(maxDate, 'yyyy-MM-dd') || '';
     
   }
@@ -55,6 +57,8 @@ export class ScheduleSlotComponent {
     const formattedDate = dateobj.toLocaleDateString(undefined, options as Intl.DateTimeFormatOptions);
     return formattedDate;
   }
+  
+ 
   onDateChange(selectedDate: string) {
     const formattedDate = this.changeDateFormat(selectedDate);
     const doctorId = this.doctorService.getDoctorId();
@@ -64,6 +68,8 @@ export class ScheduleSlotComponent {
         this.addedSlotData.push({date: formattedDate, timeslots: data})
         console.log(60,this.addedSlotData);
        this.updateSelectedButtonIndices(data);
+
+       
       },
       error: (err) => {
 
@@ -72,6 +78,8 @@ export class ScheduleSlotComponent {
       }
     })
   }
+
+
   updateSelectedButtonIndices(timeslotsdata: any[]) {
     this.selectedButtonIndices = [];
     for (const slot of timeslotsdata) {

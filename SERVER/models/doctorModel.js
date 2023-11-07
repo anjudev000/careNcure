@@ -71,6 +71,16 @@ const doctorSchema = new mongoose.Schema(
         }
       }
     ],
+    bookedSlots:[
+      {
+        date:{
+          type:String
+        },
+        timeslots:{
+          type:Array
+        }
+      }
+    ],
     isblock:{
       type:Boolean,
       default:false

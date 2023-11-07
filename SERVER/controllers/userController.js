@@ -1,5 +1,6 @@
 const User = require('../models/userModel');
-const Doctor = require('../models/doctorModel')
+const Doctor = require('../models/doctorModel');
+const Appointment = require('../models/appointmentModel');
 const Otp = require('../models/otpModel');
 const { sendOtpToMail } = require('../utils/sendotp');
 const { sendLinkToMail } = require('../utils/sendLink');
@@ -8,6 +9,9 @@ const _ = require('lodash');
 const random = require('randomstring');
 const {securePassword} = require('../utils/passwordHashing');
 const cloudinary = require('cloudinary').v2;
+const dotenv = require('dotenv');
+dotenv.config();
+const stripe=require("stripe")(process.env.STRIPE_SECRET_KEY);
 
 
 
@@ -266,6 +270,197 @@ const getDoctor = async(req,res,next)=>{
   }
 }
 
+const createAppointment = async(metadata,paymentdata,req,res)=>{
+  console.log('inside createappointmnt');
+  const {userId,doctorId,slotBooked,slotDate,slotTime} = metadata;
+  console.log(276,'slotdate:',slotDate,'slottime:',slotTime);
+  try{
+    const appointment = new Appointment({
+      userId,
+      doctorId,
+      slotBooked,
+      appointmentId:Math.floor(Math.random() * 1000000 + 1),
+      paymentMode:paymentdata.payment_method_types,
+      paymentStatus:paymentdata.status,
+      amountPaid:paymentdata.amount_received/100
+    });
+    appointment.save();
+   const doctor = await Doctor.findById(doctorId);
+   console.log(28888,doctor.fullName);
+   if(!doctor) return res.status(404).json({error: 'Doctor not found'});
+
+  //  const bookedSlot = doctor.slots.find((slot)=>{
+  //   return slot.date === slotDate && slot.timeslots.includes(slotTime);
+  //  });
+  //  console.log(2944,bookedSlot);
+  //  if(!bookedSlot) return res.status(404).json({error:'Slot not found'});
+
+  //  //remove bookedSlot from doctor
+  //  doctor.slots = doctor.slots.filter((slot)=>{
+  //   return !(slot.date === bookedSlot.date && slot.timeslots.includes(bookedSlot.timeslots))
+  //  })
+  //  console.log(301,doctor.slots);
+
+  //  //add it to bookedSlot array
+
+  //  doctor.bookedSlots.push({
+  //   date:bookedSlot.date,
+  //   timeslots:[bookedSlot.timeslots]
+  //  });
+  //  await doctor.save();
+  const bookedSlot = doctor.slots.find((slot) => {
+    return slot.date === slotDate && slot.timeslots.includes(slotTime);
+  });
+  
+  if (!bookedSlot) return res.status(404).json({ error: 'Slot not found' });
+  
+  // Find the index of the specific time slot in doctor's slots
+  const slotIndex = doctor.slots.findIndex((slot) => {
+    return slot.date === slotDate && slot.timeslots.includes(slotTime);
+  });
+  
+  if (slotIndex !== -1) {
+    // Remove the specific time slot from the doctor's slots
+    doctor.slots[slotIndex].timeslots = doctor.slots[slotIndex].timeslots.filter((slot) => slot !== slotTime);
+  
+    // If there are no more timeslots for that date, remove the entire slot
+    if (doctor.slots[slotIndex].timeslots.length === 0) {
+      doctor.slots.splice(slotIndex, 1);
+    }
+  
+    // Add the specific time slot to the bookedSlots array
+    doctor.bookedSlots.push({
+      date: bookedSlot.date,
+      timeslots: [slotTime], // Only add the specific time slot
+    });
+  
+    await doctor.save();
+  }
+  
+
+   res.status(200).json({message:'Appointment created successfully'})
+   
+  }
+  catch(error){
+    console.log('inside createAppointmnt',error.message);
+    next(error);
+   }
+}
+
+const stripeSession = async(req,res,next)=>{
+  try{
+    const {doctorData,userId,slot} = req.body;
+    console.log(3199,doctorData,userId,slot);
+    const slotString = `${slot.date} ${slot.time}`;
+
+    const existingAppointment = await Appointment.findOne({slot:slotString});
+    if(existingAppointment) return res.status(409).json({message:'Appointmnet exist'});
+
+    const customer = await stripe.customers.create({
+      metadata:{
+        userId:userId,
+        doctorId:doctorData.doctorId,
+        slotBooked:slotString,
+        slotDate:slot.date,
+        slotTime:slot.time
+      }
+    });
+
+    const session = await stripe.checkout.sessions.create({
+      line_items:[
+        {
+          price_data:{
+            currency:"inr",
+            product_data:{
+              name: `Dr.${doctorData.fullName}`,
+            },
+            unit_amount:`${doctorData?.fee * 100}`,
+          },
+          quantity:1,
+        },
+      ],
+      customer:customer.id,
+      mode:"payment",
+      success_url: "http://localhost:4200/booking-success",
+      cancel_url:"http://localhost:4200/payment-failed"
+    });
+    res.status(200).json(session);
+
+  }
+  catch(error){
+    console.log(error.message);
+    next(error);
+  }
+}
+
+const webhooks = async(req,res)=>{
+  console.log('inside webhook');
+  let endpointSecret;
+  // endpointSecret ="whsec_2cf240bc754f1d5b42200dcd181d2fbf2d2a622c77b82f54f0875da4404c5da5";
+  const payload = req.body;
+  console.log(366,payload);
+  const sig = req.headers['stripe-signature'];
+  console.log(369,sig);
+  let data;
+  let eventType;
+  if(endpointSecret){
+    let event;
+
+    try {
+      event = stripe.webhooks.constructEvent(payload, sig, endpointSecret);
+      console.log(324,'webhooks verified');
+    } catch (err) {
+      console.log(32666,err.message);
+      res.status(400).json({success:true});
+      return;
+    }
+  }else{
+      data = req.body.data.object;
+      eventType=req.body.type
+
+    if(eventType === "payment_intent.succeeded"){
+      stripe.customers.retrieve(data.customer).then((customer)=>{
+        createAppointment(customer.metadata, data, req,res);
+      })
+    }
+  }
+
+  
+  
+  // response.send().end();
+
+}
+
+const getBookingList = async(req,res,next)=>{
+  try{
+    const {userId} = req.params;
+    const bookings = await Appointment.find({userId:userId})
+    .sort({createdAt:-1})
+    .populate("userId")
+    .populate("doctorId")
+    .exec();
+    if(!bookings) return res.status(404).json({message:'No Bookings Available'});
+
+    return res.status(200).json({bookings:bookings})
+
+  }
+  catch(error){
+    console.log(error.message);
+    next(error);
+  }
+}
+
+const cancelBooking  = async(req,res,next)=>{
+  try{
+    const {id} = req.params;
+    
+
+  }
+  catch(error){
+    console.log(error.message);
+    next(error);
+  }
+}
 
 
 module.exports = {
@@ -280,5 +475,10 @@ module.exports = {
   profileDetails,
   updateProfile,
   getDoctor,
-  resendOTP
+  resendOTP,
+  createAppointment,
+  stripeSession,
+  webhooks,
+  getBookingList,
+  cancelBooking
 }

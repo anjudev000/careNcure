@@ -56,6 +56,14 @@ export class BookingComponent {
       } else {
         this.displayedSlots = availableSlots.timeslots;
       }
+         // Sort the displayedSlots array in ascending order
+           this.displayedSlots.sort((a, b) => {
+          const date = new Date('1970-01-01 ' + a);
+          const dateB = new Date('1970-01-01 ' + b);
+        
+          // Compare the Date objects
+          return date.getTime() - dateB.getTime();
+        });
     } else {
       this.displayedSlots = [];
     }

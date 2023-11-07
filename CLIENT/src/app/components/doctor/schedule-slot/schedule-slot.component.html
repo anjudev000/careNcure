@@ -16,8 +16,12 @@
                 <button mat-raised-button color="primary" 
                 type="button" 
                 *ngFor="let timeSlot of timeSlots; let index=index"
-                [ngClass]="{'selected-slot':selectedButtonIndices.includes(index),'available-slot':!selectedButtonIndices.includes(index)}"
+                [ngClass]="{
+                    'selected-slot':selectedButtonIndices.includes(index),
+                    'available-slot':!selectedButtonIndices.includes(index),
+                }"
                  (click)="handleButton(index,timeSlot)"
+
                > {{ timeSlot }}</button>
                 <input type="hidden" formControlName="selectedSlot" /></div>
             <div>

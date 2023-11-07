@@ -1,0 +1,15 @@
+/* Structure */
+
+.container{
+margin-top: 20px;
+}
+
+table {
+    width: 100%;
+  }
+  
+  .mat-mdc-form-field {
+    font-size: 14px;
+    width: 100%;
+  }
+  

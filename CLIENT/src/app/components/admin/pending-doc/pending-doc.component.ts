@@ -20,6 +20,15 @@ interface ApiResponse{
 export class PendingDocComponent {
   isPendingDoc!:boolean;
   doctorColumns:string[] = ['fullName','mobile_num','email','RegnNumber','specialization','status','Action'];
+//   doctorColumns: { apiHeader: string, customHeader: string }[] = [
+//     { apiHeader: 'fullName', customHeader: 'Name' },
+//     { apiHeader: 'mobile_num', customHeader: 'Phone'},
+//     { apiHeader: 'email', customHeader: 'Email'},
+//     { apiHeader: 'RegnNumber', customHeader: 'Registration'},
+//     { apiHeader:'specialization',customHeader: 'Department'},
+//     { apiHeader:'status',customHeader: 'Status'},
+//     { apiHeader: '',customHeader: 'Action'}
+//  ]
   dataSource!:MatTableDataSource<DoctorData>
   constructor(
     private adminService:AdminService,
