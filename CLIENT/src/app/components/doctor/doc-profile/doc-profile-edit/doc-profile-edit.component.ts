@@ -65,10 +65,6 @@ export class DocProfileEditComponent {
 
   }
 
-
-
-
-
   onFileSelected(event: any) {
     const selectedFile = event.target.files[0];
     this.selectedFileName = selectedFile.name;

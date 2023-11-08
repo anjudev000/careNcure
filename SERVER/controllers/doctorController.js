@@ -200,32 +200,7 @@ const updateprofile = async (req, res, next) => {
   }
 }
 
-// const addTimeSlot = async(req,res,next)=>{
-//   try{
-//     const {doctorId}= req.params
-//     const doctor =  await Doctor.findById(doctorId);
-//     if(!doctor){
-//       return res.status(404).json({message:'Not Found'});
-//     }
-//     const slotsToAdd = req.body;
-//     for(const slot of slotsToAdd){
-//       const {date,timeslots} = slot;
-//       const dateExist = doctor.slots.find((dateExist)=> dateExist.date === date);
-//       if(dateExist){
-//         const uniqueSlot = [...new Set([...dateExist.timeslots, ...timeslots])];
-//         dateExist.timeslots = uniqueSlot;
-//       }else{
-//         doctor.slots.push({date,timeslots});
-//       }
-//     }
-//     await doctor.save();
-//     return res.status(200).json({message:'Slots added successfully',doctorData:doctor});
 
-//   }
-//   catch(error){
-//     next(error);
-//   }
-// }
 
 const addTimeSlot = async (req, res, next) => {
   try {
@@ -251,60 +226,6 @@ const addTimeSlot = async (req, res, next) => {
   }
 };
 
-// const addTimeSlot = async (req, res, next) => {
-//   try {
-//     const { doctorId } = req.params;
-//     const doctor = await Doctor.findById(doctorId);
-//     if (!doctor) {
-//       return res.status(404).json({ message: 'Not Found' });
-//     }
-
-//     const slotsToAdd = req.body;
-//     for (const slot of slotsToAdd) {
-//       const { date, timeslots } = slot;
-//       const dateExist = doctor.slots.find((dateExist) => dateExist.date === date);
-//       if (dateExist) {
-//         // Remove time slots from existing array if they exist in req.body
-//         for (const slotToRemove of timeslots) {
-//           const index = dateExist.timeslots.indexOf(slotToRemove);
-//           if (index === -1) {
-//             dateExist.timeslots.push(slotToRemove);
-//           }
-//         }
-//         // Add new time slots to the array
-//         dateExist.timeslots.push(...timeslots);
-//       } else {
-//         doctor.slots.push({ date, timeslots });
-//       }
-//     }
-//     await doctor.save();
-//     return res.status(200).json({ message: 'Slots added successfully', doctorData: doctor });
-//   } catch (error) {
-//     next(error);
-//   }
-// };
-
-
-
-
-// const getAvailableSlot = async (req, res, next) => {
-//   try {
-//     const { doctorId } = req.params;
-//     const doctor = await Doctor.findById(doctorId);
-//     if (!doctor) {
-//       return res.status(404).json({ message: 'not found' });
-//     } else {
-//       const availableSlots = doctor.slots.map(slot => ({
-//         date: slot.date,
-//         timeslots: slot.timeslots
-//       }));
-//       return res.status(200).json({ availableSlots })
-//     }
-//   }
-//   catch (error) {
-//     next(error)
-//   }
-// }
 
 const getAvailableSlot = async (req, res, next) => {
   try{
@@ -321,6 +242,23 @@ const getAvailableSlot = async (req, res, next) => {
   console.log(error.message);
   next(error);
 }
+}
+
+const bookedSlots = async(req,res,next)=>{
+  try{
+    const {doctorId,date} = req.params;
+    const doctor = await Doctor.findById(doctorId);
+    if(!doctor) return res.status(404).json({message: 'Not found'});
+    else{
+      bookedData = doctor.bookedSlots.find(slot=> slot.date === date);
+      if(bookedData) return res.status(200).json({slotsForDate: bookedData.timeslots});
+      return res.json({slotsForDate:[]})
+    }
+  }
+  catch(error){
+    console.log(error.message);
+    next(error)
+  }
 }
 
 const getDocStatus=async(req,res,next)=>{
@@ -350,5 +288,6 @@ module.exports = {
   updateprofile,
   addTimeSlot,
   getAvailableSlot,
-  getDocStatus
+  getDocStatus,
+  bookedSlots
 }

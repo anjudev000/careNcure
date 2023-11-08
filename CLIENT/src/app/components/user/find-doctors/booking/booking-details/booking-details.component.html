@@ -55,22 +55,22 @@
             <div style="margin-bottom: 20px;"><strong>Choose a payment option to Book Appointment</strong></div>
             <div>
                 
-                <mat-radio-group aria-label="Select an option">
+                <mat-radio-group aria-label="Select an option" [(ngModel)]="paymentOption">
                     <mat-card>
                         <mat-card-content>                   
-                             <mat-radio-button value="1">&#x20B9; {{fees}} Pay Online</mat-radio-button>
+                             <mat-radio-button value="online">&#x20B9; {{fees}} Pay Online</mat-radio-button>
                         </mat-card-content>
                       </mat-card><br>
                       <mat-card>
                         <mat-card-content>                   
-                             <mat-radio-button value="1">Wallet Payment</mat-radio-button>
+                             <mat-radio-button value="wallet">Wallet Payment</mat-radio-button>
                         </mat-card-content>
                       </mat-card>
                   </mat-radio-group>
             </div>
             <div style="margin-top: 25px;">
                 <button mat-raised-button color="primary"
-                (click)="onConfirmAppointment()"
+                (click)="onConfirmAppointment(paymentOption)"
                 >Confirm Appointment</button>
             </div>
            </div>

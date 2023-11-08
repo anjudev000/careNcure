@@ -47,7 +47,8 @@ const userSchema = new mongoose.Schema(
         pincode : {type: Number}
      }],
      wallet:{
-        type:Number
+        type:Number,
+        default:0
      },
     isblock: {
         type: Boolean,

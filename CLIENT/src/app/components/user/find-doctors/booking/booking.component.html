@@ -14,7 +14,7 @@
             </div>
             <div class="buttonDiv">
                 <ng-container *ngIf="displayedSlots.length > 0; else noSlotsMessage">
-                  <button mat-raised-button color="primary" type="button" *ngFor="let slot of displayedSlots" (click)="onSlotSelection(slot)">{{ slot }}</button>
+                  <button mat-raised-button style="background-color: rgb(0,151,178);color: white;" type="button" *ngFor="let slot of displayedSlots" (click)="onSlotSelection(slot)">{{ slot }}</button>
                 </ng-container>
                 <ng-template #noSlotsMessage>
                   <p *ngIf="selectedDate">No slots available for the date</p>

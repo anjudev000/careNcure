@@ -45,8 +45,10 @@ userRoute.get('/getDoctors/:deptName',jwtHelper.verifyJwtToken,userController.ge
 userRoute.post('/create-appointment',userController.createAppointment);
 userRoute.post('/checkout-stripe',jwtHelper.verifyJwtToken,userController.stripeSession);
 userRoute.post('/checkout-stripe/webhook', express.raw({type: 'application/json'}),userController.webhooks);
-userRoute.get('/booking-list/:userId',userController.getBookingList);
-userRoute.get('/cancel-booking/:id',userController.cancelBooking);
+userRoute.get('/booking-list/:userId',jwtHelper.verifyJwtToken,userController.getBookingList);
+userRoute.patch('/cancel-booking/:id',jwtHelper.verifyJwtToken,userController.cancelBooking);
+userRoute.get('/user-wallet/:userId',jwtHelper.verifyJwtToken,userController.walletAmount);
+userRoute.post('/user-wallet/deduct',userController.deductWallet);
 
 
 module.exports = userRoute;

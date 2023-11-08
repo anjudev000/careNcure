@@ -26,8 +26,7 @@ export class ScheduleSlotComponent {
   datePipe = new DatePipe('en-US');
   minDate!:string
   maxDate!:string
-  
-  
+  isSlotBooked: boolean[] = [];
 
   constructor(private fb: FormBuilder,
     private doctorService: DoctorService,
@@ -62,23 +61,31 @@ export class ScheduleSlotComponent {
   onDateChange(selectedDate: string) {
     const formattedDate = this.changeDateFormat(selectedDate);
     const doctorId = this.doctorService.getDoctorId();
+    //api call to get the selected slots
     this.doctorService.getAvailSlots(doctorId, formattedDate).subscribe({
       next: (res) => {
         const data = ((res as ApiResponse).slotsForDate)
         this.addedSlotData.push({date: formattedDate, timeslots: data})
         console.log(60,this.addedSlotData);
        this.updateSelectedButtonIndices(data);
-
-       
       },
       error: (err) => {
-
         console.log(err.message);
 
       }
     })
-  }
 
+    //api call to get the slots booked by user
+    this.doctorService.getBookedSlots(doctorId,formattedDate).subscribe({
+      next:(res)=>{
+        const data = ((res as ApiResponse).slotsForDate);
+        this.updateIsSlotBooked(data)
+        }
+    })
+  }
+  updateIsSlotBooked(bookedSlots: string[]) {
+    this.isSlotBooked = this.timeSlots.map(slot => bookedSlots.includes(slot));
+  }
 
   updateSelectedButtonIndices(timeslotsdata: any[]) {
     this.selectedButtonIndices = [];
@@ -89,13 +96,17 @@ export class ScheduleSlotComponent {
       }
     }
   }
-
-
   handleButton(index: number, timeslot: string) {
     
     const currentDate = this.timeslotForm.get('date')?.value;
     const formattedDate = this.changeDateFormat(currentDate);
     const isSlotSelected = this.selectedButtonIndices.includes(index);
+    
+    
+  if (this.isSlotBooked[index]) {
+    // Slot is booked, do not allow selection
+    return;
+  }
   
     // Find the existing date in addedSlotData
     const existingDate = this.addedSlotData.find((i) => i.date === formattedDate);

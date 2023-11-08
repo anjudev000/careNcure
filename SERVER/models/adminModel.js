@@ -12,7 +12,16 @@ const adminSchema = new mongoose.Schema({
   password:{
     type:String,
     required: 'Password can\'t be empty'
+  },
+  commission:{
+    type:Number,
+    default:0
+  },
+  compensation:{
+    type:Number,
+    default:0
   }
+
 })
 
 

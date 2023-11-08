@@ -93,6 +93,7 @@ import { BookingDetailsComponent } from './components/user/find-doctors/booking/
 import { SuccessPageComponent } from './components/user/find-doctors/booking/booking-details/success-page/success-page.component';
 import { UserAppointmentComponent } from './components/user/user-appointment/user-appointment.component';
 import { PaymentFailedComponent } from './components/user/find-doctors/booking/booking-details/payment-failed/payment-failed.component';
+import { UserWalletComponent } from './components/user/user-wallet/user-wallet.component';
 
 
 interface NgxSpinnerConfig {
@@ -140,6 +141,7 @@ interface NgxSpinnerConfig {
     SuccessPageComponent,
     UserAppointmentComponent,
     PaymentFailedComponent,
+    UserWalletComponent,
   ],
   imports: [
     BrowserModule,

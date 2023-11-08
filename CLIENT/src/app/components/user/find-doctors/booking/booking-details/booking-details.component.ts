@@ -3,9 +3,13 @@ import { ActivatedRoute } from '@angular/router';
 import { UserService } from 'src/app/shared/user.service';
 import {loadStripe} from '@stripe/stripe-js';
 import { environment } from 'src/environment/environment';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 interface ApiResponse{
   userData:any
+}
+interface walletApiResponse{
+  userWalletAmount:number
 }
 
 @Component({
@@ -21,15 +25,17 @@ export class BookingDetailsComponent {
   selectedDate:string='';
   pic:string='';
   education:string[]=[];
-  fees!:Number;
+  fees!:number;
   userId:string='';
   userName:string='';
   userEmail:string='';
   slot:any;
   doctorData:any;
+  paymentOption:string='';
 
 constructor(private route:ActivatedRoute,
   private userService:UserService,
+  private _snackBar:MatSnackBar
   ){
   route.queryParams.subscribe((queryParams=>{
     this.doctorId = queryParams['doctorId'];
@@ -63,7 +69,50 @@ getUserInfo(){
 
 }
 
-onConfirmAppointment(){
+// onConfirmAppointment(){
+//   this.doctorData={
+//     doctorId:this.doctorId,
+//     fullName:this.doctorName,
+//     fee:this.fees
+//   }
+//   this.slot={
+//     date:this.selectedDate,
+//     time:this.selectedSlot
+//   }
+// this.userService.postPaymentData(this.doctorData,this.userId,this.slot).subscribe(
+//   async (res:any)=>{
+//     let stripe = await loadStripe(environment.stripeKEY);
+//     stripe?.redirectToCheckout({
+//       sessionId:res.id
+//     })
+//   }
+// )
+// }
+
+
+onConfirmAppointment(paymentOption:string){
+  if(paymentOption === 'wallet'){
+    this.userService.getWallet(this.userId).subscribe({
+      next:(res)=>{
+        const balance = ((res as walletApiResponse).userWalletAmount);
+        if(balance >= this.fees){
+          //sufficient bal
+          this.userService.deductWallet(this.userId,this.fees).subscribe({
+            next:(res)=>{
+              this.bookAppointment();
+            }
+          });
+        }else{
+          this._snackBar.open('Insuffiecient balance in wallet','Close',{duration:3000});
+        }
+      }
+    })
+  }else if(paymentOption === 'online'){
+    this.bookAppointment();
+  }
+}
+
+bookAppointment(){
   this.doctorData={
     doctorId:this.doctorId,
     fullName:this.doctorName,
@@ -82,4 +131,5 @@ this.userService.postPaymentData(this.doctorData,this.userId,this.slot).subscrib
   }
 )
 }
+
 }

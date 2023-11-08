@@ -5,7 +5,6 @@ import { passwordReset } from './passwordReset.model';
 import { HttpClient,HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environment/environment';
 import { forgotModel } from './passwordReset.model';
-import { UserProfile } from './userProfile.model';
 
 interface Department{
   deptName:string
@@ -70,6 +69,15 @@ export class UserService {
   }
   getApppointmentData(userId:string){
     return this.http.get(environment.apiBaseUrl+`/booking-list/${userId}`);
+  }
+  cancelAppointment(id:string){
+    return this.http.patch(environment.apiBaseUrl+`/cancel-booking/${id}`,{});
+  }
+  getWallet(userId:string){
+    return this.http.get(environment.apiBaseUrl+`/user-wallet/${userId}`);
+  }
+  deductWallet(userId:string,deductionAmount:number){
+    return this.http.post(environment.apiBaseUrl+'/user-wallet/deduct',{userId,deductionAmount});
   }
 
   //helper methods

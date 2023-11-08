@@ -1,5 +1,6 @@
 const User = require('../models/userModel');
 const Doctor = require('../models/doctorModel');
+const Admin = require('../models/adminModel');
 const Appointment = require('../models/appointmentModel');
 const Otp = require('../models/otpModel');
 const { sendOtpToMail } = require('../utils/sendotp');
@@ -271,9 +272,7 @@ const getDoctor = async(req,res,next)=>{
 }
 
 const createAppointment = async(metadata,paymentdata,req,res)=>{
-  console.log('inside createappointmnt');
   const {userId,doctorId,slotBooked,slotDate,slotTime} = metadata;
-  console.log(276,'slotdate:',slotDate,'slottime:',slotTime);
   try{
     const appointment = new Appointment({
       userId,
@@ -286,28 +285,8 @@ const createAppointment = async(metadata,paymentdata,req,res)=>{
     });
     appointment.save();
    const doctor = await Doctor.findById(doctorId);
-   console.log(28888,doctor.fullName);
    if(!doctor) return res.status(404).json({error: 'Doctor not found'});
 
-  //  const bookedSlot = doctor.slots.find((slot)=>{
-  //   return slot.date === slotDate && slot.timeslots.includes(slotTime);
-  //  });
-  //  console.log(2944,bookedSlot);
-  //  if(!bookedSlot) return res.status(404).json({error:'Slot not found'});
-
-  //  //remove bookedSlot from doctor
-  //  doctor.slots = doctor.slots.filter((slot)=>{
-  //   return !(slot.date === bookedSlot.date && slot.timeslots.includes(bookedSlot.timeslots))
-  //  })
-  //  console.log(301,doctor.slots);
-
-  //  //add it to bookedSlot array
-
-  //  doctor.bookedSlots.push({
-  //   date:bookedSlot.date,
-  //   timeslots:[bookedSlot.timeslots]
-  //  });
-  //  await doctor.save();
   const bookedSlot = doctor.slots.find((slot) => {
     return slot.date === slotDate && slot.timeslots.includes(slotTime);
   });
@@ -329,16 +308,23 @@ const createAppointment = async(metadata,paymentdata,req,res)=>{
     }
   
     // Add the specific time slot to the bookedSlots array
-    doctor.bookedSlots.push({
-      date: bookedSlot.date,
-      timeslots: [slotTime], // Only add the specific time slot
-    });
-  
+    // doctor.bookedSlots.push({
+    //   date: bookedSlot.date,
+    //   timeslots: [slotTime], // Only add the specific time slot
+    // });
+    
+    const dateExist = doctor.bookedSlots.find((dateExist)=>dateExist.date === bookedSlot.date);
+    if(dateExist){
+      dateExist.timeslots.push(slotTime);
+    }else{
+      doctor.bookedSlots.push({
+        date: bookedSlot.date,
+         timeslots: [slotTime],
+      })
+    }
     await doctor.save();
   }
-  
-
-   res.status(200).json({message:'Appointment created successfully'})
+  res.status(200).json({message:'Appointment created successfully'})
    
   }
   catch(error){
@@ -453,8 +439,59 @@ const getBookingList = async(req,res,next)=>{
 const cancelBooking  = async(req,res,next)=>{
   try{
     const {id} = req.params;
-    
+    const appointment = await Appointment.findById(id);
+    if(!appointment) return res.status(400).json({error: 'Appointment not found'});
 
+    const currentDate = new Date();
+    const appointmentDate = new Date(appointment.slotBooked);
+    const timeDifference = appointmentDate - currentDate;
+
+    let userRefund,adminRefund,doctorRefund;
+   
+    if(appointmentDate.toDateString() ===currentDate.toDateString() && timeDifference < 2 * 60 * 60 * 1000){
+
+      userRefund = 0.4  * appointment.amountPaid;
+      console.log(445,userRefund);
+      adminRefund = 0.2 * appointment.amountPaid;
+      doctorRefund = 0.2 * appointment.amountPaid;
+    }else{
+      
+      userRefund = 0.9  * appointment.amountPaid;
+      console.log(451,userRefund);
+
+      adminRefund = 0.1 * appointment.amountPaid;
+
+    }
+
+    const user = await User.findById(appointment.userId);
+    if(user){
+      let prev = user.wallet;
+      console.log(prev);
+      user.wallet += userRefund;
+      console.log(460,user.wallet);
+      await user.save();
+    }
+    const admin = await Admin.findOne();
+    if(admin){
+      admin.compensation += adminRefund;
+      await admin.save();
+    }
+    const doctor = await Doctor.findById(appointment.doctorId);
+    if(doctor){
+      doctor.compensation += doctorRefund;
+      const slot = appointment.slotBooked;
+      let parts = slot.split(' ');
+      let datepart = parts[0]+' '+parts[1]+' '+parts[2];
+      let timepart = parts[3];
+      const slotIndex = doctor.slots.findIndex((item)=>item.date === datepart);
+      if(slotIndex!== -1){
+        doctor.slots[slotIndex].timeslots.push(timepart);
+        await doctor.save();
+      }
+    }
+    appointment.status = "Cancelled";
+    await appointment.save();
+    res.status(200).json({message:'BOOKING CANCELLED, AMOUNT HAS BEEN CREDITED TO YOUR WALLET'})
   }
   catch(error){
     console.log(error.message);
@@ -462,6 +499,38 @@ const cancelBooking  = async(req,res,next)=>{
   }
 }
 
+const walletAmount = async(req,res,next)=>{
+  try{
+    const {userId} = req.params;
+    const user = await User.findById(userId);
+    if(!user) return res.status(404).json({message:'User not found'});
+    else return res.status(200).json({userWalletAmount : user.wallet})
+
+  }catch(error){
+    console.log(error.message);
+    next(error)
+  }
+}
+
+const deductWallet = async(req,res)=>{
+  try{
+    const {userId,deductionAmount} = req.body;
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+    if (user.wallet < deductionAmount) {
+      return res.status(400).json({ message: 'Insufficient wallet balance' });
+    }
+    user.wallet -= deductionAmount;
+    await user.save();
+    return res.status(200).json({ message: 'Deduction successful' });
+  }
+  catch(error){
+    console.log(error.message);
+    next(error);
+  }
+}
 
 module.exports = {
   register,
@@ -480,5 +549,7 @@ module.exports = {
   stripeSession,
   webhooks,
   getBookingList,
-  cancelBooking
+  cancelBooking,
+  walletAmount,
+  deductWallet
 }

@@ -19,9 +19,10 @@
                 [ngClass]="{
                     'selected-slot':selectedButtonIndices.includes(index),
                     'available-slot':!selectedButtonIndices.includes(index),
+                    'booked-slot': isSlotBooked[index]
                 }"
                  (click)="handleButton(index,timeSlot)"
-
+                 [disabled]="isSlotBooked[index]"
                > {{ timeSlot }}</button>
                 <input type="hidden" formControlName="selectedSlot" /></div>
             <div>

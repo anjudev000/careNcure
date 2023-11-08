@@ -61,6 +61,10 @@ const doctorSchema = new mongoose.Schema(
     fee:{
       type:Number
     },
+    compensation:{
+      type:Number,
+      default:0
+    },
     slots:[
       {
         date:{

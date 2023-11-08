@@ -53,6 +53,10 @@ export class DoctorService {
   getAvailSlots(doctorId:string,date:string){
     return this.http.get(environment.doctorapiBaseUrl+`/available-slots/${doctorId}/${date}`);
   }
+  getBookedSlots(doctorId:string,date:string){
+    return this.http.get(environment.doctorapiBaseUrl+`/booked-slots/${doctorId}/${date}`);
+  }
+  
   getDocSTatus(doctorId:string){
     return this.http.get(environment.doctorapiBaseUrl+`/getStatus/${doctorId}`);
   }

@@ -1,0 +1,46 @@
+
+    .container {
+        width: 400px; /* Set the width of your container */
+        height: 400px; /* Set the height of your container */
+        background-color: #ffffff; /* Set the background color of your container */
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Add the box shadow */
+        border: 1px solid #ccc; /* Optional: Add a border for extra style */
+        background-color: #f9f9f9;
+        padding: 20px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+      }
+      
+      .balance-label {
+        font-weight: bold;
+        font-size: 18px;
+        color: #333;
+      }
+      
+      .balance-amount {
+        margin-left: 10px;
+        color: rgb(0,151,178)
+      }
+      
+      .usage-policy {
+        margin-top: 20px;
+      }
+      
+      .policy-text {
+        font-size: 14px;
+        color: #888;
+      }
+      .caption {
+        margin-top: 0px;
+        font-size: 10px;
+        color: #555;
+    }
+    h2{
+        align-items: center;
+        color:rgb(0,151,178)
+    }
+    /* h5{
+        background-color:rgb(0,151,178) ;
+    }
+       */

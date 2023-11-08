@@ -34,3 +34,12 @@
   .disabled-slot{
     background-color: red;
   }
+  .booked-slot {
+    /* Add your CSS styles for booked slots here */
+    background-color: rgb(196, 195, 195);
+    border-color:rgb(196, 195, 195); ;
+    color: white;
+    
+    /* Add any other styling you want for booked slots */
+  }
+  

@@ -6,6 +6,8 @@ import { UserService } from 'src/app/shared/user.service';
 import { DoctorService } from 'src/app/shared/doctor.service';
 import { Router } from '@angular/router';
 import { AdminService } from 'src/app/shared/admin.service';
+import { MatDialog } from '@angular/material/dialog';
+import { UserWalletComponent } from '../user/user-wallet/user-wallet.component';
 
 interface NameRes{
   Name:string;
@@ -23,7 +25,8 @@ export class MainNavComponent {
   constructor(private userService:UserService,
     private route:Router,
     private doctorService:DoctorService,
-    private adminService:AdminService
+    private adminService:AdminService,
+    private _dialog:MatDialog
     ){}
   userName!:string;
   doctorName!:string;
@@ -125,6 +128,13 @@ export class MainNavComponent {
         }
       })
       
+    }
+
+    dialogOpen(){
+      const userId = this.userService.getUserId();
+      this._dialog.open(UserWalletComponent,{
+        data:{userId:userId}
+      });
     }
 }
  

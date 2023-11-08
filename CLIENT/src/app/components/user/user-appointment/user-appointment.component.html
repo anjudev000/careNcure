@@ -42,7 +42,15 @@
         <ng-container matColumnDef="Action">
             <th mat-header-cell *matHeaderCellDef> Action </th>
             <td mat-cell *matCellDef="let element">
-                <button mat-stroked-button color="primary">Cancel</button>
+                <button mat-stroked-button color="primary" 
+                (click)="cancelAppointment(element._id)"
+                [disabled]="element.isCancelled"
+                >
+                  <!-- {{element.isCancelled ? 'Cancelled': (element.Status === 'Completed'? <mat-icon>cloud_download</mat-icon> : 'Cancel')}} -->
+                  <span *ngIf="element.isCancelled">Cancelled</span>
+                  <mat-icon *ngIf="element.Status === 'Completed'">cloud_download</mat-icon>
+                  <span *ngIf="element.Status !== 'Completed' && !element.isCancelled">Cancel</span>
+                </button>
             </td>
           </ng-container>
       

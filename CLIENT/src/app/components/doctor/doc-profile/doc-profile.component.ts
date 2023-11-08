@@ -3,8 +3,6 @@ import { MatDialog } from '@angular/material/dialog';
 import { DoctorService } from 'src/app/shared/doctor.service';
 import { doctorProfile } from 'src/app/shared/doctorProfile.model';
 import { DocProfileEditComponent } from './doc-profile-edit/doc-profile-edit.component';
-import { MatInputModule } from '@angular/material/input';
-import { MatFormFieldModule } from '@angular/material/form-field';
 
 
 interface ApiResponse{
