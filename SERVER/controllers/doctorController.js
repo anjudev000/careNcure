@@ -1,4 +1,6 @@
 const Doctor = require('../models/doctorModel');
+const User = require('../models/userModel');
+const Appointment = require('../models/appointmentModel');
 const { securePassword } = require('../utils/passwordHashing');
 const { sendOtpToMail } = require('../utils/sendotp');
 const Otp = require('../models/otpModel');
@@ -274,6 +276,76 @@ const getDocStatus=async(req,res,next)=>{
   }
 }
 
+const getAppoitmentList = async(req,res,next)=>{
+  try{
+    const {doctorId} = req.params;
+    const appointemnts = await Appointment.find({doctorId:doctorId})
+    .sort({createdAt:-1})
+    .populate("userId")
+    .populate("doctorId")
+    .exec();
+    if(!appointemnts) return res.status(404).json({message:'No Appointments Scheduled'});
+    return res.status(200).json({appointments:appointemnts})
+  }catch(error){
+    console.log('error in getting appointment list: ',error.message);
+    next(error);
+  }
+}
+
+const cancelAppoitment = async(req,res,next)=>{
+  try{
+    const {id} = req.params;
+    const appointment = await Appointment.findById(id);
+    if(!appointment) return res.status(400).json({error: 'Appointment not found'});
+    let userRefund = appointment.amountPaid;
+    const user = await User.findById(appointment.userId);
+    if(user){
+      let prev = user.wallet;
+      console.log(prev);
+      user.wallet += userRefund;
+      console.log(460,user.wallet);
+      await user.save();
+    }
+    const doctor = await Doctor.findById(appointment.doctorId);
+    if(doctor){
+     
+      const slot = appointment.slotBooked;
+      let parts = slot.split(' ');
+      let datepart = parts[0]+' '+parts[1]+' '+parts[2];
+      let timepart = parts[3];
+      const slotIndex = doctor.slots.findIndex((item)=>item.date === datepart);
+      if(slotIndex!== -1){
+        doctor.slots[slotIndex].timeslots.push(timepart);
+        await doctor.save();
+      }
+    }
+    appointment.status = "Cancelled";
+    await appointment.save();
+    return res.status(200).json({message:'BOOKING CANCELLED'})
+   }
+  catch(error){
+    console.log('error in doctor cancel:',error.message);
+    next(error);
+  }
+}
+
+const confirmAppointment = async(req,res,next)=>{
+  try{
+    const {id} = req.params;
+    const appointment = await Appointment.findById(id);
+    if(appointment){
+      appointment.status = 'Confirmed';
+      await appointment.save();
+      return res.status(200).json({message:'Appointment is confirmed'});
+    }else{
+      return res.status(404).json({message:'Not Found'})
+    }
+    
+  }catch(error){
+    console.log('Error in confirm appointmnet:',error.message);
+    next(error);
+  }
+}
 
 module.exports = {
   register,
@@ -289,5 +361,8 @@ module.exports = {
   addTimeSlot,
   getAvailableSlot,
   getDocStatus,
-  bookedSlots
+  bookedSlots,
+  getAppoitmentList,
+  cancelAppoitment,
+  confirmAppointment
 }

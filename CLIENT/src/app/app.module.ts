@@ -94,6 +94,8 @@ import { SuccessPageComponent } from './components/user/find-doctors/booking/boo
 import { UserAppointmentComponent } from './components/user/user-appointment/user-appointment.component';
 import { PaymentFailedComponent } from './components/user/find-doctors/booking/booking-details/payment-failed/payment-failed.component';
 import { UserWalletComponent } from './components/user/user-wallet/user-wallet.component';
+import { BlockedPageComponent } from './blocked-page/blocked-page.component';
+import { DoctorAppointmentsComponent } from './components/doctor/doctor-appointments/doctor-appointments.component';
 
 
 interface NgxSpinnerConfig {
@@ -142,6 +144,8 @@ interface NgxSpinnerConfig {
     UserAppointmentComponent,
     PaymentFailedComponent,
     UserWalletComponent,
+    BlockedPageComponent,
+    DoctorAppointmentsComponent,
   ],
   imports: [
     BrowserModule,

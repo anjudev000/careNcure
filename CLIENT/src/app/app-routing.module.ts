@@ -34,6 +34,8 @@ import { BookingDetailsComponent } from './components/user/find-doctors/booking/
 import { SuccessPageComponent } from './components/user/find-doctors/booking/booking-details/success-page/success-page.component';
 import { UserAppointmentComponent } from './components/user/user-appointment/user-appointment.component';
 import { PaymentFailedComponent } from './components/user/find-doctors/booking/booking-details/payment-failed/payment-failed.component';
+import { BlockedPageComponent } from './blocked-page/blocked-page.component';
+import { DoctorAppointmentsComponent } from './components/doctor/doctor-appointments/doctor-appointments.component';
 
 const routes: Routes = [
   {
@@ -120,6 +122,12 @@ const routes: Routes = [
   },
   {
     path:'user-appointment',component:UserAppointmentComponent,canActivate:[userAuthServiceGuard]
+  },
+  {
+    path:'doctor-appointemnts',component:DoctorAppointmentsComponent,canActivate:[doctorAuthGuard]
+  },
+  {
+    path:'blocked',component:BlockedPageComponent
   },
  {
     path: '', redirectTo: 'home', pathMatch: 'full'

@@ -448,14 +448,14 @@ const cancelBooking  = async(req,res,next)=>{
 
     let userRefund,adminRefund,doctorRefund;
    
-    if(appointmentDate.toDateString() ===currentDate.toDateString() && timeDifference < 2 * 60 * 60 * 1000){
-
-      userRefund = 0.4  * appointment.amountPaid;
+    if(appointmentDate.toDateString() === currentDate.toDateString() && timeDifference < 2 * 60 * 60 * 1000){
+      console.log('inside less than 2 hour block');
+      userRefund = 0.6  * appointment.amountPaid;
       console.log(445,userRefund);
       adminRefund = 0.2 * appointment.amountPaid;
       doctorRefund = 0.2 * appointment.amountPaid;
     }else{
-      
+      console.log('inside more than 2 hour block');
       userRefund = 0.9  * appointment.amountPaid;
       console.log(451,userRefund);
 
@@ -478,7 +478,10 @@ const cancelBooking  = async(req,res,next)=>{
     }
     const doctor = await Doctor.findById(appointment.doctorId);
     if(doctor){
-      doctor.compensation += doctorRefund;
+      console.log('doctor refund amount is:',doctorRefund);
+      if(doctorRefund){
+        doctor.compensation += doctorRefund;
+      }
       const slot = appointment.slotBooked;
       let parts = slot.split(' ');
       let datepart = parts[0]+' '+parts[1]+' '+parts[2];
@@ -494,7 +497,7 @@ const cancelBooking  = async(req,res,next)=>{
     res.status(200).json({message:'BOOKING CANCELLED, AMOUNT HAS BEEN CREDITED TO YOUR WALLET'})
   }
   catch(error){
-    console.log(error.message);
+    console.log('error in cancelling: ',error.message);
     next(error);
   }
 }

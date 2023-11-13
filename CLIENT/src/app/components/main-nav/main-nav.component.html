@@ -30,7 +30,6 @@
         <ng-container *ngIf="!(isHandset$ | async)">
           <a *ngIf="(isUserLoggedin || !isDoctorLoggedIn)" routerLink="/search-speciality" class="desktop-link">Find Doctors</a>
           <a *ngIf="(isUserLoggedin || !isDoctorLoggedIn )" href="#" class="desktop-link">Video Consult</a>
-          <a *ngIf="isDoctorLoggedIn" href="#" [ngClass]="{'disabledLink': !isApproved}" class="desktop-link">My Appointments</a>
           <a *ngIf="isDoctorLoggedIn" routerLink="/schedule-slot" class="desktop-link" >Schedule Slots</a>
           <a *ngIf="isDoctorLoggedIn" href="#" [ngClass]="{'disabledLink': !isApproved}" class="desktop-link">View Prescriptions</a>
           <a *ngIf="isAdminLoggedin" routerLink="/userList" class="desktop-link"> View Users</a>
@@ -85,6 +84,9 @@
                   <mat-icon>account_circle</mat-icon>
                   <span>Profile</span>
                 </button>
+                <button mat-menu-item routerLink="doctor-appointemnts">
+                  <mat-icon>assignment</mat-icon>
+                  Appointments</button>
                 <button mat-menu-item (click)="doctorlogout()">
                   <mat-icon>power_settings_new</mat-icon>
                   <span>Logout</span>

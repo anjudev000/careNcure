@@ -5,8 +5,7 @@ import { doctorPasswordresetModel } from './passwordReset.model';
 import { forgotModel } from './passwordReset.model';
 import { HttpClient,HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environment/environment';
-import {TimeSlotArray} from './timeSlot.model';
-
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -59,6 +58,15 @@ export class DoctorService {
   
   getDocSTatus(doctorId:string){
     return this.http.get(environment.doctorapiBaseUrl+`/getStatus/${doctorId}`);
+  }
+  getAppointments(doctorId:string){
+   return this.http.get(environment.doctorapiBaseUrl+`/doctor-appointemnts/${doctorId}`);
+  }
+  cancelAppointments(id:string){
+   return this.http.patch(environment.doctorapiBaseUrl+`/cancel-booking/${id}`,{});
+  }
+  confirmAppointment(id:string){
+    return this.http.patch(environment.doctorapiBaseUrl+`/confirm-booking/${id}`,{});
   }
 
 

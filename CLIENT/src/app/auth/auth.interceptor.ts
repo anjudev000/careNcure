@@ -1,7 +1,8 @@
-import { HttpInterceptor,HttpRequest,HttpHandler } from "@angular/common/http";
+import { HttpInterceptor,HttpRequest,HttpHandler, HttpEvent } from "@angular/common/http";
 import {Injectable} from '@angular/core';
 import {tap} from 'rxjs/operators';
 import { Router } from "@angular/router";
+import { Observable } from "rxjs";
 
 
 @Injectable()
@@ -9,7 +10,7 @@ export class AuthInterceptor implements HttpInterceptor{
   private isNavigating = false;
   constructor(private router:Router){}
 
-  intercept(req:HttpRequest<any>,next:HttpHandler){
+  intercept(req:HttpRequest<any>,next:HttpHandler) : Observable<HttpEvent<any>>{
 
     if(req.headers.get('noauth'))
       return next.handle(req.clone());
@@ -31,7 +32,15 @@ export class AuthInterceptor implements HttpInterceptor{
       tap(
         (event)=>{},
         (err)=>{
-          if(err.error.auth === false && !this.isNavigating){
+          if (err.status === 403 && !this.isNavigating) {
+            this.isNavigating = true;
+            // Redirect to the blocked page
+            this.router.navigateByUrl('/blocked');
+            setTimeout(() => {
+              this.isNavigating = false; // Reset the flag after navigation is complete
+            }, 1000);
+          }
+          else if(err.error.auth === false && !this.isNavigating){
             this.isNavigating = true;
             if(req.url.includes('/admin/')){
               this.router.navigateByUrl('/admin-login');

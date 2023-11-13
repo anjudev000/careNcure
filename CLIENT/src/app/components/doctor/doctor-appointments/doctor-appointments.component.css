@@ -1,0 +1,27 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    margin-left: 350px;
+}
+.appointment-card {
+    margin: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 700px;
+    border-radius: 15px;
+    transition: transform 0.3s ease; /* Add transition for smooth effect */
+}
+
+.appointment-card:hover {
+    transform: scale(1.1); /* Scale the card on hover */
+}
+.appointment-info {
+    margin-bottom: 10px; /* Add space between each piece of appointment information */
+}
+
+.button-container {
+    display: flex;
+    justify-content: space-around;
+    
+}

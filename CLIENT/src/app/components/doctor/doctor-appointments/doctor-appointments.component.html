@@ -1,0 +1,29 @@
+<div class="container">
+
+  <h1>Your Appointments</h1>
+
+  <mat-card *ngFor="let app of appointments" class="appointment-card">
+      <mat-card-header>
+          <mat-card-content class="appointment-info">id: {{app.appointmentId}}</mat-card-content>
+          <mat-card-content class="appointment-info">{{app.userId.fullName}}</mat-card-content>
+          <mat-card-content class="appointment-info">{{app.slotBooked}}</mat-card-content>
+          <mat-card-content class="appointment-info">{{app.status}}</mat-card-content>
+          <div class="button-container">
+              <button mat-raised-button color="warn" 
+              style="margin-right: 10px;"
+              (click)="cancelAppointment(app._id)"
+              [disabled]="app.status === 'Cancelled'"
+              >
+              Cancel
+            </button>
+              <button mat-raised-button color="primary"
+              (click)="handleButtonClick(app)"
+              [disabled]="app.status === 'Cancelled'"
+              >
+              {{app.status === 'Confirmed'? 'Start Call': app.status === 'Completed'? 'Prescription':'Confirm'}}
+            </button>
+          </div>
+      </mat-card-header>
+  </mat-card>
+
+</div>
