@@ -6,11 +6,14 @@ import { ReactiveFormsModule } from '@angular/forms';
 import {FlexLayoutModule} from '@angular/flex-layout';
 // import { SpinnersAngularModule } from 'spinners-angular';
 import { NgxSpinnerModule } from "ngx-spinner";
+import { CommonModule } from '@angular/common';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-// import { NgxStripeModule } from 'ngx-stripe';
+import {SocketIoModule,SocketIoConfig} from'ngx-socket-io';
+// Socket.io configuration
+const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
 
 
 
@@ -96,7 +99,8 @@ import { PaymentFailedComponent } from './components/user/find-doctors/booking/b
 import { UserWalletComponent } from './components/user/user-wallet/user-wallet.component';
 import { BlockedPageComponent } from './blocked-page/blocked-page.component';
 import { DoctorAppointmentsComponent } from './components/doctor/doctor-appointments/doctor-appointments.component';
-
+import { VideoCallComponent } from './components/video-call/video-call.component';
+import { DoctorWalletComponent } from './components/doctor/doctor-wallet/doctor-wallet.component';
 
 interface NgxSpinnerConfig {
   type?: string;
@@ -146,6 +150,8 @@ interface NgxSpinnerConfig {
     UserWalletComponent,
     BlockedPageComponent,
     DoctorAppointmentsComponent,
+    VideoCallComponent,
+    DoctorWalletComponent,
   ],
   imports: [
     BrowserModule,
@@ -178,7 +184,9 @@ interface NgxSpinnerConfig {
     MatExpansionModule,
     MatDividerModule,
     NgxSpinnerModule,
+    CommonModule,
     NgxSpinnerModule.forRoot({ type: 'ball-scale-multiple' }),
+    SocketIoModule.forRoot(config)
     // NgxStripeModule.forRoot(environment.stripeKEY)
     // SpinnersAngularModule
     // MatFileUploadModule

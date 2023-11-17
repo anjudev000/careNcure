@@ -47,5 +47,6 @@ doctorRoute.get('/getStatus/:doctorId',jwtHelper.verifyJwtToken,isDoctorBlocked,
 doctorRoute.get('/doctor-appointemnts/:doctorId',doctorController.getAppoitmentList);
 doctorRoute.patch('/cancel-booking/:id',doctorController.cancelAppoitment);
 doctorRoute.patch('/confirm-booking/:id',doctorController.confirmAppointment);
+doctorRoute.put('/appointment-completed/:id',doctorController.endAppointment);
 
 module.exports = doctorRoute;

@@ -1,0 +1,59 @@
+<!-- video-call.component.html -->
+<div style="margin: 20px;">
+    <h3>Consultation</h3>
+
+    <h5>{{ value === 'user' ? 'Please wait till the call arrives' : '' }}</h5>
+    
+    <div *ngIf="value === 'doctor'">
+        <div *ngIf="remoteSocketId; else noPatient">
+            Patient Online
+        </div>
+        <ng-template #noPatient>
+            No one in the room
+        </ng-template>
+    </div>
+    <div>
+        <div>
+            <h6>Ongoing Consultation</h6>
+        </div>
+        <div>
+            <mat-grid-list cols="2" rowHeight=2:1>
+                <mat-grid-tile >
+                    <p class="video-description">local:</p>
+                    <video #myVideo [autoplay]="true"></video>
+                </mat-grid-tile>
+                <mat-grid-tile>
+                    <p class="video-description">remote:</p>
+                    <video #remoteVideo [autoplay]="true"></video>
+                </mat-grid-tile>
+            </mat-grid-list>
+        </div>
+    </div>
+     <div>
+        <!-- camera on button -->
+        <button mat-raised-button color="primary" (click)="startLocalVideo()"
+            [disabled]="myVideoActive"><mat-icon>videocam</mat-icon><span></span></button>
+
+         <!-- camera off button    -->
+        <button mat-raised-button color="primary" (click)="pauseLocalVideo()"
+            [disabled]="!myVideoActive"><mat-icon>videocam_off</mat-icon><span></span></button>
+
+            <!-- mute/unmute -->
+         <button mat-raised-button color="primary" *ngIf="myStream" (click)="handleMute()">
+                <mat-icon>{{ muted ? 'volume_up' : 'volume_off' }}</mat-icon>
+            </button>
+
+            <!-- call end button -->
+        <button mat-raised-button color="warn" *ngIf="remoteSocketId"
+            (click)="disConnectCall()"><mat-icon> call_end</mat-icon></button>
+
+            <!-- accept call button -->
+         <button mat-raised-button style="background-color: green;" *ngIf="value === 'user' && myStream && !accepted"
+          (click)="sendStreams()"
+        ><mat-icon>phone_in_talk</mat-icon></button>
+
+            <!-- call button -->
+        <button mat-raised-button color="primary" *ngIf="!callActive && value === 'doctor' && remoteSocketId"
+            (click)="handleCallUser()"><mat-icon> call</mat-icon></button>
+    </div>
+</div>

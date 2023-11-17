@@ -11,9 +11,7 @@ const bcrypt = require('bcryptjs');
 passport.use('user',
   new localStrategy({ usernameField: 'email' },
     async (username, password, done) => {
-      console.log("inside passport", username, password);
       const user = await User.findOne({ email: username });
-      console.log("user is", user);
 
       if (!user) {
         return done(null, false, { message: 'Email is not registered' });
@@ -30,9 +28,7 @@ passport.use('user',
       }
 
       if (!user.isVerified) {
-        console.log(username, 18);
         const otp = await sendOtpToMail(username);
-        console.log('line 34444444444', otp);
         //Save otp to the otp schema
         const newOTP = new Otp({
           userId: user._id,
@@ -50,9 +46,7 @@ passport.use('user',
 passport.use('doctor',
   new localStrategy({ usernameField: 'email' },
     async (username, password, done) => {
-      console.log("inside passport", username, password);
       const doctor = await Doctor.findOne({ email: username });
-      console.log("doctor is", doctor);
 
       if (!doctor) {
         return done(null, false, { message: 'Email is not registered',notVerified:false });
@@ -69,9 +63,7 @@ passport.use('doctor',
       }
 
       if (!doctor.isVerified) {
-        console.log(username, 18);
         const otp = await sendOtpToMail(username);
-        console.log('line 34', otp);
         //Save otp to the otp schema
         const newOTP = new Otp({
           doctorId: doctor._id,

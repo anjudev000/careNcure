@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 import { AdminService } from 'src/app/shared/admin.service';
 import { MatDialog } from '@angular/material/dialog';
 import { UserWalletComponent } from '../user/user-wallet/user-wallet.component';
+import { DoctorWalletComponent } from '../doctor/doctor-wallet/doctor-wallet.component';
 
 interface NameRes{
   Name:string;
@@ -135,6 +136,13 @@ export class MainNavComponent {
       this._dialog.open(UserWalletComponent,{
         data:{userId:userId}
       });
+    }
+
+    doctorDialog(){
+      const doctorId = this.doctorService.getDoctorId();
+      this._dialog.open(DoctorWalletComponent,{
+        data:{doctorId:doctorId}
+      })
     }
 }
  

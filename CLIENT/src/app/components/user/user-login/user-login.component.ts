@@ -43,7 +43,7 @@ ngOnInit(){
         setTimeout(()=>{
           this.router.navigate(['/user-otp-verify'],{state:{email:formData.email}});
         },6000)
-      }
+      } 
       }
     )
   }

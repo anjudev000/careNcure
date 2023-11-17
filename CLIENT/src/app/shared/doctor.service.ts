@@ -68,6 +68,9 @@ export class DoctorService {
   confirmAppointment(id:string){
     return this.http.patch(environment.doctorapiBaseUrl+`/confirm-booking/${id}`,{});
   }
+  endAppointment(id:string){
+    return this.http.put(environment.doctorapiBaseUrl+`/appointment-completed/${id}`,{});
+  }
 
 
   //helper methods

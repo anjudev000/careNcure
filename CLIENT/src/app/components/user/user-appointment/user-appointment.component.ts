@@ -3,6 +3,9 @@ import {MatTableDataSource} from '@angular/material/table';
 import { UserService } from 'src/app/shared/user.service';
 import Swal from 'sweetalert2';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { SocketService } from 'src/app/shared/socket.service';
+import { NavigationExtras, Router } from '@angular/router';
+
 
 
 interface ApiResponse{
@@ -10,6 +13,8 @@ interface ApiResponse{
 }
 interface Booking {
   _id:string;
+  userId:string;
+  email:string;
   Doctor: string;
   Scheduled: string;
   BookedOn: string;
@@ -25,11 +30,16 @@ interface Booking {
   styleUrls: ['./user-appointment.component.css']
 })
 export class UserAppointmentComponent {
+
   displayedColumns: string[] = ['No','Doctor','Scheduled','BookedOn','Status','Action'];
   dataSource!:MatTableDataSource<any>;
 
-  constructor(private userService:UserService,
-    private _snackBar:MatSnackBar
+  constructor(
+    private userService:UserService,
+    private socketService:SocketService,
+    private router:Router,
+    private _snackBar:MatSnackBar,
+    
     ){}
 
   applyFilter(event: Event) {
@@ -51,6 +61,8 @@ export class UserAppointmentComponent {
         const bookings: Booking[] = data.map((booking: any) => {
           return {
             _id: booking._id,
+            userId:booking.userId,
+            email:booking.userId.email,
             Doctor: booking.doctorId.fullName,
             Scheduled: booking.slotBooked,
             BookedOn: booking.updatedAt.split(' ')[0],
@@ -96,4 +108,11 @@ export class UserAppointmentComponent {
     })
     
   }
+
+  joinCall(roomId:string,email:string,booking:any):void{
+     const room = roomId;
+     this.socketService.userRoomJoin({ email, room });
+     const value = 'user';
+     this.router.navigate([`user/call/${room}`],{state:{value:'user'}});
+}
 }

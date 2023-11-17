@@ -347,6 +347,34 @@ const confirmAppointment = async(req,res,next)=>{
   }
 }
 
+const endAppointment = async(req,res,next)=>{
+  try{
+    const {id} = req.params;
+    const updateAppointment = await Appointment.findById(id);
+    if(!updateAppointment) return res.status(404).json({message:'Appointment not found'});
+
+    const doctorFees = (updateAppointment.amountPaid * 80)/100;
+    const adminCommision = updateAppointment.amountPaid - doctorFees;
+
+    await Appointment.findByIdAndUpdate(
+      id,
+      { status: 'Completed', adminAmount: adminCommision },
+      { new: true }
+    );
+    const docId = updateAppointment.doctorId;
+    const doctor = await Doctor.findById(docId);
+
+    if(!doctor)  return res.status(404).json({message:'Doctor Not Found'});
+      const amount = doctor.wallet + doctorFees;
+    console.log('Amount for doctor:',amount);
+    await Doctor.findByIdAndUpdate(docId,{wallet:amount},{new:true});
+    return res.status(200).json({message:'Appointment Ended'});
+  }catch(error){
+    console.log('Error in ending Appointmnet');
+    next(error);
+  }
+}
+
 module.exports = {
   register,
   otpVerify,
@@ -364,5 +392,6 @@ module.exports = {
   bookedSlots,
   getAppoitmentList,
   cancelAppoitment,
-  confirmAppointment
+  confirmAppointment,
+  endAppointment
 }

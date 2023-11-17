@@ -9,12 +9,12 @@
           <div class="row g-0">
             <div class="col-md-4 gradient-custom text-center text-white"
               style="border-top-left-radius: .5rem; border-bottom-left-radius: .5rem;">
-              <img [src]="data?.profilePic" alt="Avatar" class="img-fluid my-5"
+              <img [src]="data && data.profilePic" alt="Avatar" class="img-fluid my-5"
                 style="width: 200px; border-radius: 70px;" />
               <!-- <h5>Marie Horwitz</h5> -->
-              <p><b>DR.{{data.fullName}}</b></p>
+              <p><b>DR.{{data && data.fullName}}</b></p>
               <i class="far fa-edit mb-5"></i>
-              <p>Regn.No: {{data.RegnNumber}}</p>
+              <p>Regn.No: {{data && data.RegnNumber}}</p>
             </div>
             <div class="col-md-8">
               <div class="card-body p-4">
@@ -23,21 +23,21 @@
                 <div class="row pt-1">
                   <div class="col-6 mb-3">
                     <h6><b>Email</b></h6>
-                    <p class="text-muted">{{data.email}}</p>
+                    <p class="text-muted">{{data && data.email}}</p>
                   </div>
                   <div class="col-6 mb-3">
                     <h6><b>Phone</b></h6>
-                    <p class="text-muted">{{data.mobile_num}}</p>
+                    <p class="text-muted">{{data && data.mobile_num}}</p>
                   </div>
                 </div>
                 <div class="row pt-1">
                   <div class="col-6 mb-3">
                     <h6><b>Specialization</b></h6>
-                    <p class="text-muted">{{data.specialization}}</p>
+                    <p class="text-muted">{{data && data.specialization}}</p>
                   </div>
                   <div class="col-6 mb-3">
                     <h6><b>Fees</b></h6>
-                    <p class="text-muted">{{data.fee}}</p>
+                    <p class="text-muted">{{data && data.fee}}</p>
                   </div>
                 </div>
 
@@ -48,15 +48,15 @@
                   <div class="row pt-1">
                     <div class="col-4 mb-3">
                       <h6><b>Degree</b></h6>
-                      <p class="text-muted">{{data.education[0].degree}}</p>
+                      <p class="text-muted">{{data && data.education[0].degree}}</p>
                     </div>
                     <div class="col-4 mb-3">
                       <h6><b>College</b></h6>
-                      <p class="text-muted">{{data.education[0].college}}</p>
+                      <p class="text-muted">{{data && data.education[0].college}}</p>
                     </div>
                     <div class="col-4 mb-3">
                       <h6><b>year</b></h6>
-                      <p class="text-muted">{{data.education[0].graduation_year}}</p>
+                      <p class="text-muted">{{data && data.education[0].graduation_year}}</p>
                     </div>
 
                   </div>
@@ -67,11 +67,11 @@
                   <div class="row pt-1">
                     <div class="col-6 mb-3">
                       <h6><b>Hospital</b></h6>
-                      <p class="text-muted">{{data.experience[0]?.hospital}}</p>
+                      <p class="text-muted">{{data && data.experience[0].hospital}}</p>
                     </div>
                     <div class="col-6 mb-3">
                       <h6><b>Term</b></h6>
-                      <p class="text-muted">{{data.experience[0]?.term}}</p>
+                      <p class="text-muted">{{data && data.experience[0].term}}</p>
                     </div>
 
 

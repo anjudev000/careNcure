@@ -31,6 +31,9 @@ const appointmentSchema = new mongoose.Schema({
       amountPaid:{
         type:Number,
       },
+      adminAmount:{
+        type:Number,
+      },
       paymentStatus:{
         type:String
       },

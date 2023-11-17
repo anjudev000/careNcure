@@ -36,6 +36,7 @@ import { UserAppointmentComponent } from './components/user/user-appointment/use
 import { PaymentFailedComponent } from './components/user/find-doctors/booking/booking-details/payment-failed/payment-failed.component';
 import { BlockedPageComponent } from './blocked-page/blocked-page.component';
 import { DoctorAppointmentsComponent } from './components/doctor/doctor-appointments/doctor-appointments.component';
+import { VideoCallComponent } from './components/video-call/video-call.component';
 
 const routes: Routes = [
   {
@@ -128,6 +129,12 @@ const routes: Routes = [
   },
   {
     path:'blocked',component:BlockedPageComponent
+  },
+  {
+    path:'doctor/call/:room',component:VideoCallComponent,canActivate:[doctorAuthGuard]
+  },
+  {
+    path:'user/call/:room',component:VideoCallComponent,canActivate:[userAuthServiceGuard]
   },
  {
     path: '', redirectTo: 'home', pathMatch: 'full'

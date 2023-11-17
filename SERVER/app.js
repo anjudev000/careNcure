@@ -7,6 +7,8 @@ const cors = require('cors');
 const {notFound,errorHandler} = require('./middleware/errorHandling');
 const passport = require('passport');
 require('./middleware/passportAuthentication');
+const socketManager = require('./config/socket') ;
+const  {Server} = require('socket.io');
 
 
  
@@ -30,7 +32,13 @@ app.use('*',notFound);
 app.use(errorHandler);
 
 
-app.listen(3000,()=>{
+const server = app.listen(3000,()=>{
   connectToMongoDB();
   console.log("server is running on port 3000...");
 })
+
+const io = new Server(server,{cors: {
+  origin: ['http://localhost:4200', 'https://admin.socket.io'],
+  credentials: true
+}})
+socketManager(io);

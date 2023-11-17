@@ -61,6 +61,10 @@ const doctorSchema = new mongoose.Schema(
     fee:{
       type:Number
     },
+    wallet:{
+      type:Number,
+      default:0
+   },
     compensation:{
       type:Number,
       default:0

@@ -2,6 +2,9 @@ import { Component } from '@angular/core';
 import Swal from 'sweetalert2';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { DoctorService } from 'src/app/shared/doctor.service';
+import { SocketService } from 'src/app/shared/socket.service';
+import { NavigationExtras, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 
 interface ApiResponse{
   appointments:any
@@ -14,7 +17,11 @@ interface Appointment{
   _id:string;
   appointmentId:number;
   userId:{
+    _id:string;
     fullName:string;
+  };
+  doctorId:{
+    email:string;
   };
   slotBooked:string;
   status:string;
@@ -27,8 +34,12 @@ interface Appointment{
 })
 export class DoctorAppointmentsComponent {
     appointments:Appointment[]=[];
-   constructor(private doctorService:DoctorService,
-    private _snackBar:MatSnackBar
+   constructor(
+    private doctorService:DoctorService,
+    private socketService:SocketService,
+    private _snackBar:MatSnackBar,
+    private router:Router,
+    private route:ActivatedRoute
     ){}
     
     ngOnInit(){
@@ -105,10 +116,21 @@ export class DoctorAppointmentsComponent {
           })
         }
          startVideoCall(app:Appointment){
-
+          const room = app._id+app.userId._id;
+          const email = app.doctorId.email;
+          console.log(119,room);
+          
+          this.socketService.joinRoom({email,room});
+          console.log(128,room)
+          this.router.navigate([`doctor/call/${room}`],{state:{value:'doctor',appointmentId:app._id}});
+          // this.socketService.emitValue({ email, room, value: 'doctor' });
+            
+           
+          
+          
         }
        createPrescription(app:Appointment){
-
+        
         }
 
 
