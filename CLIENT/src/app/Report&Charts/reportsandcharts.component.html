@@ -1,25 +1,36 @@
-<div style="margin: 50px;">
-    <div class="bg-warning" style="width: 200px; display: inline-block;">
-        <mat-card>
-            <mat-card-title>Total Appointements</mat-card-title>
-            <mat-card-content>{{totalAppointments}}</mat-card-content>
-          </mat-card>
+<div class="container" style="margin: 50px;">
+    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; padding: 20px;">
+        <div class="bg-warning" style="width: 200px;">
+            <mat-card>
+                <mat-card-title>Total Appointments</mat-card-title>
+                <mat-card-content>{{totalAppointments}}</mat-card-content>
+              </mat-card>
+        </div>
+        <div style="width: 200px;">
+            <mat-card>
+                <mat-card-title>Monthly Revenue</mat-card-title>
+                <mat-card-content>{{monthlyRev}}</mat-card-content>          </mat-card>
+        </div>
+        <div style="width: 200px;">
+            <mat-card *ngIf="!isAdmin">
+                <mat-card-title>Weekly Revenue</mat-card-title>
+                <mat-card-content>{{weeklyRev}}</mat-card-content>        
+              </mat-card>
+              <mat-card *ngIf="isAdmin">
+                <mat-card-title>My Revenue</mat-card-title>
+                <mat-card-content>{{totalAdminRevenue}}</mat-card-content>        
+              </mat-card>
+        </div>
     </div>
-    <div style="width: 200px;">
-        <mat-card>
-            <mat-card-title>Monthly Revenue</mat-card-title>
-            <mat-card-content>{{monthlyRev}}</mat-card-content>          </mat-card>
-    </div>
-    <div style="width: 200px;">
-        <mat-card>
-            <mat-card-title>Weekly Revenue</mat-card-title>
-            <mat-card-content>{{weeklyRev}}</mat-card-content>          </mat-card>
-    </div>
-    
-    
-    <div style="width: 600px;height: 600px;">
+   <div style="display: grid; grid-template-columns: 1fr 1fr;">
+    <div style="width: 700px;height: 700px; padding: 50px;">
         <canvas #myChart></canvas>
-      </div>
+    </div>
+    <div style="width: 700px;height: 700px; padding: 50px;">
+        <canvas #myChart2></canvas>
+    </div>
+   </div>
+   
     
 </div>
 

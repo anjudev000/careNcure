@@ -1,6 +1,7 @@
 const Admin = require('../models/adminModel');
 const User = require('../models/userModel');
 const Doctor = require('../models/doctorModel');
+const Appointment = require('../models/appointmentModel');
 const dotenv = require('dotenv');
 dotenv.config();
 const _ = require('lodash');
@@ -160,6 +161,90 @@ const rejectDoctor = async (req, res, next) => {
   }
 }
 
+const getDashboardDetails = async(req,res,next)=>{
+  try{
+     // Get the total number of appointments
+     const totalAppointmentsCount = await Appointment.countDocuments();
+   // Get all appointments
+   const allAppointments = await Appointment.find();
+
+   // Calculate the total revenue
+   const totalRevenue = allAppointments.reduce((sum, appointment) => {
+     // Check if the appointment has an amountPaid and is in a valid status
+     if (
+       appointment.amountPaid &&
+       appointment.status !== 'Cancelled' &&
+       appointment.status !== 'Scheduled'
+     ) {
+       sum += appointment.amountPaid;
+     }
+     return sum;
+   }, 0);
+
+      // Calculate the total admin revenue
+      const totalAdminRevenue = allAppointments.reduce((sum, appointment) => {
+     
+        if (
+          appointment.adminAmount &&
+          appointment.status !== 'Cancelled' &&
+          appointment.status !== 'Scheduled'
+        ) {
+          sum += appointment.adminAmount;
+        }
+        return sum;
+      }, 0);
+
+    // Monthly details
+    const currentMonth = new Date().getMonth();
+    const monthlyAppointments = allAppointments.filter(appointment => {
+      return new Date(appointment.slotBooked).getMonth() === currentMonth;
+    });
+    console.log(189,monthlyAppointments);
+    let monthlyRevenue = 0;
+    let monthlyTotalAppointments = 0;
+    monthlyAppointments.forEach(appointment => {
+      monthlyRevenue += appointment.amountPaid || 0;
+      monthlyTotalAppointments++;
+    });
+
+     //  for graph data- appointments by month
+     let appointmentsByMonth = {};
+     const currentYear = new Date().getFullYear();
+     for (let month = 0; month < 12; month++) {
+       appointmentsByMonth[`${currentYear}-${month + 1}`] = {
+         month: `${currentYear}-${month + 1}`,
+         noOfAppointments: 0,
+         totalAmount: 0
+       };
+     }
+     console.log(447,appointmentsByMonth);
+     allAppointments.forEach(appointment => {
+      const appointmentYear = new Date(appointment.slotBooked).getFullYear();
+         if (currentYear === appointmentYear) {
+           const month = new Date(appointment.slotBooked).getMonth() + 1;
+           const key = `${currentYear}-${month}`;
+           if (!appointmentsByMonth[key]) {
+             appointmentsByMonth[key] = { month: key, noOfAppointments: 0, totalAmount: 0 };
+           }
+           appointmentsByMonth[key].noOfAppointments++;
+           appointmentsByMonth[key].totalAmount += appointment.amountPaid|| 0;
+         }});
+
+    return res.status(200).json({
+      monthlyAppointments: Object.values(appointmentsByMonth),
+      monthlyRevenue,
+      monthlyTotalAppointments,
+      totalAppointmentsCount,
+      totalRevenue,
+      totalAdminRevenue
+    });
+    
+  }
+  catch(error){
+    next(error);
+  }
+}
+
 
 module.exports = {
   login,
@@ -170,5 +255,6 @@ module.exports = {
   blockUnblockUser,
   blockUnblockDoctor,
   approveDoctor,
-  rejectDoctor
+  rejectDoctor,
+  getDashboardDetails
 }

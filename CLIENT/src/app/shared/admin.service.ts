@@ -38,6 +38,11 @@ export class AdminService {
   postDocRejection(doctorId:string,reason:string){
     return this.http.post(environment.adminApiBaseUrl+`/doctor-rejection/${doctorId}`,reason);
   }
+  getDashboardData(){
+    return this.http.get(environment.adminApiBaseUrl+'/admin-dashboard');
+  }
+
+
   //helper methods
   setToken(token:string){
     localStorage.setItem('adminToken',token);

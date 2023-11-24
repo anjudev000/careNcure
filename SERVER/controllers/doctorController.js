@@ -416,10 +416,11 @@ const getDashboardData = async (req, res, next) => {
     const monthlyAppointments = appointments.filter(appointment => {
       return new Date(appointment.slotBooked).getMonth() === currentMonth;
     });
+    console.log(419,monthlyAppointments);
     let monthlyRevenue = 0;
     let monthlyTotalAppointments = 0;
     monthlyAppointments.forEach(appointment => {
-      monthlyRevenue += doctor.wallet || 0;
+      monthlyRevenue += appointment.amountPaid || 0;
       monthlyTotalAppointments++;
     });
 
@@ -430,7 +431,7 @@ const getDashboardData = async (req, res, next) => {
     let weeklyRevenue = 0;
     let weeklyTotalAppointments = 0;
     weeklyAppointments.forEach(appointment => {
-      weeklyRevenue += doctor.wallet || 0;
+      weeklyRevenue += appointment.amountPaid || 0;
       weeklyTotalAppointments++;
     });
     // Additional logic for appointments by month
@@ -443,25 +444,29 @@ const getDashboardData = async (req, res, next) => {
         totalAmount: 0
       };
     }
-
+    console.log(447,appointmentsByMonth);
     appointments.forEach(appointment => {
-      const appointmentYear = new Date(appointment.slotBooked).getFullYear();
-      if (currentYear === appointmentYear) {
-        const month = new Date(appointment.slotBooked).getMonth() + 1;
-        const key = `${currentYear}-${month}`;
-        if (!appointmentsByMonth[key]) {
-          appointmentsByMonth[key] = { month: key, noOfAppointments: 0, totalAmount: 0 };
+      if(appointment.doctorId.toString() === doctor._id.toString()){
+        const appointmentYear = new Date(appointment.slotBooked).getFullYear();
+        if (currentYear === appointmentYear) {
+          const month = new Date(appointment.slotBooked).getMonth() + 1;
+          const key = `${currentYear}-${month}`;
+          if (!appointmentsByMonth[key]) {
+            appointmentsByMonth[key] = { month: key, noOfAppointments: 0, totalAmount: 0 };
+          }
+          appointmentsByMonth[key].noOfAppointments++;
+          appointmentsByMonth[key].totalAmount += appointment.amountPaid|| 0;
         }
-        appointmentsByMonth[key].noOfAppointments++;
-        appointmentsByMonth[key].totalAmount += doctor.wallet || 0;
       }
+    
     });
+    console.log(463,appointmentsByMonth);
+
     res.status(200).json({
       monthlyAppointments: Object.values(appointmentsByMonth),
       weeklyAppointments,
       weeklyRevenue,
       weeklyTotalAppointments,
-      monthlyAppointments,
       monthlyRevenue,
       monthlyTotalAppointments,
       annualAppointments,

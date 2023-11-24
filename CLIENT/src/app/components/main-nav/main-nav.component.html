@@ -28,8 +28,8 @@
           </div>
         </div>
         <ng-container *ngIf="!(isHandset$ | async)">
-          <a *ngIf="(isUserLoggedin || !isDoctorLoggedIn)" routerLink="/search-speciality" class="desktop-link">Find Doctors</a>
-          <a *ngIf="(isUserLoggedin || !isDoctorLoggedIn )" href="#" class="desktop-link">Video Consult</a>
+          <a *ngIf="isUserLoggedin" routerLink="/search-speciality" class="desktop-link">Find Doctors</a>
+          <a *ngIf="isUserLoggedin" href="#" class="desktop-link">Video Consult</a>
           <a *ngIf="isDoctorLoggedIn" routerLink="/schedule-slot" class="desktop-link" >Schedule Slots</a>
           <!-- <a *ngIf="isDoctorLoggedIn" href="#" [ngClass]="{'disabledLink': !isApproved}" class="desktop-link">View Prescriptions</a> -->
           <a *ngIf="isAdminLoggedin" routerLink="/userList" class="desktop-link"> View Users</a>
@@ -80,6 +80,10 @@
             <div>
               <button mat-button color="primary" [matMenuTriggerFor]="menu">DR.{{doctorName}}</button>
               <mat-menu #menu="matMenu">
+                <button mat-menu-item routerLink="doctor-home">
+                  <mat-icon>dashboard</mat-icon>
+                    <span>Dashboard</span>
+                </button>
                 <button mat-menu-item routerLink="doctor-profile">
                   <mat-icon>account_circle</mat-icon>
                   <span>Profile</span>
@@ -103,6 +107,10 @@
               <div>
                 <button mat-button color="primary" [matMenuTriggerFor]="menu">{{adminName}}</button>
                 <mat-menu #menu="matMenu">
+                  <button mat-menu-item routerLink="admin-dashboard">
+                    <mat-icon>dashboard</mat-icon>
+                      <span>Dashboard</span>
+                  </button>
                   <button mat-menu-item>
                     <mat-icon>account_circle</mat-icon>
                     <span>Profile</span>
