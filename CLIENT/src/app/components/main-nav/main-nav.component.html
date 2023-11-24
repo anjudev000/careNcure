@@ -31,7 +31,7 @@
           <a *ngIf="(isUserLoggedin || !isDoctorLoggedIn)" routerLink="/search-speciality" class="desktop-link">Find Doctors</a>
           <a *ngIf="(isUserLoggedin || !isDoctorLoggedIn )" href="#" class="desktop-link">Video Consult</a>
           <a *ngIf="isDoctorLoggedIn" routerLink="/schedule-slot" class="desktop-link" >Schedule Slots</a>
-          <a *ngIf="isDoctorLoggedIn" href="#" [ngClass]="{'disabledLink': !isApproved}" class="desktop-link">View Prescriptions</a>
+          <!-- <a *ngIf="isDoctorLoggedIn" href="#" [ngClass]="{'disabledLink': !isApproved}" class="desktop-link">View Prescriptions</a> -->
           <a *ngIf="isAdminLoggedin" routerLink="/userList" class="desktop-link"> View Users</a>
           <div>
             <a *ngIf="isAdminLoggedin"  class="desktop-link" [matMenuTriggerFor]="menu">View Doctors</a>

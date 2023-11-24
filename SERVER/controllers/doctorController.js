@@ -230,130 +230,131 @@ const addTimeSlot = async (req, res, next) => {
 
 
 const getAvailableSlot = async (req, res, next) => {
-  try{
+  try {
 
-  const { doctorId, date } = req.params;
-  const doctor = await Doctor.findById(doctorId);
-  if (!doctor) return res.status(404).json({ message: 'not found' });
-  else {
-    slotdata = doctor.slots.find(slot => slot.date === date);
-   if (slotdata)  return res.status(200).json({slotsForDate:slotdata.timeslots});
-   return res.json({slotsForDate: []})
-  }
-}catch(error){
-  console.log(error.message);
-  next(error);
-}
-}
-
-const bookedSlots = async(req,res,next)=>{
-  try{
-    const {doctorId,date} = req.params;
+    const { doctorId, date } = req.params;
     const doctor = await Doctor.findById(doctorId);
-    if(!doctor) return res.status(404).json({message: 'Not found'});
-    else{
-      bookedData = doctor.bookedSlots.find(slot=> slot.date === date);
-      if(bookedData) return res.status(200).json({slotsForDate: bookedData.timeslots});
-      return res.json({slotsForDate:[]})
+    if (!doctor) return res.status(404).json({ message: 'not found' });
+    else {
+      slotdata = doctor.slots.find(slot => slot.date === date);
+      if (slotdata) return res.status(200).json({ slotsForDate: slotdata.timeslots });
+      return res.json({ slotsForDate: [] })
+    }
+  } catch (error) {
+    console.log(error.message);
+    next(error);
+  }
+}
+
+const bookedSlots = async (req, res, next) => {
+  try {
+    const { doctorId, date } = req.params;
+    const doctor = await Doctor.findById(doctorId);
+    if (!doctor) return res.status(404).json({ message: 'Not found' });
+    else {
+      bookedData = doctor.bookedSlots.find(slot => slot.date === date);
+      if (bookedData) return res.status(200).json({ slotsForDate: bookedData.timeslots });
+      return res.json({ slotsForDate: [] })
     }
   }
-  catch(error){
+  catch (error) {
     console.log(error.message);
     next(error)
   }
 }
 
-const getDocStatus=async(req,res,next)=>{
-  try{
+const getDocStatus = async (req, res, next) => {
+  try {
 
-    const {doctorId} = req.params;
+    const { doctorId } = req.params;
     const doctor = await Doctor.findById(doctorId);
-    if(!doctor)  return res.status(404).json({message:'Doctor not found'});
+    if (!doctor) return res.status(404).json({ message: 'Doctor not found' });
     const docstatus = doctor.status;
-    return res.status(200).json({ docstatus });  }
-  catch(error){
+    return res.status(200).json({ docstatus });
+  }
+  catch (error) {
     next(error)
   }
 }
 
-const getAppoitmentList = async(req,res,next)=>{
-  try{
-    const {doctorId} = req.params;
-    const appointemnts = await Appointment.find({doctorId:doctorId})
-    .sort({createdAt:-1})
-    .populate("userId")
-    .populate("doctorId")
-    .exec();
-    if(!appointemnts) return res.status(404).json({message:'No Appointments Scheduled'});
-    return res.status(200).json({appointments:appointemnts})
-  }catch(error){
-    console.log('error in getting appointment list: ',error.message);
+const getAppoitmentList = async (req, res, next) => {
+  try {
+    const { doctorId } = req.params;
+    const appointemnts = await Appointment.find({ doctorId: doctorId })
+      .sort({ createdAt: -1 })
+      .populate("userId")
+      .populate("doctorId")
+      .exec();
+    if (!appointemnts) return res.status(404).json({ message: 'No Appointments Scheduled' });
+    return res.status(200).json({ appointments: appointemnts })
+  } catch (error) {
+    console.log('error in getting appointment list: ', error.message);
     next(error);
   }
 }
 
-const cancelAppoitment = async(req,res,next)=>{
-  try{
-    const {id} = req.params;
+const cancelAppoitment = async (req, res, next) => {
+  try {
+    const { id } = req.params;
     const appointment = await Appointment.findById(id);
-    if(!appointment) return res.status(400).json({error: 'Appointment not found'});
+    if (!appointment) return res.status(400).json({ error: 'Appointment not found' });
     let userRefund = appointment.amountPaid;
     const user = await User.findById(appointment.userId);
-    if(user){
+    if (user) {
       let prev = user.wallet;
       console.log(prev);
       user.wallet += userRefund;
-      console.log(460,user.wallet);
+      console.log(460, user.wallet);
       await user.save();
     }
     const doctor = await Doctor.findById(appointment.doctorId);
-    if(doctor){
-     
+    if (doctor) {
+
       const slot = appointment.slotBooked;
       let parts = slot.split(' ');
-      let datepart = parts[0]+' '+parts[1]+' '+parts[2];
+      let datepart = parts[0] + ' ' + parts[1] + ' ' + parts[2];
       let timepart = parts[3];
-      const slotIndex = doctor.slots.findIndex((item)=>item.date === datepart);
-      if(slotIndex!== -1){
+      const slotIndex = doctor.slots.findIndex((item) => item.date === datepart);
+      if (slotIndex !== -1) {
         doctor.slots[slotIndex].timeslots.push(timepart);
         await doctor.save();
       }
     }
     appointment.status = "Cancelled";
     await appointment.save();
-    return res.status(200).json({message:'BOOKING CANCELLED'})
-   }
-  catch(error){
-    console.log('error in doctor cancel:',error.message);
+    return res.status(200).json({ message: 'BOOKING CANCELLED' })
+  }
+  catch (error) {
+    console.log('error in doctor cancel:', error.message);
     next(error);
   }
 }
 
-const confirmAppointment = async(req,res,next)=>{
-  try{
-    const {id} = req.params;
+const confirmAppointment = async (req, res, next) => {
+  try {
+    const { id } = req.params;
     const appointment = await Appointment.findById(id);
-    if(appointment){
+    if (appointment) {
       appointment.status = 'Confirmed';
       await appointment.save();
-      return res.status(200).json({message:'Appointment is confirmed'});
-    }else{
-      return res.status(404).json({message:'Not Found'})
+      return res.status(200).json({ message: 'Appointment is confirmed' });
+    } else {
+      return res.status(404).json({ message: 'Not Found' })
     }
-    
-  }catch(error){
-    console.log('Error in confirm appointmnet:',error.message);
+
+  } catch (error) {
+    console.log('Error in confirm appointmnet:', error.message);
     next(error);
   }
 }
 
-const endAppointment = async(req,res,next)=>{
-  try{
-    const {id} = req.params;
+const endAppointment = async (req, res, next) => {
+  try {
+    const { id } = req.params;
     const updateAppointment = await Appointment.findById(id);
-    if(!updateAppointment) return res.status(404).json({message:'Appointment not found'});
+    if (!updateAppointment) return res.status(404).json({ message: 'Appointment not found' });
 
-    const doctorFees = (updateAppointment.amountPaid * 80)/100;
+    const doctorFees = (updateAppointment.amountPaid * 80) / 100;
     const adminCommision = updateAppointment.amountPaid - doctorFees;
 
     await Appointment.findByIdAndUpdate(
@@ -364,16 +365,115 @@ const endAppointment = async(req,res,next)=>{
     const docId = updateAppointment.doctorId;
     const doctor = await Doctor.findById(docId);
 
-    if(!doctor)  return res.status(404).json({message:'Doctor Not Found'});
-      const amount = doctor.wallet + doctorFees;
-    console.log('Amount for doctor:',amount);
-    await Doctor.findByIdAndUpdate(docId,{wallet:amount},{new:true});
-    return res.status(200).json({message:'Appointment Ended'});
-  }catch(error){
+    if (!doctor) return res.status(404).json({ message: 'Doctor Not Found' });
+    const amount = doctor.wallet + doctorFees;
+    console.log('Amount for doctor:', amount);
+    await Doctor.findByIdAndUpdate(docId, { wallet: amount }, { new: true });
+    return res.status(200).json({ message: 'Appointment Ended' });
+  } catch (error) {
     console.log('Error in ending Appointmnet');
     next(error);
   }
 }
+
+const prescription = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const { diagnosis, medicines, advice } = req.body;
+    const appointment = await Appointment.findById(id)
+    if (!appointment) return res.status(404).json({ message: 'Appointment not Found' });
+    const updatedAppointment = await Appointment.findByIdAndUpdate(id, {
+      diagnosis,
+      prescription: medicines,
+      advice
+    })
+    return res.status(200).json({ updatedAppointment, message: "prescription updated" });
+  } catch (error) {
+    console.log('Error occured in generting prescription', error.message);
+    next(error);
+  }
+}
+
+const getDashboardData = async (req, res, next) => {
+  try {
+    const { doctorId } = req.params;
+    const appointments = await Appointment.find({ doctorId: doctorId });
+    const doctor = await Doctor.findById(doctorId);
+    // Annual details
+    const annualAppointments = appointments.filter(appointment => {
+      const appointmentYear = new Date(appointment.slotBooked).getFullYear();
+      return appointmentYear === new Date().getFullYear();
+    });
+    let annualRevenue = 0;
+    let annualTotalAppointments = 0;
+    annualAppointments.forEach(appointment => {
+      annualRevenue += doctor.wallet || 0;
+      annualTotalAppointments++;
+    });
+
+    // Monthly details
+    const currentMonth = new Date().getMonth();
+    const monthlyAppointments = appointments.filter(appointment => {
+      return new Date(appointment.slotBooked).getMonth() === currentMonth;
+    });
+    let monthlyRevenue = 0;
+    let monthlyTotalAppointments = 0;
+    monthlyAppointments.forEach(appointment => {
+      monthlyRevenue += doctor.wallet || 0;
+      monthlyTotalAppointments++;
+    });
+
+    // Weekly details
+    const lastWeekDate = new Date();
+    lastWeekDate.setDate(new Date().getDate() - 7);
+    const weeklyAppointments = appointments.filter(appointment => new Date(appointment.slotBooked) > lastWeekDate);
+    let weeklyRevenue = 0;
+    let weeklyTotalAppointments = 0;
+    weeklyAppointments.forEach(appointment => {
+      weeklyRevenue += doctor.wallet || 0;
+      weeklyTotalAppointments++;
+    });
+    // Additional logic for appointments by month
+    let appointmentsByMonth = {};
+    const currentYear = new Date().getFullYear();
+    for (let month = 0; month < 12; month++) {
+      appointmentsByMonth[`${currentYear}-${month + 1}`] = {
+        month: `${currentYear}-${month + 1}`,
+        noOfAppointments: 0,
+        totalAmount: 0
+      };
+    }
+
+    appointments.forEach(appointment => {
+      const appointmentYear = new Date(appointment.slotBooked).getFullYear();
+      if (currentYear === appointmentYear) {
+        const month = new Date(appointment.slotBooked).getMonth() + 1;
+        const key = `${currentYear}-${month}`;
+        if (!appointmentsByMonth[key]) {
+          appointmentsByMonth[key] = { month: key, noOfAppointments: 0, totalAmount: 0 };
+        }
+        appointmentsByMonth[key].noOfAppointments++;
+        appointmentsByMonth[key].totalAmount += doctor.wallet || 0;
+      }
+    });
+    res.status(200).json({
+      monthlyAppointments: Object.values(appointmentsByMonth),
+      weeklyAppointments,
+      weeklyRevenue,
+      weeklyTotalAppointments,
+      monthlyAppointments,
+      monthlyRevenue,
+      monthlyTotalAppointments,
+      annualAppointments,
+      annualRevenue,
+      annualTotalAppointments
+    });
+  } catch (error) {
+    console.log('error in dashboard data',error.message);
+    next(error);
+  }
+};
+
 
 module.exports = {
   register,
@@ -393,5 +493,7 @@ module.exports = {
   getAppoitmentList,
   cancelAppoitment,
   confirmAppointment,
-  endAppointment
+  endAppointment,
+  prescription,
+  getDashboardData
 }

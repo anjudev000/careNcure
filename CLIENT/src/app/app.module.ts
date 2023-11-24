@@ -101,6 +101,8 @@ import { BlockedPageComponent } from './blocked-page/blocked-page.component';
 import { DoctorAppointmentsComponent } from './components/doctor/doctor-appointments/doctor-appointments.component';
 import { VideoCallComponent } from './components/video-call/video-call.component';
 import { DoctorWalletComponent } from './components/doctor/doctor-wallet/doctor-wallet.component';
+import { PrescriptionComponent } from './components/doctor/prescription/prescription.component';
+import { ReportsandchartsComponent } from './Report&Charts/reportsandcharts.component';
 
 interface NgxSpinnerConfig {
   type?: string;
@@ -152,6 +154,8 @@ interface NgxSpinnerConfig {
     DoctorAppointmentsComponent,
     VideoCallComponent,
     DoctorWalletComponent,
+    PrescriptionComponent,
+    ReportsandchartsComponent,
   ],
   imports: [
     BrowserModule,

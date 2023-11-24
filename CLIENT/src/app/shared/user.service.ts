@@ -79,6 +79,9 @@ export class UserService {
   deductWallet(userId:string,deductionAmount:number){
     return this.http.post(environment.apiBaseUrl+'/user-wallet/deduct',{userId,deductionAmount});
   }
+  getPrescriptionDetails(id:string){
+    return this.http.get(environment.apiBaseUrl+`/get-prescription/${id}`);
+  }
 
   //helper methods
 

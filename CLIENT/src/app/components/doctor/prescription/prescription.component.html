@@ -1,0 +1,57 @@
+<div mat-dialog-title>Create Prescription</div>
+<form [formGroup]="prescriptionForm" (ngSubmit)="onSubmit()">
+  <div mat-dialog-content class="content row">
+   
+    
+    <!-- Appointmnetid -->
+    <mat-form-field appearance="outline">
+      <mat-label>Appoitnment  Id</mat-label>
+      <input matInput  formControlName="appId" >
+    </mat-form-field>
+
+   <!-- Diagnosis -->
+    <mat-form-field appearance="outline">
+      <mat-label>Diagnosis</mat-label>
+      <input matInput placeholder="Enter the diagnosis" formControlName="diagnosis">
+    </mat-form-field>
+    
+
+     <!-- Medicines -->
+    <div formArrayName="medicines">
+      <div *ngFor="let medicine of medicines.controls; let i = index" [formGroupName]="i" class="medicine-group">
+        <mat-form-field appearance="outline">
+          <mat-label>Medicine</mat-label>
+          <input matInput placeholder="Enter the findings" formControlName="medicine">
+        </mat-form-field>&nbsp;
+        <mat-form-field appearance="outline">
+          <mat-label>Dosage</mat-label>
+          <mat-select formControlName="dosage">
+            <mat-option *ngFor="let val of dosage" [value]="val">
+              {{val}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>&nbsp;
+        <button mat-stroked-button color="warn" type="button" (click)="removeMedicine(i)">
+          <mat-icon>remove_circle_outline</mat-icon>
+        </button>
+      </div>
+    </div>
+      <!-- Add Medicine Button -->
+      <button mat-stroked-button color="primary" type="button" (click)="addMedicine()">
+        <mat-icon>add</mat-icon>Add Medicine
+      </button>
+     
+  
+   <!-- Advice -->
+   <mat-form-field appearance="outline">
+    <mat-label>Advice</mat-label>
+    <input matInput formControlName="advice">
+  </mat-form-field>
+</div>
+
+  <!-- Submit button -->
+  <div mat-dialog-actions class="action">
+    <button mat-raised-button type="button" [mat-dialog-close]="false">Cancel</button>
+    <button mat-raised-button color="primary" type="submit">Generate</button>
+  </div>
+</form>

@@ -50,6 +50,7 @@ userRoute.get('/booking-list/:userId',jwtHelper.verifyJwtToken,isUserBlocked,use
 userRoute.patch('/cancel-booking/:id',jwtHelper.verifyJwtToken,isUserBlocked,userController.cancelBooking);
 userRoute.get('/user-wallet/:userId',jwtHelper.verifyJwtToken,isUserBlocked,userController.walletAmount);
 userRoute.post('/user-wallet/deduct',jwtHelper.verifyJwtToken,isUserBlocked,userController.deductWallet);
+userRoute.get('/get-prescription/:id',userController.getPrescription);
 
 
 module.exports = userRoute;

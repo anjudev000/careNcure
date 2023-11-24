@@ -5,7 +5,8 @@ import { doctorPasswordresetModel } from './passwordReset.model';
 import { forgotModel } from './passwordReset.model';
 import { HttpClient,HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environment/environment';
-import { Observable } from 'rxjs';
+import { Prescription } from './prescription.model';
+
 
 @Injectable({
   providedIn: 'root'
@@ -70,6 +71,12 @@ export class DoctorService {
   }
   endAppointment(id:string){
     return this.http.put(environment.doctorapiBaseUrl+`/appointment-completed/${id}`,{});
+  }
+  generatePrescription(id:string,prescriptionData:Prescription){
+    return this.http.put(environment.doctorapiBaseUrl+`/generate-prescription/${id}`,prescriptionData);
+  }
+  getDashData(doctorId:string){
+    return this.http.get(environment.doctorapiBaseUrl+`/dashboard-data/${doctorId}`);
   }
 
 

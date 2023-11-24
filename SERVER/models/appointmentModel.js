@@ -22,9 +22,6 @@ const appointmentSchema = new mongoose.Schema({
       appointmentId:{
         type:Number
       },
-      reason:{
-        type:String
-      },
       paymentMode:{
         type:[String],
       },
@@ -44,8 +41,6 @@ const appointmentSchema = new mongoose.Schema({
         {
           medicine:{type:String},
           dosage:{type:String},
-          frequency:{type:String},
-          instructions:{type:String}
         }
       ],
       advice:{type:String}

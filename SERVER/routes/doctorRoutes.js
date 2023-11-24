@@ -44,9 +44,12 @@ doctorRoute.post('/add-time-slots/:doctorId',jwtHelper.verifyJwtToken,isDoctorBl
 doctorRoute.get('/available-slots/:doctorId/:date',jwtHelper.verifyJwtToken,isDoctorBlocked,doctorController.getAvailableSlot);
 doctorRoute.get('/booked-slots/:doctorId/:date',jwtHelper.verifyJwtToken,isDoctorBlocked,doctorController.bookedSlots);
 doctorRoute.get('/getStatus/:doctorId',jwtHelper.verifyJwtToken,isDoctorBlocked,doctorController.getDocStatus);
-doctorRoute.get('/doctor-appointemnts/:doctorId',doctorController.getAppoitmentList);
-doctorRoute.patch('/cancel-booking/:id',doctorController.cancelAppoitment);
-doctorRoute.patch('/confirm-booking/:id',doctorController.confirmAppointment);
-doctorRoute.put('/appointment-completed/:id',doctorController.endAppointment);
+doctorRoute.get('/doctor-appointemnts/:doctorId',jwtHelper.verifyJwtToken,isDoctorBlocked,doctorController.getAppoitmentList);
+doctorRoute.patch('/cancel-booking/:id',jwtHelper.verifyJwtToken,isDoctorBlocked,doctorController.cancelAppoitment);
+doctorRoute.patch('/confirm-booking/:id',jwtHelper.verifyJwtToken,isDoctorBlocked,doctorController.confirmAppointment);
+doctorRoute.put('/appointment-completed/:id',jwtHelper.verifyJwtToken,isDoctorBlocked,doctorController.endAppointment);
+doctorRoute.put('/generate-prescription/:id',jwtHelper.verifyJwtToken,isDoctorBlocked,doctorController.prescription);
+doctorRoute.get('/dashboard-data/:doctorId',doctorController.getDashboardData);
+
 
 module.exports = doctorRoute;

@@ -535,6 +535,26 @@ const deductWallet = async(req,res)=>{
   }
 }
 
+const getPrescription = async(req,res,next)=>{
+  try{
+    const {id} = req.params;
+    const appointment = await Appointment.findById(id);
+    if(!appointment) return res.status(404).json({message:'Appointment Not Found'});
+
+    const { diagnosis, advice, prescription } = appointment;
+
+    res.status(200).json({ 
+      diagnosis,
+      advice,
+      prescription,
+    });
+
+  }catch(error){
+    console.log(error.message);
+    next(error);
+  }
+}
+
 module.exports = {
   register,
   otpVerification,
@@ -554,5 +574,6 @@ module.exports = {
   getBookingList,
   cancelBooking,
   walletAmount,
-  deductWallet
+  deductWallet,
+  getPrescription
 }

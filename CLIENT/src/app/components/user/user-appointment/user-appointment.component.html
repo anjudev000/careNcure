@@ -56,7 +56,7 @@
                   
                 </ng-container> 
                 <ng-container *ngIf="element.Status ==='Completed'">
-                  <button mat-stroked-button color="primary">Prescription <mat-icon>cloud_download</mat-icon></button>
+                  <button mat-stroked-button color="primary" (click)="generatePDF(element)">View Prescription</button>
                 </ng-container>               
             </td>
           </ng-container>
